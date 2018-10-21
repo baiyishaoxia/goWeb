@@ -1,0 +1,77 @@
+{{define "css"}}
+{{end}}
+{{define "content"}}
+<center>欢迎使用GO语言</center>
+<form action="/home/index/list" method="get" id="form1">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="http://www.baidu.com" class="home"><i></i><span>百度一下</span></a>
+        <i class="arrow"></i>
+        <span>友情链接</span>
+    </div>
+    <!--/导航栏-->
+
+    <!--工具栏-->
+    <div id="floatHead" class="toolbar-wrap">
+        <div class="toolbar">
+            <div class="box-wrap">
+                <a class="menu-btn"></a>
+                <div class="l-list">
+                    <ul class="icon-list">
+                        <li><a class="add" href="/home/index/create"><i></i><span>新增</span></a></li>
+                        <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
+                        <li><a href="/home/index/save"  class="save btnsave" ><i></i><span>保存</span></a></li>
+                        <li><a href="/home/index/del" class="del btndel" ><i></i><span>删除</span></a></li>
+                    </ul>
+                </div>
+                <div class="r-list">
+                    <input name="keywords" placeholder="请输入关键字" class="keyword normal" value="{{.Keywords}}" type="text">
+                    <a class="btn-search" href="javascript:void (0)">查询</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/工具栏-->
+    <!--列表-->
+    <div class="table-container">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
+            <tr>
+                <th width="10%">选择</th>
+                <td width="20%">Name</td>
+                <td width="30%">描述</td>
+                <td width="20%">链接</td>
+                <th width="5%">排序</th>
+                <th width="5%">状态</th>
+                <th width="5%">操作</th>
+            </tr>
+        {{range $key,$val:=.Data}}
+            <tr>
+                <td align="center">
+                    <span class="checkall" style="vertical-align:middle;">
+                       <input  name="id[]" type="checkbox" value="{{$val.LinkId}}">
+                    </span>
+                </td>
+                <td align="left">{{$val.LinkName}}</td>
+                <td align="left">{{call $.Substr $val.LinkTitle}}</td>
+                <td align="left"><a href="{{$val.LinkUrl}}" target="_blank">{{$val.LinkUrl}}</a></td>
+                <td align="center">
+                    <input type="hidden" name="data[sort][]" value="{{$val.LinkId}}">
+                    <input class="sort" name="data[{{$val.LinkId}}][sort]" type="text" value="{{$val.LinkOrder}}">
+                </td>
+                <td align="center">{{if eq $val.LinkIsdel 1}}已回收{{else}}未回收{{end}}</td>
+                <td align="center">
+                    <a href="/home/index/edit/{{$val.LinkId}}">编辑</a>
+                </td>
+            </tr>
+        {{end}}
+        </table>
+    </div>
+    <!--/列表-->
+{{include "layouts/page"}}
+</form>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+</script>
+{{end}}

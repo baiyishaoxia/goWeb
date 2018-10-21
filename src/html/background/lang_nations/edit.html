@@ -1,0 +1,101 @@
+{{define "css"}}
+<title>国家管理--修改</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/script/layui/css/layui.css">
+<style type="text/css">
+    #var_box .all{width: 100%;}
+</style>
+{{end}}
+
+{{define "content"}}
+<form method="POST" action="/admin/nations/edit/{{.Data.Id}}" accept-charset="UTF-8" id="form1">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="/admin/center" class="home"><i></i><span>首页</span></a>
+        <i class="arrow"></i>
+        <a href="/admin/nations/list"><span>国家管理</span></a>
+        <i class="arrow"></i>
+        <span>修改国家</span>
+    </div>
+    <div class="line10"></div>
+    <!--/导航栏-->
+
+    <!--内容-->
+    <div id="floatHead" class="content-tab-wrap">
+        <div class="content-tab">
+            <div class="content-tab-ul-wrap">
+                <ul>
+                    <li><a class="selected" href="javascript:;">修改国家信息</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <dl>
+            <dt>国家名称</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="title" value="{{.Data.Title}}" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>缩略图</dt>
+            <dd>
+                <input class="input normal upload-path" name="img_url" value="{{.Data.ImageUrl}}" type="text">
+                <div class="upload-box upload-image"></div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>排序</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="sort" value="{{.Data.Sort}}" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>是否启用</dt>
+            <dd>
+                <div class="rule-single-checkbox">
+                    <input type="checkbox" name="is_open" value="1" {{if eq .Data.IsOpen true}}checked{{end}}  id="">
+                </div>
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>是否默认</dt>
+            <dd>
+                <div class="rule-single-checkbox">
+                    <input type="checkbox" name="is_default" value="1" {{if eq .Data.IsDefault true}}checked{{end}}  id="">
+                </div>
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+    </div>
+    <!--/内容-->
+    <!--工具栏-->
+    <div class="page-footer">
+        <div class="btn-wrap">
+            <input class="btn" type="submit" value="提交保存">
+
+        </div>
+    </div>
+    <!--/工具栏-->
+</form>
+
+{{end}}
+{{define "js"}}
+<script src="/public/home/script/validform_v5.3.2/Validform_v5.3.2.js"></script>
+<script src="/public/home/script/webuploader/webuploader.min.js"></script>
+<script src="/public/home/script/common.js"></script>
+<script src="/public/home/js/uploader.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#form1').initValidform();
+        $(".upload-image").each(function () {
+            $(this).InitUploader({sendurl: "/admin/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+    })
+</script>
+
+{{end}}

@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://blog.csdn.net/u012767761/article/details/73604434 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="canonical" href="http://blog.csdn.net/u012767761/article/details/73604434"> 
+    <script type="text/javascript" async="" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/pr.js"></script><script charset="utf-8" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/b.js"></script><script charset="utf-8" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/b.js"></script><script type="text/javascript" async="" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/cwaeqau.js"></script><script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/hm.js"></script><script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/hm.js"></script><script type="text/javascript">
+        var username = "u012767761";
+        var _blogger = username;
+        var blog_address = "http://blog.csdn.net/u012767761";
+        var static_host = "http://csdnimg.cn/release/phoenix/";
+        var currentUserName = ""; 
+        var fileName = '73604434';
+        var commentscount = 0;
+        var islock = false;
+        window.quickReplyflag = true;
+        var totalFloor = 0;
+        var isBole = false;
+        var isDigg = false;
+        var isExpert = false;
+        var isAdm = false;
+        var baiduKey = "simple+qrcode+%E8%AF%BB%E5%8F%96%E4%BA%8C%E7%BB%B4%E7%A0%81";
+        var needInsertBaidu = false;
+        var isShowAds = true;
+    </script>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/avatar.css">
+                <link rel="stylesheet" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/main-aa20801f57.css">
+          <link rel="stylesheet" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/content_toolbar.css">
+
+    <script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/main-1.0.5.js"></script>
+    <script type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/tracking-1.0.2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/main-8faf05cfc6.js"></script>
+
+    <script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/ds.js"></script>
+    <script type="text/javascript">
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+    </script>
+    <meta name="description" content="1、简介
+
+Simple Qrcode 是 Bacon/BaconQrCode 针对 Laravel 框架的封装版本，用于在
+ Laravel 中为生成二维码提供接口。
+
+2、安装&amp;配置
+
+在项目根目录下使用如下命令安装依赖包：
+composer require simplesoftwareio/simple-qrcode 1.3.*
+
+在 config/app.php 注册服">
+    <meta name="keywords" content="二维码,扩展">
+    <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/u012767761/article/details/73604434#">
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <title>在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客</title>
+    <link href="http://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+              <script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/baidu_search-1.0.0.js" type="text/javascript"></script>
+                      <link rel="stylesheet" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/htmledit_views-b569b0e3ef.css">
+      <script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/share.js"></script><link rel="stylesheet" type="text/css" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/goTop.min.css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/share_style0_16.css"><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><div id="MathJax_Message" style="display: none;"></div><svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><symbol id="icon-xiajiantou" viewBox="0 0 1024 1024"><path d="M328.208 346.062h368.494c20.393 0 36.887 16.366 36.887 36.757 0 9.484-3.637 18.056-9.483 24.55L541.873 650.522c-12.211 16.105-35.2 19.484-51.438 7.275-2.859-2.08-5.324-4.547-7.274-7.275L298.853 404.772c-12.08-16.106-8.83-39.225 7.404-51.306 6.626-5.066 14.289-7.404 21.95-7.404z"></path></symbol><symbol id="icon-shouji" viewBox="0 0 1024 1024"><path d="M537.754 795.889c-26.41 0-47.893 21.478-47.893 47.892s21.484 47.893 47.893 47.893 47.892-21.479 47.892-47.893-21.483-47.892-47.892-47.892z"></path><path d="M774.697 42.071H300.815c-39.864 0-72.3 32.43-72.3 72.3v795.264c0 39.869 32.43 72.3 72.3 72.3h473.872c39.87 0 72.3-32.431 72.3-72.3v-795.27c0.004-39.864-32.426-72.294-72.29-72.294zM300.815 90.266h473.872a24.125 24.125 0 0 1 24.1 24.1v595.809H276.72v-595.81a24.125 24.125 0 0 1 24.094-24.1z m473.882 843.463H300.815a24.125 24.125 0 0 1-24.1-24.1V762.501h522.072V909.63a24.115 24.115 0 0 1-24.09 24.1z"></path></symbol><symbol id="icon-tianxie" viewBox="0 0 1024 1024"><path d="M121.905 780.19h780.19v97.524h-780.19V780.19zM823.296 298.496l-68.974-68.974-344.795 344.796-34.475 103.448 103.424-34.475zM875.008 246.76l17.237-17.238-68.949-68.949-17.262 17.237-17.237 17.238 68.974 68.973z"></path></symbol><symbol id="icon-sousuo" viewBox="0 0 1024 1024"><path d="M1023.972002 964.002812l-59.981188 59.981189-271.443276-271.459276c-166.600191 136.489602-412.812649 126.986048-568.309361-28.494664-165.624236-165.624236-165.624236-434.187647 0-599.859881 165.624236-165.592238 434.187647-165.592238 599.827883 0 155.52871 155.52871 164.984266 401.789166 28.462666 568.389356L1023.972002 964.002812zM663.364906 184.007375c-132.585785-132.585785-347.327719-132.761777-479.705514-0.43198-132.329797 132.345796-132.121807 347.119729 0.463978 479.705514s347.375717 132.793775 479.705514 0.41598c132.329797-132.281799 132.169805-347.10373-0.463978-479.689514z"></path></symbol><symbol id="icon-guanbi" viewBox="0 0 1024 1024"><path d="M1002.211316 933.90818c24.46369 24.46369 29.007633 59.583246 10.159871 78.447007-18.863761 18.863761-53.983317 14.303819-78.447007-10.159871L21.807724 90.09486C-2.655966 65.631169-7.199909 30.495614 11.647853 11.647853c18.863761-18.863761 53.983317-14.303819 78.447007 10.159871L1002.211316 933.90818z"></path><path d="M933.92418 21.807724C958.38787-2.655966 993.507426-7.199909 1012.371187 11.647853c18.863761 18.863761 14.303819 53.983317-10.159871 78.447007L90.09486 1002.211316c-24.46369 24.46369-59.583246 29.007633-78.447007 10.159871-18.847761-18.863761-14.303819-53.983317 10.159871-78.463007L933.92418 21.807724z"></path></symbol><symbol id="icon-caidan" viewBox="0 0 1024 1024"><path d="M0 132.8a48.496 48.496 0 0 0 48.496 48.496h927.008a48.496 48.496 0 1 0 0-96.992H48.496A48.496 48.496 0 0 0 0 132.8s0-26.784 0 0zM0 512.016a48.48 48.48 0 0 0 48.48 48.48h927.04a48.48 48.48 0 0 0 0-96.96H48.48A48.48 48.48 0 0 0 0 512.016s0-26.784 0 0zM0 891.2a48.496 48.496 0 0 0 48.496 48.496h927.008a48.496 48.496 0 1 0 0-96.992H48.496A48.496 48.496 0 0 0 0 891.2s0-26.784 0 0z"></path></symbol><symbol id="icon-yonghudenglu" viewBox="0 0 1024 1024"><path d="M1022.26704 962.432c-43.888-157.584-162.16-281.216-312.064-340.144 92.8-61.376 153.92-164.496 153.92-281.168C864.12304 153.04 706.04304 0 511.70704 0 317.35504 0 159.19504 153.04 159.19504 341.136c0 116.704 61.152 219.84 154.064 281.184C164.13904 681.024 46.18704 803.792 1.80304 960.16c-7.344 26.016 8.464 52.864 35.36 60.032a52.016 52.016 0 0 0 38.4-4.608 49.072 49.072 0 0 0 23.712-29.568c50.768-178.96 220.352-303.92 412.448-303.92 193.04 0 362.848 125.712 412.944 305.744 7.296 26.048 34.992 41.456 61.952 34.48 26.912-7.04 42.88-33.824 35.648-59.888zM260.25104 341.136c0-134.256 112.816-243.424 251.472-243.424 138.576 0 251.328 109.184 251.328 243.424 0 133.904-112.768 242.864-251.328 242.864-138.672 0-251.472-108.976-251.472-242.864z m0 0"></path></symbol><symbol id="toolbar-csdnlogo" viewBox="0 0 1024 1024"><path d="M533.941333 419.264c14.709333-1.621333 37.290667-3.264 68.352-3.264 51.872 0 93.802667 9.152 119.776 28.416 23.338667 17.952 38.858667 47.008 34.56 89.130667-3.978667 39.189333-24.042667 66.634667-53.312 83.594666C676.544 633.152 642.837333 640 592.106667 640c-29.888 0-58.421333-1.642667-80.106667-4.896l21.941333-215.84z m42.869334 172.938667c4.981333 0.992 11.562667 1.973333 24.533333 1.973333 51.882667 0 88.469333-25.877333 92.16-62.24 5.333333-52.554667-27.125333-70.944-81.802667-70.624-7.072 0-16.917333 0-22.133333 0.970667L576.8 592.213333h0.010667z m223.498666-164.704c210.954667-39.872 229.162667 31.776 222.645334 95.189333L1010.656 640h-66.944l11.210667-106.986667c2.421333-23.562667 17.504-69.653333-55.338667-67.914666-25.184 0.608-37.706667 4.064-37.706667 4.064s-2.186667 28.469333-4.832 49.514666L844.32 640H778.666667l13.024-119.573333" fill="#231916"></path><path d="M226.634667 632.682667c-12.373333 4.341333-38.037333 7.317333-73.909334 7.317333C49.6 640-6.048 590.933333 0.522667 526.090667 8.416 448.810667 90.858667 405.333333 181.141333 405.333333c34.976 0 55.552 2.858667 74.858667 7.637334l-6.208 52.064c-12.821333-4.384-42.890667-8.405333-67.232-8.405334-53.141333 0-98.250667 16.042667-103.424 66.762667-4.608 45.354667 27.061333 67.04 86.816 67.04 20.8 0 51.477333-3.018667 65.653333-7.370667l-4.992 49.6 0.021334 0.021334z" fill="#C92027"></path><path d="M272.714667 580.021333c19.285333 6.762667 59.488 13.504 92 13.504 35.029333 0 54.528-9.333333 56.096-23.797333 1.418667-13.205333-12.928-14.986667-52.490667-24.010667-54.666667-12.896-89.546667-32.842667-86.133333-64.704C286.176 443.989333 337.685333 416 416.725333 416c38.56 0 75.914667 2.613333 95.274667 8.714667l-6.656 46.666666c-12.565333-4.202667-60.672-10.037333-93.205333-10.037333-32.992 0-50.069333 9.973333-51.253334 20.917333-1.493333 13.845333 15.658667 14.485333 58.528 25.450667 58.026667 14.154667 83.402667 34.090667 80.085334 64.992C495.605333 609.109333 449.258667 640 356.714667 640c-38.528 0-71.744-6.762667-90.048-13.525333l6.048-46.453334z" fill="#231916"></path></symbol><symbol id="icon-morentouxiang" viewBox="0 0 1024 1024"><path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#A0C3FF"></path><path d="M691.2 887.466667c-55.466667-25.6-123.733333-51.2-123.733333-51.2v-38.4c68.266667-25.6 119.466667-89.6 132.266666-166.4 12.8-4.266667 38.4-17.066667 46.933334-55.466667l8.533333-46.933333s4.266667-59.733333-42.666667-46.933334c4.266667-38.4 4.266667-81.066667 4.266667-115.2-4.266667-64-89.6-98.133333-89.6-98.133333l12.8-17.066667s-42.666667-12.8-59.733333-4.266666l12.8-29.866667s-85.333333 0-132.266667 38.4h-4.266667v-17.066667s-145.066667 21.333333-140.8 243.2c-46.933333-12.8-42.666667 46.933333-42.666666 46.933334l8.533333 46.933333c4.266667 38.4 29.866667 51.2 46.933333 55.466667 12.8 81.066667 64 145.066667 132.266667 166.4v38.4s-68.266667 29.866667-123.733333 51.2c-29.866667 12.8-59.733333 34.133333-81.066667 59.733333 68.266667 51.2 157.866667 76.8 256 76.8s187.733333-25.6 264.533333-72.533333c-21.333333-29.866667-51.2-46.933333-85.333333-64z" fill="#4374E0"></path></symbol><symbol id="icon-icon_boke" viewBox="0 0 1024 1024"><path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m298.667-256H213.333v42.667h597.334V768z m-21.334-448L704 234.667 341.333 597.333l-42.666 128 128-42.666L789.333 320z"></path></symbol><symbol id="icon-icon_gitchatx" viewBox="0 0 1024 1024"><path d="M810.667 533.333v-64h-384v85.334h298.666v128h85.334V533.333zM256 810.667h426.667v-85.334h-384V298.667h426.666V384h85.334V213.333H213.333v597.334H256zM512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m213.333-298.667v85.334h85.334v-85.334h-85.334z"></path></symbol><symbol id="icon-guanbi1" viewBox="0 0 1024 1024"><path d="M512 1024A512 512 0 1 1 512 0a512 512 0 0 1 0 1024z m160-768L512 416 352 256l-96 96 160 160-160 160 96 96 160-160 160 160 96-96-160-160 160-160-96-96z"></path></symbol></svg><div class="csdn-toolbar csdn-toolbar tb_disnone  csdn-toolbar-skin-black ">        <div class="container row center-block ">          <ul class="pull-left left-menu clearfix">            <li>              <a href="http://www.csdn.net/" title="CSDN首页" target="_blank">              <svg class="icon" aria-hidden="true">                  <use xlink:href="#toolbar-csdnlogo"></use>              </svg>                </a>            </li>            <li><a href="http://blog.csdn.net/" class="toolbar_to_feed" title="博客" target="_blank">博客</a></li>            <li><a href="http://edu.csdn.net/" title="学院" target="_blank">学院</a></li>            <li><a href="http://download.csdn.net/" title="下载" target="_blank">下载</a></li>            <li><a href="http://gitbook.cn/?ref=csdn" title="GitChat" target="_blank">GitChat</a></li>            <li class="tb_is1090hide"><a href="http://bbs.csdn.net/" title="论坛" target="_blank">论坛</a></li>            <li class="tb_is1150hide"><a href="http://ask.csdn.net/" title="问答" target="_blank">问答</a></li>            <li class="tb_is1210hide"><a href="http://mall.csdn.net/" title="商城" target="_blank">商城</a></li>            <li class="tb_is1270hide"><a href="http://download.csdn.net/vip_code" title="下载VIP" target="_blank">VIP</a></li>            <li class="tb_is1330hide"><a href="http://huiyi.csdn.net/" title="活动" target="_blank">活动</a></li>            <li class="tb_is1400hide"><a href="http://job.csdn.net/" title="招聘" target="_blank">招聘</a></li>            <li class="tb_is1452hide"><a href="http://www.iteye.com/" title="ITeye" target="_blank">ITeye</a></li>            <li class="tb_is1513hide"><a href="http://www.gitee.com/" title="码云" target="_blank">码云</a></li>            <li class="tb_is1513hide"><a href="http://www.csto.com/" title="CSTO" target="_blank">CSTO</a></li>            <li class="show-more">            <a href="javascript:;" class="show-more-a"><svg width="22" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 4a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm9 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm9 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#4F4F4F" fill-rule="evenodd"></path></svg></a>              <div class="more">                <div class="tb_is1090show"><a href="http://bbs.csdn.net/" target="_blank">论坛</a></div>                <div class="tb_is1150show"><a href="http://ask.csdn.net/" target="_blank">问答</a></div>                <div class="tb_is1210show"><a href="http://mall.csdn.net/" target="_blank">商城</a></div>                <div class="tb_is1270show"><a href="http://download.csdn.net/vip_code" target="_blank">下载VIP</a></div>                <div class="tb_is1330show"><a href="http://huiyi.csdn.net/" target="_blank">活动</a></div>                <div class="tb_is1400show"><a href="http://job.csdn.net/" target="_blank">招聘</a></div>                <div class="tb_is1452show"><a href="http://www.iteye.com/" target="_blank">ITeye</a></div>                <div class="tb_is1513show"><a href="http://www.gitee.com/" target="_blank">码云</a></div>                <div class="tb_is1513show"><a href="http://www.csto.com/" target="_blank">CSTO</a></div>              </div>            </li>          </ul>          <div class="pull-right login-wrap unlogin">            <ul class="btns">            <li class="toolbar-tracking csdn-tracking-statistics tracking-click" data-mod="popu_369"><a href="http://blog.csdn.net/u012767761/article/details/73604434#" style="padding:0" target="_blank"></a></li>              <li>                <div class="search_bar csdn-tracking-statistics tracking-click" data-mod="popu_366">                  <input type="text" class="input_search" name="">                  <a href="http://so.csdn.net/so/" target="_blank" class="btn-nobg-noborder btn-search"><i class="iconfont-toolbar toolbar-sousuo"></i></a>                </div>              </li>              <li class="write-bolg-btn csdn-tracking-statistics tracking-click" data-mod="popu_370"><a class="" href="http://mp.blog.csdn.net/postedit" target="_blank"><i class="iconfont-toolbar toolbar-icon_boke"></i><span>写博客</span></a></li>              <li class="gitChat"><a class="" href="http://gitbook.cn/new/gitchat/activity?utm_source=csdnblog1" target="_blank"><i class="iconfont-toolbar toolbar-icon_gitchatx"></i><span>发Chat</span></a></li>              <li class="userinfo"><a href="https://passport.csdn.net/account/login">登录</a><span></span><a href="https://passport.csdn.net/account/mobileregister?action=mobileRegister">注册</a></li>              <li class="userLogin">                <div class="loginCenter"><a href="http://my.csdn.net/" target="_blank"><img class="login_img" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/100x100.jpg"><div class="toolbar-circle"></div></a></div>                <div class="userControl">                  <div><a href="http://blog.csdn.net/" target="_blank">我的博客</a></div>                  <div><a class="xiaoxi" href="http://msg.csdn.net/" target="_blank">消息<span class="toolbar-newsL">(3)</span></a></div>                  <div><a href="http://my.csdn.net/my/account/changepwd" target="_blank">设置</a></div>                  <div><a href="http://bbs.csdn.net/forums/Service" target="_blank">反馈</a></div>                  <div><a href="http://oldblog.csdn.net/home/help.html" target="_blank">帮助</a></div>                  <div><a href="http://passport.csdn.net/account/logout">退出</a></div>                </div>              </li>            </ul>          </div>        </div>    </div><script class="toolbar-s" type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/iconfont.js"></script>
+<script id="toolbar-tpl-scriptId" prod="download" skin="black" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/content_toolbar.js" type="text/javascript" domain="http://blog.csdn.net/"></script>
+<div class="container clearfix">
+  <main>
+    <div style="display:none;">
+      <img src="http://blog.csdn.net/u012767761/article/details/73604434" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);">
+    </div>
+    <article>
+        <h1 class="csdn_top">在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解</h1>
+        <div class="article_bar clearfix">
+            <div class="artical_tag">
+                <span class="original">
+                转载                </span>
+                <span class="time">2017年06月22日 15:05:48</span>
+            </div>
+
+            <ul class="article_tags clearfix csdn-tracking-statistics tracking-click" data-mod="popu_377">
+                <li class="tit">标签：</li>
+
+<!--          [startarticletags]-->
+                                                            <li><a href="http://so.csdn.net/so/search/s.do?q=%E4%BA%8C%E7%BB%B4%E7%A0%81&amp;t=blog" target="_blank">二维码</a> <span>/</span></li>
+                                            <li><a href="http://so.csdn.net/so/search/s.do?q=%E6%89%A9%E5%B1%95&amp;t=blog" target="_blank">扩展</a> <span>/</span></li>
+                                    <!--          [endarticletags]-->
+            </ul>
+            <ul class="right_bar">
+                <li><button class="btn-noborder"><i class="icon iconfont icon-read"></i><span class="txt">1406</span></button></li>
+                <li class="edit">
+                    <a class="btn-noborder" href="http://mp.blog.csdn.net/postedit/73604434">
+                        <i class="icon iconfont icon-bianji"></i><span class="txt">编辑</span>
+                    </a>
+                </li>
+                <li class="del">
+                    <a class="btn-noborder" onclick="javascript:deleteArticle(fileName);return false;">
+                        <i class="icon iconfont icon-shanchu"></i><span class="txt">删除</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="article_content" class="article_content csdn-tracking-statistics tracking-click" data-mod="popu_519" data-dsm="post">
+                            <div class="htmledit_views">
+                        
+<h3 id="ipt_kb_toc_2605_0" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">1、简介</span></h3>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+Simple Qrcode 是&nbsp;<a href="https://github.com/Bacon/BaconQrCode" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">Bacon/BaconQrCode</a>&nbsp;针对&nbsp;<a href="http://laravelacademy.org/tags/laravel" title="View all posts in Laravel" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">Laravel</a>&nbsp;框架的封装版本，用于在
+ Laravel 中为生成<a href="http://laravelacademy.org/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81" title="View all posts in 二维码" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">二维码</a>提供接口。</p>
+<h3 id="ipt_kb_toc_2605_1" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">2、安装&amp;配置</span></h3>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+在项目根目录下使用如下命令安装依赖包：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">composer require simplesoftwareio/simple-qrcode 1.3.*</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+在&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">config/app.php</code>&nbsp;注册服务提供者：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">SimpleSoftwareIO\<a href="http://laravelacademy.org/tags/qrcode" title="View all posts in QrCode" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">QrCode</a>\QrCodeServiceProvider::class</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+同样在&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">config/app.php</code>&nbsp;添加&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">QrCode</code>&nbsp;门面：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">'QrCode' =&gt; SimpleSoftwareIO\QrCode\Facades\QrCode::class</pre>
+<h3 id="ipt_kb_toc_2605_2" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">3、快速上手</span></h3>
+<h4 id="ipt_kb_toc_2605_3" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">在视图中打印</span></h4>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">&lt;div class="visible-print text-center"&gt;
+    {!! QrCode::size(100)-&gt;generate(Request::url()); !!}
+    &lt;p&gt;Scan me to return to the original page.&lt;/p&gt;
+&lt;/div&gt;</pre>
+<h4 id="ipt_kb_toc_2605_4" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">嵌入到<a href="http://laravelacademy.org/tags/%E9%82%AE%E4%BB%B6" title="View all posts in 邮件" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">邮件</a>内容</span></h4>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">&lt;img src="{!!$message-&gt;embedData(QrCode::format('png')-&gt;generate('Embed me into an e-mail!'), 'QrCode.png', 'image/png')!!}"&gt;</pre>
+<h3 id="ipt_kb_toc_2605_5" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">4、基本用法</span></h3>
+<h4 id="ipt_kb_toc_2605_6" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">基本使用</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+Qrcode 生成器用法很简单，最基本的语法如下：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::generate('Hello,LaravelAcademy!');</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+这将会生成一个二维码，用手机扫描该二维码将会跳转到一个显示“Hello,LaravelAcademy!”的页面。</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+如果想要显示中文，需要使用如下方式指定<a href="http://laravelacademy.org/tags/%E7%BC%96%E7%A0%81" title="View all posts in 编码" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">编码</a>：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::encoding('UTF-8')-&gt;generate('你好，Laravel学院！');</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">generate()</code>&nbsp;方法用于生产二维码图片，默认情况下，返回一个&nbsp;<a href="http://laravelacademy.org/tags/svg" title="View all posts in SVG" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">SVG</a>&nbsp;格式的图片字符串，在视图中我们可以可以通过如下方式将其打印出来：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">{!! QrCode::generate('Hello,LaravelAcademy!'); !!}</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+此外，<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">generate()</code>&nbsp;方法还可以接受第二个参数用于指定文件名以及保存路径：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">if(!file_exists(public_path('qrcodes')))
+    mkdir(public_path('qrcodes'));
+QrCode::generate('Hello,LaravelAcademy!', public_path('qrcodes/qrcode.svg'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+这样生成的 SVG 文件会保存到&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">/public/qrcodes/qrcode.svg</code>。</p>
+<h4 id="ipt_kb_toc_2605_7" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">修改保存格式</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+前面我们说了，QrCode 默认生成 SVG 格式文件，当然，我们可以修改保存格式，目前 Simple QrCode 支持三种格式：<a href="http://laravelacademy.org/tags/png" title="View all posts in PNG" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">PNG</a>、SVG
+ 和 RPS。要修改生成二维码图片格式，可以使用&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">format()</code>&nbsp;方法：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;generate('Hello,LaravelAcademy!',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+这样会在&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">/public/qrcodes</code>&nbsp;目录下生成&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">qrcode.png</code>&nbsp;图片。要生成其它格式，将对应格式传入&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">format()</code>&nbsp;方法即可。</p>
+<blockquote style="border-width:0px 0px 0px 5px;border-left-style:solid;border-left-color:rgb(238,238,238);font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin:0px 0px 20px;padding:10px 20px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<p style="border:0px;font-family:inherit;font-style:inherit;margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;line-height:1.25;">
+注：<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">format()</code>&nbsp;方法必须在所有其它格式化方法之前调用，这些格式化方法包括<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">size</code>、<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">color</code>、<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">backgroundColor</code>&nbsp;和&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">margin</code>。</p>
+</blockquote>
+<h4 id="ipt_kb_toc_2605_8" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">修改二维码图片<a href="http://laravelacademy.org/tags/%E5%B0%BA%E5%AF%B8" title="View all posts in 尺寸" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">尺寸</a></span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+QrCode 生成器默认返回最小尺寸二维码图片。如果要修改生成二维码图片尺寸，可以使用&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">size()</code>&nbsp;方法：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;size(100)-&gt;generate('Hello,LaravelAcademy!',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+这样会生成一个宽高均为100像素的二维码图片：</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<img class="alignnone size-full wp-image-2606" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/qrcode-100.png" alt="在Laravel中使用Simple Qrcode生成二维码" width="100" height="100" style="border:none;vertical-align:middle;"></p>
+<h4 id="ipt_kb_toc_2605_9" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">修改<a href="http://laravelacademy.org/tags/%E9%A2%9C%E8%89%B2" title="View all posts in 颜色" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">颜色</a>（前景色/背景色）</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+我们还可以通过&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">color()</code>&nbsp;方法来修改生成二维码图片的颜色，颜色参数以
+ RGB 格式表示：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;size(100)-&gt;color(255,0,255)-&gt;generate('Hello,LaravelAcademy!',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+生成的二维码图片如下：</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<img class="alignnone size-full wp-image-2607" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/qrcode-pink.png" alt="在Laravel中使用Simple Qrcode生成二维码" width="100" height="100" style="border:none;vertical-align:middle;"></p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+此外，还可以使用&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">backgroundColor()</code>&nbsp;方法修改背景色：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;size(100)-&gt;color(255,0,255)-&gt;backgroundColor(255,255,0)-&gt;generate('Hello,LaravelAcademy!',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+生成的二维码图片如下：</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<img class="alignnone size-full wp-image-2608" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/qrcode-pink-yellow.png" alt="在Laravel中使用Simple Qrcode生成二维码" width="100" height="100" style="border:none;vertical-align:middle;"></p>
+<h4 id="ipt_kb_toc_2605_10" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">修改<a href="http://laravelacademy.org/tags/%E8%BE%B9%E8%B7%9D" title="View all posts in 边距" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">边距</a></span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+如果你想要修改二维码图片与最外层容器边框的距离，可以使用&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">margin()</code>&nbsp;方法：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;size(100)-&gt;color(255,0,255)-&gt;backgroundColor(255,255,0)-&gt;margin(100)-&gt;generate('Hello,LaravelAcademy!',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+生成的二维码图片如下：</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<img class="alignnone size-full wp-image-2609" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/qrcode-margin.png" alt="在Laravel中使用Simple Qrcode生成二维码" width="125" height="125" style="border:none;vertical-align:middle;"></p>
+<h4 id="ipt_kb_toc_2605_11" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">支持编码</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+关于编码问题我们前面已经提到过，即使用&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">encoding()</code>&nbsp;方法设置当前编码，QrCode
+ 默认编码为&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">ISO-8859-1</code>，目前支持如下编码：</p>
+<table style="border:1px solid rgb(221,221,221);font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin:0px 0px 1.5em;padding:0px;vertical-align:baseline;border-collapse:collapse;border-spacing:0px;color:rgb(51,51,51);line-height:20px;"><thead style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;background:rgb(246,246,246);"><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><th style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+字符编码</th>
+</tr></thead><tbody style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-1</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-2</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-3</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-4</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-5</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-6</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-7</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-8</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-9</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-10</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-11</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-12</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-13</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-14</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-15</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ISO-8859-16</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+SHIFT-JIS</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+WINDOWS-1250</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+WINDOWS-1251</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+WINDOWS-1252</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+WINDOWS-1256</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+UTF-16BE</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+UTF-8</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+ASCII</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+GBK</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+EUC-KR</td>
+</tr></tbody></table><p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+如果在生成二维码过程中报错：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">Could not encode content to ISO-8859-1</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+这就意味着你需要修改编码了。</p>
+<h4 id="ipt_kb_toc_2605_12" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">合并<a href="http://laravelacademy.org/tags/%E6%B0%B4%E5%8D%B0" title="View all posts in 水印" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">水印</a>图片到二维码</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+我们有时候需要将 Logo 或者头像放到二维码图片上，这可以通过&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">merge()</code>&nbsp;方法实现：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::format('png')-&gt;size(200)-&gt;merge('/public/qrcodes/laravel.png',.15)-&gt;generate('LaravelAcademy',public_path('qrcodes/qrcode.png'));</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">merge()</code>&nbsp;的第一个参数是水印图片（Logo或头像）的相对路径（相对于项目根目录），第二个参数表示所占百分比。上述生成的二维码图片如下：</p>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<img class="alignnone size-full wp-image-2610" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/qrcode-laravel.png" alt="在Laravel中使用Simple Qrcode生成二维码" width="200" height="200" style="border:none;vertical-align:middle;"></p>
+<blockquote style="border-width:0px 0px 0px 5px;border-left-style:solid;border-left-color:rgb(238,238,238);font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin:0px 0px 20px;padding:10px 20px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<p style="border:0px;font-family:inherit;font-style:inherit;margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;line-height:1.25;">
+注：目前&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">merge()</code>&nbsp;方法只支持&nbsp;PNG
+ 格式二维码图片。</p>
+</blockquote>
+<h3 id="ipt_kb_toc_2605_13" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">5、辅助函数</span></h3>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+我们平时用到的二维码不仅仅是显示文字，而是拥有很多额外功能，比如跳转链接、支付、下载、关注等等，这些功能可以通过 QrCode 提供的辅助函数来实现。</p>
+<h4 id="ipt_kb_toc_2605_14" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">邮件</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">email()</code>&nbsp;函数可以用于生产邮件二维码，
+ 我们可以传递邮箱地址、主题和内容到该函数：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::email('yaojinbu@163.com','测试邮件','通过二维码发送图片');</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+生成的二维码包含 mailto 信息。</p>
+<h4 id="ipt_kb_toc_2605_15" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">Geo</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">geo()</code>&nbsp;函数可以生成手机可以读取并在
+ Google 地图或类似应用中定位的经度和纬度信息：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::geo(37.822214, -122.481769);</pre>
+<h4 id="ipt_kb_toc_2605_16" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">电话/手机号码</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">phoneNumber()</code>&nbsp;函数可以生成一个包含手机/手机号码信息的二维码图片：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::phoneNumber('18888888888');</pre>
+<h4 id="ipt_kb_toc_2605_17" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">短信（<a href="http://laravelacademy.org/tags/sms" title="View all posts in SMS" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">SMS</a>）</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">SMS()</code>&nbsp;辅助函数可生成包括收件人和信息的短信二维码：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::encoding('UTF-8')-&gt;SMS('18888888888','Laravel学院致力于提供优质Laravel中文学习资源');</pre>
+<h4 id="ipt_kb_toc_2605_18" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:18px;font-weight:500;margin:10px 0px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">更多用法</span></h4>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+此外，你还可以通过在传入&nbsp;<code style="border:0px;font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:12.6px;margin:0px;padding:2px 4px;vertical-align:baseline;line-height:normal;color:rgb(244,100,95);background-color:rgb(249,242,244);">generate()</code>&nbsp;方法的第一个字符串参数前添加如下前缀以生成对应二维码：</p>
+<table style="border:1px solid rgb(221,221,221);font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin:0px 0px 1.5em;padding:0px;vertical-align:baseline;border-collapse:collapse;border-spacing:0px;color:rgb(51,51,51);line-height:20px;"><thead style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;background:rgb(246,246,246);"><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><th style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+使用</th>
+<th style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+前缀</th>
+<th style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+示例</th>
+</tr></thead><tbody style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Website&nbsp;<a href="http://laravelacademy.org/tags/url" title="View all posts in URL" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">URL</a></td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+http://</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+http://www.simplesoftware.io</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Secured URL</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+https://</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+https://www.simplesoftware.io</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+E-mail Address</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+mailto:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+mailto:support@simplesoftware.io</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Phone Number</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+tel:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+tel:555-555-5555</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Text (SMS)</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms:555-555-5555</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Text (SMS) With Pretyped Message</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms::I am a pretyped message</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Text (SMS) With Pretyped Message and Number</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+sms:555-555-5555:I am a pretyped message</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Geo Address</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+geo:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+geo:-78.400364,-85.916993</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+MeCard</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+mecard:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+MECARD:Simple, Software;Some Address, Somewhere, 20430;TEL:555-555-5555;EMAIL:support@simplesoftware.io;</td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+VCard</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+BEGIN:VCARD</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+<a href="https://en.wikipedia.org/wiki/VCard" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">See
+ Examples</a></td>
+</tr><tr style="border:1px solid rgb(221,221,221);font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;"><td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+Wifi</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+wifi:</td>
+<td style="border:1px solid rgb(221,221,221);font-family:inherit;font-size:14px;font-style:inherit;margin:0px;padding:10px;vertical-align:baseline;">
+wifi:WEP/WPA;SSID;PSK;Hidden(True/False)</td>
+</tr></tbody></table><p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+比如，要生成链接二维码，可以通过如下方式（我们还修改尺寸以方便扫描）：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">QrCode::size(200)-&gt;generate('http://laravelacademy.org');</pre>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+扫描生成的二维码图片，页面会跳转到&nbsp;<a href="http://laravelacademy.org/" style="border:0px;font-family:inherit;font-style:inherit;font-weight:inherit;margin:0px;padding:0px;vertical-align:baseline;color:rgb(244,100,95);text-decoration:none;background:transparent;" target="_blank">http://laravelacademy.org</a>。</p>
+<h3 id="ipt_kb_toc_2605_19" style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:24px;font-weight:500;margin:20px 0px 10px;padding:0px;vertical-align:baseline;clear:both;line-height:1.1;color:rgb(51,51,51);">
+<span style="border:0px;font-family:inherit;font-style:inherit;margin:0px;padding:0px;vertical-align:baseline;">6、在 Laravel 之外使用</span></h3>
+<p style="border:0px;font-family:&#39;Helvetica Neue&#39;, Helvetica, Arial, &#39;Hiragino Sans GB&#39;, &#39;Hiragino Sans GB W3&#39;, &#39;WenQuanYi Micro Hei&#39;, &#39;Microsoft YaHei UI&#39;, &#39;Microsoft YaHei&#39;, sans-serif;font-size:14px;margin-top:0px;margin-bottom:10px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;color:rgb(51,51,51);line-height:20px;">
+你还可以在 Laravel 之外使用 Simple QrCode：</p>
+<pre style="border:1px solid rgb(204,204,204);font-family:Monaco, Menlo, Consolas, &#39;Courier New&#39;, monospace;font-size:13px;margin-top:10px;margin-bottom:10px;padding:9.5px;vertical-align:baseline;line-height:1.42857;overflow:auto;white-space:pre-wrap;color:rgb(51,51,51);background:rgb(245,245,245);">use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
+
+$qrcode = new BaconQrCodeGenerator;
+$qrcode-&gt;size(500)-&gt;generate('Welcome to LaravelAcademy!');</pre>
+                </div>
+                    </div>
+    </article>
+      <div class="readall_box csdn-tracking-statistics tracking-click" data-mod="popu_376">
+          <div class="read_more_mask"></div>
+          <a class="btn btn-large btn-gray-fred read_more_btn" target="_self">阅读全文</a>
+      </div>
+      <div class="article_copyright">
+         
+              </div>
+      <ul class="article_collect clearfix csdn-tracking-statistics tracking-click" data-mod="popu_378" style="display: none;">
+          <li class="tit">本文已收录于以下专栏：</li>
+<!--          [startarticlecolumns]-->
+                                <!--          [endarticlecolumns]-->
+      </ul>
+      <div class="comment_box clearfix" id="comments">
+          <div id="comment_form">
+              <div id="commentsbmitarear">
+                              </div>
+          </div>
+      </div>
+      <div class="comment_li_outbox">
+          <div id="comment_list"></div>
+      </div>
+
+      <div class="more_comment">
+          <div id="comment_bar" class="trackgin-ad" data-mod="popu_385"></div>
+      </div>
+
+      <!-- <h3 class="recommend_tit" id="related">相关文章推荐</h3> -->
+      <div class="recommend_list clearfix" id="rasss">
+                                          <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="true" data-dsm="post">
+                <a href="http://blog.csdn.net/u012767761/article/details/73742054" target="_blank" strategy="BlogCommendFromBaidu_0">
+                    <dd>
+                        <h2>Laravel5中通过SimpleQrCode扩展包生成二维码实例</h2>
+                        <div class="summary">
+                            Simple Qrcode是基于强大的Bacon/BaconQrCode库开发的针对Laravel框架的封装版本，用于在Laravel中为生成二维码提供接口。
+安装SimpleQrCode扩展包
+...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_u012767761.jpg" alt="u012767761" title="u012767761"></li>
+                            <li class="user_name">u012767761</li>
+                            <li class="time">2017年06月26日 17:17</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>2085</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="true" data-dsm="post">
+                <a href="http://blog.csdn.net/shenbushen/article/details/53511610" target="_blank" strategy="BlogCommendFromBaidu_1">
+                    <dd>
+                        <h2>Qrcode生成二维码的参数总结 及最小尺寸的测试</h2>
+                        <div class="summary">
+                            Qrcode生成二维码，做过很多实验，探索最小规格的二维码到底是多少尺寸，和最高规格的二维码到底是多大尺寸。现在我总结总结：
+有两种思路：
+1.生成规格高的二维码，然后压缩到自己想要的尺寸的二维码。这...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_shenbushen.jpg" alt="shenbushen" title="shenbushen"></li>
+                            <li class="user_name">shenbushen</li>
+                            <li class="time">2016年12月08日 00:38</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>13877</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                          <dl class="">
+            <script>
+            (function() {
+              var s = "_" + Math.random().toString(36).slice(2);
+              document.write('<div id="' + s + '"></div>');
+              (window.slotbydup=window.slotbydup || []).push({
+                id: '4765209',
+                container: s,
+                size: '808,120',
+                display: 'inlay-fix'
+              });
+            })();
+            </script><div id="_xxnhd8fwo2e"></div><script charset="utf-8" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/fckm"></script><iframe scrolling="no" style="width: 100%; height: 148px; border: 0px;" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/saved_resource.html"></iframe>
+          </dl>
+                                        <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="true" data-dsm="post">
+                <a href="http://blog.csdn.net/johnsuna/article/details/8864046" target="_blank" strategy="BlogCommendFromBaidu_2">
+                    <dd>
+                        <h2>隐藏在QRCode二维码背后的秘密</h2>
+                        <div class="summary">
+                            隐藏在QRCode二维码背后的秘密，您知道吗？1、容错级。二维码的容错级分别为：L，M，Q和H。其中，L最低，H最高。如何从二维码中一眼看出其容错级别呢？看下图：图1 &nbsp;容错级示例如上图所示，关键部分...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_johnsuna.jpg" alt="johnsuna" title="johnsuna"></li>
+                            <li class="user_name">johnsuna</li>
+                            <li class="time">2013年04月28日 17:19</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>10077</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/QQ408896436/article/details/52219540" target="_blank" strategy="BlogCommendFromBaidu_3">
+                    <dd>
+                        <h2>在页面上生成二维码</h2>
+                        <div class="summary">
+                            body{ margin: 0; padding: 0; }
+		/*qrcode*/
+		#qrcode{ margin: 0 auto; }
+	
+
+
+	
+	
+
+
+
+
+var create_ewm ...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_qq408896436.jpg" alt="QQ408896436" title="QQ408896436"></li>
+                            <li class="user_name">QQ408896436</li>
+                            <li class="time">2016年08月16日 12:00</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1052</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/qq_35362858/article/details/73335511" target="_blank" strategy="BlogCommendFromBaidu_4">
+                    <dd>
+                        <h2>qrcode二维码生成，可插图片文字</h2>
+                        <div class="summary">
+                            qrcode二维码生成，可插图片文字                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_qq_35362858.jpg" alt="qq_35362858" title="qq_35362858"></li>
+                            <li class="user_name">qq_35362858</li>
+                            <li class="time">2017年06月16日 16:33</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>855</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/qq_36663951/article/details/78970505" target="_blank" strategy="BlogCommendFromBaidu_5">
+                    <dd>
+                        <h2>在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解</h2>
+                        <div class="summary">
+                            1、简介
+Simple Qrcode 是 
+Bacon/BaconQrCode 针对 
+Laravel 框架的封装版本，用于在 Laravel 中为生成二维码提供接口。
+2、安装&amp;配置
+在项...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_qq_36663951.jpg" alt="qq_36663951" title="qq_36663951"></li>
+                            <li class="user_name">qq_36663951</li>
+                            <li class="time">2018年01月09日 09:48</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>198</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/u014017121/article/details/51261461" target="_blank" strategy="BlogCommendFromBaidu_6">
+                    <dd>
+                        <h2>工具类整理 php 文件处理 二维码生成 laravel 移动设备判断</h2>
+                        <div class="summary">
+                                                    </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_u014017121.jpg" alt="u014017121" title="u014017121"></li>
+                            <li class="user_name">u014017121</li>
+                            <li class="time">2016年04月27日 15:21</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1042</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/qq_39479575/article/details/78555534" target="_blank" strategy="BlogCommendFromBaidu_7">
+                    <dd>
+                        <h2>Laravel安装第三方扩展包 mews/captcha</h2>
+                        <div class="summary">
+                            环境：Win7 64+Laragon1 .  开启 extension=php_fileinfo.dll （位于php.ini） 
+fileinfo扩展没有开启，会报错：Installation fa...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_qq_39479575.jpg" alt="qq_39479575" title="qq_39479575"></li>
+                            <li class="user_name">qq_39479575</li>
+                            <li class="time">2017年11月16日 21:14</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>208</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics downloadElement" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a class="clearfix" href="https://download.csdn.net/download/aishuixiquan/8561143" target="_blank" strategy="BlogCommendFromBaidu_8">
+                    <dd class="floatL">
+                        <div class="summary">
+                            <h2>QRCode读取二维码</h2>
+                            <div class="summary">
+                                <ul>
+                                    <li class="time">2015年04月03日 15:15</li>
+                                    <li class="visited_num fileSize">1010KB</li>
+                                    <li class="download_btn">下载</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </dd>
+                    <dt class="floatR"><img class="maxwidth" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/rar.svg" alt="" title=""></dt>
+                </a>
+            </dl>
+                                                    <dl class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <a href="http://blog.csdn.net/alinagebaba/article/details/51026937" target="_blank" strategy="BlogCommendFromBaidu_9">
+                    <dd>
+                        <h2>qrCode二维码的生成和识别</h2>
+                        <div class="summary">
+                            有关二维码的介绍，我这里不做过多说明， 可以直接去基维百科查看，附上链接 
+QR code . 
+IOS7之前，开发者进行扫码编程时，一般会借助第三方库。常用的是 
+ZBarSDKa 和 
+Z...                        </div>
+
+                        <ul>
+                            <li class="avatar_img"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_alinagebaba.jpg" alt="alinagebaba" title="alinagebaba"></li>
+                            <li class="user_name">alinagebaba</li>
+                            <li class="time">2016年03月31日 15:31</li>
+                            <li class="visited_num"><i class="icon iconfont icon-read"></i><span>2523</span></li>
+                        </ul>
+                    </dd>
+                </a>
+            </dl>
+                              </div>
+  </main>
+<aside>
+    <div class="right_box user_info">
+    <dl class="inf_bar clearfix">
+        <dt class="csdn-tracking-statistics tracking-click" data-mod="popu_381">
+                <a href="http://blog.csdn.net/u012767761" target="_blank">
+                    <img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/3_u012767761.jpg" class="avatar_pic">
+        </a>
+      </dt><dd>
+            <h3 class="csdn-tracking-statistics tracking-click" data-mod="popu_380"><a href="http://blog.csdn.net/u012767761" target="_blank" id="uid">u012767761</a></h3>
+            <div class="medals" title="">
+                      </div>
+                    </dd>
+    </dl>
+    <div class="inf_number_box clearfix">
+        <dl title="85">
+            <dt>原创</dt>
+            <dd>85</dd>
+        </dl>
+        <dl title="10">
+            <dt>粉丝</dt>
+            <dd id="fan">10</dd>
+        </dl>
+        <dl title="10">
+            <dt>喜欢</dt>
+            <dd>10</dd>
+        </dl>
+        <dl title="17">
+          <dt>评论</dt>
+          <dd>17</dd>
+        </dl>
+    </div>
+
+</div>
+<div class="interflow clearfix">
+      <div class="badge gradeAndbadge">
+        <div>
+                                    <img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/chizhiyiheng.png" alt="持之以恒">
+                                            </div>
+    </div>
+      <div class="grade gradeAndbadge gradewidths">
+      <span>等级：</span>
+      <div>
+        <a href="http://blog.csdn.net/home/help.html#level" title="5级,点击查看等级说明" target="_blank">
+          <img class="grade-img" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/blog5.png" alt="5级,点击查看等级说明">
+        </a>
+      </div>
+    </div>
+    <div class="gradeAndbadge gradewidths" title="129378">
+        <span>访问量：</span>
+        <span class="num odd-overhidden">12万+</span>
+    </div>
+
+    <div class="gradeAndbadge gradewidths" title="2374">
+      <span>积分：</span>
+      <span class="num odd-overhidden">2374</span>
+    </div>
+    <div class="gradeAndbadge gradewidths" title="18795">
+        <span>排名：</span>
+        <span class="num odd-overhidden">1万+</span>
+    </div>
+
+</div>
+          <div class="extension_other csdn-tracking-statistics tracking-click" data-mod="popu_389" style="position: relative;">
+          <!--u3032528-->
+        <div class="flashrecommend">
+                        <div id="_j2aq6fo7nd9"><ins style="width:0px;height:0px;"></ins><iframe width="300" frameborder="0" height="250" scrolling="no" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/s.html"></iframe><abbr class="jmxazgsesqbhzwc" style="display:none;"></abbr></div><script type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/bwocoltly.js"></script>
+                    </div>
+      <img class="append_mark_img" style="display:block;position:absolute;left:0;bottom:0;width:30px;height:16px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAABGdBTUEAALGPC/xhBQAAAhpJREFUOBHFVU2L2lAUHU0nExNHbRq1BkSrSFH8QBdu3QnuxYUr3bj2f/gHRPwrdmVdCLqxIK0KighqWz+mNVPaavtuhgtqnpnposyD5N53z7k57yX33RhKpdK7q2cYxmfQVCUfFU6n06/z+fwbvQWaTCYml8t5gBOJRKzZbFb19XJenIPhcNgaj8dfYZxlWSYWizkZhjFgDGyr1VqMRqMd+JlMRrbZbDd2u/3G4XBwTqeTBx8wGLvd7reiKPuH2cNdI+zz+W4FQbjudrtfkNjr9Vboo91sNr/A9/v9QjKZlFer1X2xWHxLclnIBx+5nU5n0Wg0FjgHqxGG4Hw+V9rt9lfw9YbRaDQUCoVgtVr9MB6P1d2TRYjRaFSq1+uf9HKpwnoJx5jL5eKazebM4/EIcAHmdrvNkiSZUqmU45g7HA6/zWaze4xphDmOY7bb7U8k6FmLxXItiiJ3zNnv938mk8mdLMvqQhBbLpc/dIXNZjM7nU6/Y4Ke7ff7d3AFAoFbUoQnxYd5h8PhCjg4R6vZMQiTQnnSjvEhpAmFB4OBpgABD4VCUrlcfo9ctBphcgx4eC1IeKqt1WofadxKpSLS4ifC5Ltw5Bsd1uu1elRoCZdiiUTiJQ2DyqfFT4SDwaCVnNnPNOJjMdKxqDs7bzz4HMP5T4Lneea8yyD5kvV6vTw5xwoNv4RpevW/ioLYJVE9TCNMW/X/iP0FJ9WyNfNE5tcAAAAASUVORK5CYII="></div>
+            <div class="writings">
+      <div class="public_signal clearfix">
+        <h3>他的最新文章</h3>
+        <a href="http://blog.csdn.net/u012767761" target="_blank" class="more"><span>更多文章</span></a>
+      </div>
+        <ul class="inf_list clearfix csdn-tracking-statistics tracking-click" data-mod="popu_382">
+                        <li class="clearfix">
+                <a href="http://blog.csdn.net/u012767761/article/details/78838497" target="_blank">小程序都报wxss编译错误</a>
+            </li>
+                        <li class="clearfix">
+                <a href="http://blog.csdn.net/u012767761/article/details/78716922" target="_blank">Phpstorm许可证过期</a>
+            </li>
+                        <li class="clearfix">
+                <a href="http://blog.csdn.net/u012767761/article/details/78471306" target="_blank">阿里大于（阿里短信）配置说明教程</a>
+            </li>
+                        <li class="clearfix">
+                <a href="http://blog.csdn.net/u012767761/article/details/78471288" target="_blank">阿里云PHP-SMS短信服务——验证码发送教程</a>
+            </li>
+                        <li class="clearfix">
+                <a href="http://blog.csdn.net/u012767761/article/details/78447602" target="_blank">lnmp/lamp-- 解决Warning: scandir() has been disabled for security reasons in…的问题</a>
+            </li>
+                    </ul>
+    </div>
+                <div class="user-hotArticle sort ClassSort">
+            <h3>文章分类</h3>
+            <ul class="hotArticle-list sort-list ClassSort-list">
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6882234" class="odd-overhidden floatL">PHP</a>
+                        <div class="read list-left floatR"><span>67篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6882290" class="odd-overhidden floatL">js</a>
+                        <div class="read list-left floatR"><span>19篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6886849" class="odd-overhidden floatL">json</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6892176" class="odd-overhidden floatL">MySQL</a>
+                        <div class="read list-left floatR"><span>10篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6892184" class="odd-overhidden floatL">面试题</a>
+                        <div class="read list-left floatR"><span>11篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6894507" class="odd-overhidden floatL">http状态码</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6896611" class="odd-overhidden floatL">html</a>
+                        <div class="read list-left floatR"><span>7篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6903236" class="odd-overhidden floatL">微信开发</a>
+                        <div class="read list-left floatR"><span>23篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6903352" class="odd-overhidden floatL">图片EXIF</a>
+                        <div class="read list-left floatR"><span>6篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6907041" class="odd-overhidden floatL">其他</a>
+                        <div class="read list-left floatR"><span>4篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6924988" class="odd-overhidden floatL">七牛</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6927511" class="odd-overhidden floatL">分页</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6928873" class="odd-overhidden floatL">wget</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6949300" class="odd-overhidden floatL">Angular</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6960476" class="odd-overhidden floatL">开发工具</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6960596" class="odd-overhidden floatL">laravel</a>
+                        <div class="read list-left floatR"><span>7篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963558" class="odd-overhidden floatL">emoji表情</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963581" class="odd-overhidden floatL">Think PHP</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963588" class="odd-overhidden floatL">websocket</a>
+                        <div class="read list-left floatR"><span>11篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963642" class="odd-overhidden floatL">融云IM API</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963644" class="odd-overhidden floatL">css</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963663" class="odd-overhidden floatL">百度地图</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963665" class="odd-overhidden floatL">ajax</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963676" class="odd-overhidden floatL">MVC</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6963911" class="odd-overhidden floatL">LAMP/LNMP</a>
+                        <div class="read list-left floatR"><span>9篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6964393" class="odd-overhidden floatL">node.js</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6964439" class="odd-overhidden floatL">名词解释</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6980693" class="odd-overhidden floatL">短信</a>
+                        <div class="read list-left floatR"><span>4篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6981801" class="odd-overhidden floatL">phpstudy</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6983381" class="odd-overhidden floatL">千聊直播</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6993267" class="odd-overhidden floatL">photoshop</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6994688" class="odd-overhidden floatL">图片合成</a>
+                        <div class="read list-left floatR"><span>31篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/6996945" class="odd-overhidden floatL">验证码</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7000008" class="odd-overhidden floatL">curl</a>
+                        <div class="read list-left floatR"><span>4篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7000901" class="odd-overhidden floatL">redis</a>
+                        <div class="read list-left floatR"><span>7篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7013791" class="odd-overhidden floatL">jQuery</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7026986" class="odd-overhidden floatL">RESTful</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7117612" class="odd-overhidden floatL">PHP个人学习与回顾</a>
+                        <div class="read list-left floatR"><span>15篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7119054" class="odd-overhidden floatL">PHP正则</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7144622" class="odd-overhidden floatL">算法题</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7145498" class="odd-overhidden floatL">冲突处理</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7189459" class="odd-overhidden floatL">centos</a>
+                        <div class="read list-left floatR"><span>9篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7196933" class="odd-overhidden floatL">docker</a>
+                        <div class="read list-left floatR"><span>7篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7203630" class="odd-overhidden floatL">docker学习</a>
+                        <div class="read list-left floatR"><span>7篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7209023" class="odd-overhidden floatL">memcached</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7209024" class="odd-overhidden floatL">PHPMailer</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7209025" class="odd-overhidden floatL">git</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7212423" class="odd-overhidden floatL">nginx</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7223648" class="odd-overhidden floatL">workerman</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7223763" class="odd-overhidden floatL">postman</a>
+                        <div class="read list-left floatR"><span>3篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7225757" class="odd-overhidden floatL">TP5</a>
+                        <div class="read list-left floatR"><span>2篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7225768" class="odd-overhidden floatL">phpmyadmin</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7227276" class="odd-overhidden floatL">apache</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7247113" class="odd-overhidden floatL">Aes</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7327207" class="odd-overhidden floatL">phpstorm</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                                    <li class="clearfix">
+                        <a href="http://blog.csdn.net/u012767761/article/category/7352965" class="odd-overhidden floatL">小程序</a>
+                        <div class="read list-left floatR"><span>1篇</span></div>
+                    </li>
+                            </ul>
+            <div class="unfold-btn">
+              <span>展开</span><i class="icon iconfont icon-xiajiantou"></i>
+            </div>
+        </div>
+    <!--    [StartShowSelfColumn]-->
+    <!--    [EndShowSelfColumn]-->
+            <div class="user-hotArticle sort timeSort">
+          <h3>文章存档</h3>
+          <ul class="hotArticle-list timeSort-list">
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/12" class="odd-overhidden floatL">2017年12月</a>
+                  <div class="read list-left floatR"><span>2篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/11" class="odd-overhidden floatL">2017年11月</a>
+                  <div class="read list-left floatR"><span>4篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/10" class="odd-overhidden floatL">2017年10月</a>
+                  <div class="read list-left floatR"><span>27篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/09" class="odd-overhidden floatL">2017年9月</a>
+                  <div class="read list-left floatR"><span>33篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/08" class="odd-overhidden floatL">2017年8月</a>
+                  <div class="read list-left floatR"><span>21篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/07" class="odd-overhidden floatL">2017年7月</a>
+                  <div class="read list-left floatR"><span>22篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/06" class="odd-overhidden floatL">2017年6月</a>
+                  <div class="read list-left floatR"><span>91篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/05" class="odd-overhidden floatL">2017年5月</a>
+                  <div class="read list-left floatR"><span>53篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/04" class="odd-overhidden floatL">2017年4月</a>
+                  <div class="read list-left floatR"><span>19篇</span></div>
+                </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/u012767761/article/month/2017/02" class="odd-overhidden floatL">2017年2月</a>
+                  <div class="read list-left floatR"><span>1篇</span></div>
+                </li>
+                      </ul>
+          <div class="unfold-btn">
+            <span>展开</span><i class="icon iconfont icon-xiajiantou"></i>
+          </div>
+        </div>
+            <div class="user-hotArticle">
+        <h3>他的热门文章</h3>
+        <ul class="hotArticle-list csdn-tracking-statistics tracking-click" data-mod="popu_521">
+<!--        [StartHotArticles]-->
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/73527853" target="_blank">千聊资费说明和提现须知</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>5244</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/73492403" target="_blank">新版phpStudy，支持自定义php版本</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3892</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/72903118" target="_blank">Laravel Eloquent ORM  多条件查询</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3532</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/71248870" target="_blank">PHP调用微信JSSDK接口 选择相册及拍照、图片上传</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3372</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/73948691" target="_blank">php实现微信推广海报代码示例</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3136</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/71547270" target="_blank">php使用websocket示例 client 和 server</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3098</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/72851725" target="_blank">HTML5仿手机微信聊天界面</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3096</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/71248681" target="_blank">PHP 使用 微信JSSDK 拍照选择图片接口 利用localid预览时 安卓手机正常显示 iOS手机不显示</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>3091</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/70591811" target="_blank">jQuery 事件中  bind 方法和blur() 方法</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>2648</span></div>
+                </li>
+                            <li>
+                    <a href="http://blog.csdn.net/u012767761/article/details/72817519" target="_blank">微信中关闭网页输入内容时的安全提示 [干掉 “防盗号或诈骗，请不要输入QQ密码”]</a>
+                    <div class="read list-left"><i class="icon iconfont icon-read"></i><span>2641</span></div>
+                </li>
+            <!--        [EndHotArticles]-->
+        </ul>
+    </div>
+    
+<!--    [startcustom]-->
+    <!--    [endcustom]-->
+  <div class="fixRight_box" style="height:256px">
+    <div class="fixRight">
+                    <!--u3163270-->
+                        <div id="_07pg63u1vyik"><iframe width="300" frameborder="0" height="250" scrolling="no" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/s(1).html"></iframe><div style="width:0px;height:0px;"></div></div><script type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/avneunkwb.js"></script>
+                          <div class="persion_article"><div class="right_box footer_box csdn-tracking-statistics" data-mod="popu_475" data-dsm="post">        <h3 class="feed_new_tit"><span class="line"></span><span class="txt">联系我们</span></h3>        <div class="contact-box">        <div class="img-box"><img src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/csdn_cs_qr.png" alt="客服"></div>        <div class="contact-info">        <h4>请扫描二维码联系客服</h4>        <p><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2.167 2h11.666C14.478 2 15 2.576 15 3.286v9.428c0 .71-.522 1.286-1.167 1.286H2.167C1.522 14 1 13.424 1 12.714V3.286C1 2.576 1.522 2 2.167 2zm-.164 3v1L8 10l6-4V5L8 9 2.003 5z" fill="#B3B3B3" fill-rule="evenodd"></path></svg><a href="mailto:webmaster@csdn.net" target="_blank"><span class="txt">webmaster@csdn.net</span></a></p><p><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M14.999 13.355a.603.603 0 0 1-.609.645H1.61a.603.603 0 0 1-.609-.645l.139-1.47c.021-.355.25-.845.51-1.088 0 0 3.107-2.827 3.343-2.909 0 0-.029-2.46 1.2-2.46h3.635c1.112 0 1.202 2.469 1.202 2.469l3.32 2.9c.26.243.489.733.51 1.088l.139 1.47zM7 10a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2H7zm7.806-5.674c.105.135.191.384.19.554l-.003 2.811c0 .17-.133.26-.295.2l-2.462-.999a.478.478 0 0 1-.296-.416V5.445c0-2.07-7.878-2.225-7.878 0v1.21c0 .17-.135.352-.3.404L1.3 7.904c-.165.052-.3-.044-.3-.213V4.88c0-.17.086-.42.191-.554C1.191 4.326 2.131 2 8 2s6.807 2.326 6.807 2.326z" fill="#B3B3B3"></path></svg><span class="txt"> 400-660-0108</span></p>        <p><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M14.496 10.35c-.301-1.705-1.565-2.822-1.565-2.822.18-1.548-.481-1.823-.481-1.823C12.31.915 8.089.998 8 1 7.91.998 3.689.915 3.55 5.705c0 0-.662.275-.481 1.823 0 0-1.264 1.117-1.565 2.822 0 0-.16 2.882 1.445.353 0 0 .36.96 1.022 1.823 0 0-1.183.392-1.083 1.412 0 0-.04 1.136 2.527 1.058 0 0 1.805-.137 2.347-.882h.476c.542.745 2.347.882 2.347.882 2.566.078 2.527-1.058 2.527-1.058.1-1.02-1.083-1.412-1.083-1.412a7.986 7.986 0 0 0 1.022-1.823c1.604 2.529 1.445-.353 1.445-.353z" fill="#B3B3B3" fill-rule="evenodd"></path></svg><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2431299880&amp;site=qq&amp;menu=yes" target="_blank"><span class="txt">QQ客服</span></a>        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.325 13.965a6.5 6.5 0 1 1 7.175-6.4C14.467 11.677 11.346 15 7.5 15c-.514 0-1.015-.06-1.498-.172.488-.178.922-.48 1.323-.863zM4 7.5a4 4 0 1 0 8 0 .5.5 0 1 0-1 0 3 3 0 1 1-6 0 .5.5 0 0 0-1 0z" fill="#B3B3B3" fill-rule="evenodd"></path></svg><a href="http://bbs.csdn.net/forums/Service" target="_blank"><span class="txt">客服论坛</span></a>        </p>        </div></div>        <div class="bg-gray">        <div class="feed_copyright">        <p><a class="right-dotte" href="http://www.csdn.net/company/about.html" target="_blank">关于</a><a href="http://www.csdn.net/company/recruit.html" target="_blank" class="right-dotte">招聘</a><a href="http://www.csdn.net/company/marketing.html" target="_blank" class="right-dotte">广告服务</a>        <a href="http://zn.baidu.com/" target="_blank" class="footer_baidu">        <svg width="13" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M8.392 7.013c1.014 1.454 2.753 2.8 2.753 2.8s1.303 1.017.47 2.98c-.833 1.962-3.876.942-3.876.942s-1.122-.36-2.424-.072c-1.303.291-2.426.181-2.426.181s-1.523.037-1.957-1.888c-.434-1.927 1.52-2.982 1.666-3.161.145-.183 1.159-.873 1.81-1.963.653-1.09 2.608-1.962 3.984.181zm1.23 5.706V9.346H8.64v2.534h-.937s-.3-.044-.356-.285V9.33l-.925.015v2.518s.042.627.925.855h2.277zm-3.685.013V7.951l-.896-.014v1.295H3.987s-1.054.086-1.422 1.28c-.129.798.114 1.266.156 1.368.043.099.383.682 1.238.852h1.978zm-2.433-1.45c-.087-.286.013-.613.057-.741.042-.128.228-.427.61-.54h.855v1.948h-.797s-.555-.029-.725-.668zm6.877-8.775c-.143.909-.865 2.108-1.99 1.962-1.121-.144-1.375-1.16-1.267-2.179C7.214 1.458 8.21.18 9.007.364c.796.18 1.52 1.235 1.374 2.143zm-4.09-.345c0 1.197-.68 2.164-1.52 2.164S3.25 3.36 3.25 2.162C3.25.967 3.932 0 4.77 0c.842 0 1.52.967 1.52 2.162zm4.854 2.09c1.34 0 1.701 1.309 1.701 1.743 0 .438.182 2.29-1.485 2.326-1.667.037-1.737-1.126-1.737-1.96 0-.874.179-2.11 1.52-2.11zm-7.93.581c.045.398.253 2.217-1.27 2.544C.427 7.704-.14 5.947.028 5.124c0 0 .18-1.78 1.412-1.89.98-.085 1.7.986 1.774 1.6z" fill="#999" fill-rule="evenodd"></path></svg>        <em> 百度</em></a></p>        <p class="fz12">©1999-2018 CSDN版权所有</p>        <p class="fz12"><a href="http://www.miibeian.gov.cn/" target="_blank" class="ml14">京ICP证09002463号</a></p>        </div>        <div class="allow-info-box">        <p><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><span>经营性网站备案信息</span></a></p>        <p><a href="http://www.cyberpolice.cn/" target="_blank"><span>网络110报警服务</span></a></p>        <p><a href="http://www.12377.cn/" target="_blank"><span>中国互联网举报中心</span></a></p>        <p><a href="http://www.bjjubao.org/" target="_blank"><span>北京互联网违法和不良信息举报中心</span></a></p>        </div>        </div>        </div></div>
+    </div>
+  </div>
+</aside>
+</div>
+
+<div class="left_fixed">
+    <div class="left_show_button">
+        <span>
+          <i class="icon iconfont icon-youjiantou"></i>
+        </span>
+    </div>
+    <ul class="left_menu" id="share_box">
+        <li>
+            <button class="left-fixed-btn btn-like csdn-tracking-statistics tracking-click" data-mod="popu_373" target="_self" title="点赞">
+                <a href="javascript:void(0);" class="iconbox border_red" target="_blank"><i class="icon iconfont icon-dianzan"></i></a>
+                <a class="txt" href="javascript:void(0);" target="_blank">0</a>
+            </button>
+        </li>
+        <li id="blog_artical_directory">
+            <button class="left-fixed-btn left_menu_btn csdn-tracking-statistics tracking-click" data-mod="popu_372" target="_self" title="目录">
+                <a href="javascript:void(0);" class="iconbox border_black" target="_blank"><i class="icon iconfont icon-mulu"></i></a>
+            </button>
+        </li>
+        <li class="menu_con">
+            <div class="list_father">
+                <div class="arr_box">
+                    <button class="btn-noborder arr-btn scroll-down  left_scroll_down"><i class="icon iconfont icon-xiajiantou"></i></button>
+                    <button class="btn-noborder arr-btn scroll-up left_scroll_top"><i class="icon iconfont icon-shangjiantou"></i></button>
+                </div>
+                <div class="arr"></div>
+                <div id="csdnBlogDir"></div>
+            </div>
+        </li>
+        <!--        <li>-->
+        <!--            <button class="left-fixed-btn btn-like tracking-ad" data-mod="popu_373" target="_self">-->
+        <!--                <span class="iconbox border_red"><i class="icon iconfont icon-xihuan-"></i></span>-->
+        <!--                <span class="txt">喜欢</span>-->
+        <!--                <span class="untxt">取消喜欢</span>-->
+        <!--            </button>-->
+        <!--        </li>-->
+        <li>
+            <button class="left-fixed-btn csdn-tracking-statistics tracking-click" data-mod="popu_374" id="com-quick-collect" target="_self" title="收藏">
+                <a href="javascript:void(0);" class="iconbox border_purple" target="_blank"><i class="icon iconfont icon-shoucang"></i></a>
+            </button>
+        </li>
+        <li>
+            <button class="left-fixed-btn btn-pinglun csdn-tracking-statistics tracking-click" data-mod="popu_544" title="评论">
+                <a href="javascript:void(0);" class="iconbox border_purple" target="_blank"><i class="icon iconfont icon-pinglun"></i></a>
+            </button>
+        </li>
+        <li class="bdsharebuttonbox csdn-tracking-statistics tracking-click bdshare-button-style0-16" data-mod="popu_172" data-bd-bind="1520650124817">
+            <a class="bds_tsina outside left-fixed-btn" data-cmd="tsina" title="分享到新浪微博" target="_blank"></a>
+            <span class="iconbox border_red2"><i class="icon iconfont icon-xinlang"></i></span>
+        </li>
+        <li class="bdsharebuttonbox csdn-tracking-statistics tracking-click bdshare-button-style0-16" data-mod="popu_172" data-bd-bind="1520650124817">
+            <a class="bds_weixin outside left-fixed-btn" data-cmd="weixin" title="分享到微信" target="_blank"></a>
+            <span class="iconbox border_green"><i class="icon iconfont icon-weixin"></i></span>
+        </li>
+        <li class="bdsharebuttonbox csdn-tracking-statistics tracking-click bdshare-button-style0-16" data-mod="popu_172" data-bd-bind="1520650124817">
+            <a class="bds_qzone outside left-fixed-btn" data-cmd="qzone" title="分享到QQ空间" target="_blank"></a>
+            <span class="iconbox border_blue"><i class="icon iconfont icon-QQ"></i></span>
+        </li>
+        <li id="share_box">
+            
+            <div class="bdsharebuttonbox csdn-tracking-statistics tracking-click bdshare-button-style0-16" data-mod="popu_172" data-bd-bind="1520650124817">
+                
+                
+                
+            </div>
+        </li>
+    </ul>
+</div>
+<div id="pop_win"></div>
+<div id="popup_mask"></div>
+<div class="pop_CA_cover"></div>
+<div class="pop pop_CA">
+    <div class="CA_header">
+        收藏助手
+        <span class="cancel_icon" id="fapancle"></span>
+    </div>
+    <iframe src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/saved_resource(1).html" id="collectIframe" frameborder="0" width="100%" height="360" scrolling="no"></iframe>
+</div>
+<!--举报-->
+<div id="report_dialog" style="top: 250px; left: 343.5px;"><div id="panel_report">
+    <div class="panel_head">不良信息举报</div>
+    <form method="post" id="frmReport" class="panel_body">
+        <table border="0" cellpadding="0" cellspacing="4" class="pop_table">
+            <tbody><tr><td colspan="2">您举报文章：<a href="http://blog.csdn.net/u012767761/article/details/73604434" target="_blank">在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解</a></td></tr>
+            <tr>
+                <th style="width:60px;">举报原因：</th>
+                <td id="panel_reporttype">
+                    <label><input type="radio" class="report_type" id="report_sex" name="report_type" value="1">色情</label>
+                    <label><input type="radio" class="report_type" id="report_Politics" name="report_type" value="2">政治</label>
+                    <label><input type="radio" class="report_type" id="report_copy" name="report_type" value="3">抄袭</label>
+                    <label><input type="radio" class="report_type" id="report_ad" name="report_type" value="4">广告</label>
+                    <label><input type="radio" class="report_type" id="report_want" name="report_type" value="5">招聘</label>
+                    <label><input type="radio" class="report_type" id="report_call" name="report_type" value="6">骂人</label>
+                    <br>
+                    <label><input type="radio" class="report_type" id="report_other" name="report_type" value="7">其他</label>
+                    <input type="text" name="report_other_content" id="report_other_content" maxlength="30" style="display: none;">
+                </td>
+            </tr>
+            <tr id="panel_originalurl" style="display: none;">
+                <th>原文地址：</th>
+                <td>
+                    <input id="originalurl" value="http://" name="originalurl" type="text" style="width: 90%;">
+                </td>
+            </tr>
+            <tr>
+                <th id="sp_reason">原因补充：</th>
+                <td>
+                    <textarea id="report_description" style="width: 300px;" rows="3" name="report_description"></textarea>
+                    <p id="sp_n" style="color:#999;margin:0px;padding:0px;">(最多只允许输入30个字)</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="btnSubmitReport" name="submit" type="image" align="middle" class="btn_1" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/btn_submit.jpg">
+                    <span style="padding-left:20px;"></span>
+                    <img id="btnCloseReportDialog" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/btn_cancel.jpg" align="middle">
+                    <div id="error" style="color: Red">
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+    </form>
+</div>
+    <script language="javascript" type="text/javascript">
+        var isComment=0;
+        //显示隐藏地址
+        $(function () {
+          console.log("version:phoenix");
+            if(isComment){
+                $("#report_description").attr("disabled",true);
+                $("#sp_n").hide();
+                $("#sp_reason").html("评论内容：");
+            }
+            $(".report_type").click(function () {
+                $("#panel_originalurl,#report_other_content").hide();
+                switch ($(this).val()) {
+                    case '3':
+                        $("#panel_originalurl").show();
+                        $("#originalurl").focus();
+                        break;
+                    case '7':
+                        if(isComment){
+                            $("#report_other_content").show().focus();
+                        }
+                        break;
+                }
+
+            });
+
+            $("#frmReport").submit(function () {
+                if (!currentUserName) {
+
+                    if (confirm("您的操作必须登录，是否登录？")) {
+                        location.href = "http://passport.csdn.net/account/login?from=" + encodeURIComponent(location.href);
+                        return false;
+                    }
+                    return false;
+                }
+
+                var reportType = $("input[name=report_type]:checked").val();
+                if(!reportType){
+                    alert("请选择举报原因！");
+                    return false;
+                }
+                var otherInfo = "";
+                switch (reportType) {
+                    case '3':
+                        otherInfo = $("#originalurl").val();
+                        if (otherInfo == ""||otherInfo=="http://") {
+                            alert("举报抄袭必须提供原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        } else if(!checkeURL(otherInfo)) {
+                            alert("请输入正确的原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        }
+                        break;
+                    case '7':
+                        otherInfo = $("#report_other_content").val();
+                        if (isComment && !otherInfo) {
+                            alert("请填写举报的具体原因！");
+                            $("#report_other_content").focus();
+                            return false;
+                        }
+                        if(!isComment){
+                            if(!$("#report_description").val()){
+                                alert("请填写举报的具体原因！");
+                                $("#report_description").focus();
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                if(!isComment){
+                    if($("#report_description").val().length>30){
+                        alert("举报原因最多只允许输入30个字！");
+                        return false;
+                    }
+                }
+	            nowTime = {
+		            year: new Date().getFullYear(),
+		            month: parseInt(new Date().getMonth())+1,
+		            day: new Date().getDate(),
+		            hours: parseInt(new Date().getHours())+1,
+		            minutes: parseInt(new Date().getMinutes())+1,
+		            seconds: parseInt(new Date().getSeconds())+1
+	            };
+	            var data = {
+		            articleId: fileName,
+		            commentId: 0,
+		            reportType: reportType,
+		            originalurl: $("#originalurl").val(),
+		            report_other_content: $("#report_other_content").val(),
+		            report_description: $("#report_description").val(),
+		            currentUserName: currentUserName,
+		            updatetime: nowTime.year+'/'+nowTime.month+'/'+nowTime.day+' '+ nowTime.hours+':'+nowTime.minutes+':'+seconds,
+		            blogUser: username
+	            };
+	            if(!isComment){//如果是举报文章
+		            data.report_other_content = data.report_description;
+		            // data.report_description = "1. 神经网络这是一个常见的神经网络的图：这是一个常见的三层神经网络的基本构成，Layer L1是输入层，Layer L2是隐含层";
+	            }
+
+	            $.post(blog_address + "/common/report?id="+fileName+"&t=2", data, function (data) {
+		            if (data.result == 1){
+			            SetError("感谢您的举报，我们会尽快审核！");
+		            }else{
+			            if (data.content) alert(data.content);
+		            }
+
+	            });
+                return false;
+            });
+
+            $("#btnCloseReportDialog").click(function () {
+                CloseDiv();
+            });
+
+        });
+
+        //提示后关闭方法
+        function SetError(error) {
+            $("#btnCloseReportDialog").trigger("click");
+            alert(error);
+            CloseDiv();
+        }
+
+        //关闭方法
+        function CloseDiv() {
+
+            $.removeMask();
+            $("#report_dialog").hide();
+            return false;
+        }
+
+        //验证url
+        function checkeURL(url){
+            return /^http(s)?:\/\/([\w-]+\.)+[\w-]+/i.test(url);
+        }
+    </script>
+</div>
+<!--  fixme 后期清理掉  -->
+<div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+    <script id="adJs52b5334" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/52b5334.js"></script>
+    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+</div>
+<script>
+    $(".MathJax").remove();
+</script>
+<script type="text/javascript" src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/MathJax.js"></script>
+<!-- <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script> -->
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<script type="text/javascript">
+    if($(".article_collect li").length==1){$(".article_collect").hide();}
+    if($(".article_tags li").length==1){$(".article_tags").hide();}
+    $(".edit a").attr("href","http://mp.blog.csdn.net/postedit/"+fileName);
+    $.each($(".edu_li a"),function(){$(this).attr("href",$(this).attr("href").replace("blog7","blog9"))});
+    new CNick('#uid').showNickname();
+
+    if($("#fan").html()=="")
+    {
+	    $("#fan").html(0);
+    }
+</script>
+<script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/appendMark.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    appendMark($('.recommend_list').children('a').find('dt'),$('.extension_other'),$('.yd_a_d_feed_cla'))
+</script>
+<script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/publib_footer-1.0.3.js" data-isfootertrack="false"></script><link rel="stylesheet" type="text/css" href="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/pub_footer_1.0.3.css">
+<script src="./在 Laravel 5 中通过 Simple QrCode 扩展包生成二维码详解 - CSDN博客_files/goTop-v1.0.min.js"></script>
+<script>
+    GoTop({
+        right: 8,
+        hasReport: true,
+        reportFun: function() {
+            $.createMask();
+            var r = blog_address + "/common/report?id=" + fileName + "&t=" + 2;
+            if (3 == 2) {
+                var s = n.parentNode.parentNode.parentNode.getAttribute("floor");
+                r += "&floor=" + s
+            }
+            var i = (document.documentElement.clientHeight - 400) / 2 + (document.documentElement.scrollTop || document.body.scrollTop),
+                a = (document.documentElement.clientWidth - 400) / 2;
+
+            $("#report_dialog").load(r).css({
+                //top: i + "px",
+                top: '20%',
+                left: a
+            }).show()
+        }
+    })
+</script><div class="meau-gotop-box" style="right: 8px; bottom: 40px; z-index: 110;">    <a href="http://blog.csdn.net/u012767761/article/details/73604434#" id="backtop" class="btn-meau" title="返回顶部" style="display: flex;">      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="12">        <path d="M9.314 0l9.313 9.314-2.12 2.121-7.193-7.192-7.193 7.192L0 9.314z" fill="#FFF" fill-rule="evenodd"></path>      </svg>    </a>  <a href="http://blog.csdn.net/u012767761/article/details/73604434#" id="reportContent" class="btn-meau" title="返回顶部">                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="22"><path d="M0 13.028V3.365L9 0l9 3.365v9.663C18 17.983 13.97 22 9 22s-9-4.017-9-8.972zm2-8.282v8.282c0 3.854 3.134 6.978 7 6.978s7-3.124 7-6.978V4.746L9 2.13 2 4.746zm6 10.276h2v1.993H8v-1.993zm0-8.973h2v6.979H8V6.049z" fill="#FFF" fill-rule="nonzero"></path></svg>                          </a></div>
+<div id="loginWrap"></div>
+<div id="dlMask"></div>
+
+<div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div></body></html>

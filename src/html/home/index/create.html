@@ -1,0 +1,144 @@
+{{define "css"}}
+<style type="text/css">
+    #var_box .all{width: 100%;}
+</style>
+{{end}}
+{{define "content"}}
+<form method="POST" action="/home/index/create" accept-charset="UTF-8" id="form1">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="http://www.baidu.com" class="home"><i></i><span>百度一下</span></a>
+        <i class="arrow"></i>
+        <a href="/home/index/list"><span>链接管理</span></a>
+        <i class="arrow"></i>
+        <span>添加链接</span>
+    </div>
+    <div class="line10"></div>
+    <!--/导航栏-->
+
+    <!--内容-->
+    <div id="floatHead" class="content-tab-wrap">
+        <div class="content-tab">
+            <div class="content-tab-ul-wrap">
+                <ul>
+                    <li><a class="selected" href="javascript:;">添加链接信息</a></li>
+                    <li><a href="javascript:void (0)">其它信息</a></li>
+                    <li><a href="javascript:void (0)">扩展选项</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <dl>
+            <dt>链接名</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="name" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>链接描述</dt>
+            <dd>
+                <textarea class="input normal" datatype="*" name="title" type="text"></textarea>
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>url</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="url" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>排序</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="sort" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+       </div>
+    <div class="tab-content" style="display: none">
+        <dl>
+            <dt>封面图片</dt>
+            <dd>
+                <input class="input normal upload-path"  name="img_url" type="text">
+                <div class="upload-box upload-image"></div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>上传视频</dt>
+            <dd>
+                <input class="input normal upload-path" name="vedio_url" type="text">
+                <div class="upload-box upload-video"></div>
+            </dd>
+        </dl>
+         <dl>
+            <dt>是否显示</dt>
+            <dd>
+                <div class="rule-single-checkbox">
+                    <input type="checkbox" name="is_show" value="1" id="">
+                </div>
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>验证码</dt>
+            <dd>
+                <input class="input normal" autocomplete="off" placeholder="验证码" name="captcha" type="text" value="">
+                <img src="/captcha/280/62" class='captcha' style='cursor: pointer;background: #fff' width='280' height='62'/>
+            </dd>
+        </dl>
+    </div>
+    <div class="tab-content" style="display: none">
+        <dl>
+            <dt>备注</dt>
+            <dd>
+                <div id="content-editor" style="width:700px;height:400px;max-height:500px;">备注demo</div>
+                <textarea id="content" name="content" style="display: none" >备注demo</textarea>
+            </dd>
+        </dl>
+    </div>
+    <!--/内容-->
+    <!--工具栏-->
+    <div class="page-footer">
+        <div class="btn-wrap">
+            <input class="btn" type="submit" value="提交保存">
+        </div>
+    </div>
+    <!--/工具栏-->
+</form>
+
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+    $(function () {
+        $('#form1').initValidform();
+        $(".upload-image").each(function () {
+            $(this).InitUploader({sendurl: "/home/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+        $(".upload-video").each(function () {
+            $(this).InitUploader({sendurl: "/home/upload/video", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+        var E = window.wangEditor;
+        var editor = new E('#content-editor');
+        var $text1 = $('#content');
+        editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+            $text1.val(html)
+        };
+        // 配置服务器端地址
+        editor.customConfig.uploadImgServer = '/home/upload/wang_editor/image';
+        editor.customConfig.uploadFileName = 'Filedata';
+        editor.create();
+        //点击更换验证码
+        var url=$(".captcha").attr('src');
+        $(".captcha").click(function () {
+            url1 = url + "?tmp" + Math.random();
+            this.src=url1;
+        })
+    })
+</script>
+
+{{end}}

@@ -1,0 +1,185 @@
+{{define "css"}}
+<title>添加权限</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/script/layui/css/layui.css">
+<style type="text/css">
+    #var_box .all{width: 100%;}
+</style>
+{{end}}
+
+{{define "content"}}
+<form method="POST" action="/admin/permission/edit/{{.Navigation.Id}}" id="form1">
+<article class="page-container">
+    <!--内容-->
+    <div id="floatHead" class="content-tab-wrap">
+        <div class="content-tab">
+            <div class="content-tab-ul-wrap">
+                <ul>
+                    <li><a class="selected" href="javascript:;">基本信息</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <dl>
+            <dt>上级导航</dt>
+            <dd>
+                <div class="rule-single-select">
+                    <select name="parent_id">
+                    {{range $key,$value:=.Data}}
+                        <option {{if eq $value.Id $.Navigation.ParentId }}selected{{end}} value="{{$value.Id}}">{{$value.TitleHtml}}</option>
+                    {{end}}
+                    </select>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>排序数字</dt>
+            <dd>
+                <input class="input small" datatype="*" name="sort" type="text" value="{{.Navigation.Sort}}">
+                <span class="Validform_checktip">*数字，越小越向前</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>是否显示</dt>
+            <dd>
+                <div class="rule-single-checkbox">
+                    <input {{if eq .Navigation.IsShow true }}checked{{end}} name="is_show" type="checkbox" value="true">
+                </div>
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>系统默认</dt>
+            <dd>
+                <div class="rule-single-checkbox">
+                    <input {{if eq .Navigation.IsSys true }}checked{{end}} name="is_sys" type="checkbox" value="true">
+                </div>
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>导航名称</dt>
+            <dd>
+                <input class="input normal" datatype="*" name="title" value="{{.Navigation.Title}}" type="text">
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>导航链接</dt>
+            <dd>
+                <input class="input normal" name="url" value="{{.Navigation.Url}}" type="text">
+            </dd>
+        </dl>
+        <dl>
+            <dt>ICO</dt>
+            <dd>
+                <input class="input normal upload-path" name="ico" value="{{.Navigation.Ico}}" type="text">
+                <div class="upload-box upload-img"></div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>权限控制器路由</dt>
+            <dd>
+                <a id="itemAddRountController" class="icon-btn add"><i></i><span>添加控制器路由</span></a>
+                <span class="Validform_checktip">*注意，不添加任何控制器路由则表示该项存在子菜单</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt></dt>
+            <dd>
+                <div class="table-container">
+                    <input type="hidden" name="nodeids" id="nodeids" value="{{.NodeLen}}">
+                    <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="10%">名称</th>
+                            <th>控制器路由名称</th>
+                            <th width="10%">排序（值越小越靠前）</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="var_box">
+                        {{range $key,$value:=.NavigationNodes}}
+                        <tr>
+                            <td align="center">
+                                <input type="text" name="node[{{$key}}][title]" placeholder="名称" value="{{$value.Title}}" class="input nomall">
+                            </td>
+                            <td>
+                                <input name="node[{{$key}}][route_action]" placeholder="请输入控制器路由" value="{{$value.RouteAction}}" class="input all" type="text">
+                            </td>
+                            <td align="center">
+                                <input name="node[{{$key}}][sort]" class="input small" value="{{$value.Sort}}" type="text">
+                            </td>
+                            <td align="center">
+                                <a href="javascript:void(0)" node="{{$key}}" class="itemDelRountController">删除</a>
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </dd>
+        </dl>
+    </div>
+    <!--/内容-->
+    <!--工具栏-->
+    <div class="page-footer">
+        <div class="btn-wrap">
+            <input class="btn sure" type="submit" value="提交保存">
+        </div>
+    </div>
+    <!--/工具栏-->
+</article>
+</form>
+{{end}}
+{{define "js"}}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script src="/public/home/script/validform_v5.3.2/Validform_v5.3.2.js"></script>
+<script src="/public/home/script/webuploader/webuploader.min.js"></script>
+<script src="/public/home/script/common.js"></script>
+<script src="/public/home/js/uploader.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".upload-img").each(function () {
+            $(this).InitUploader({sendurl: "/admin/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+        $('#itemAddRountController').click(function () {
+            var html='<tr>' +
+                    '<td align="center">' +
+                    '   <input type="text"  placeholder="名称" class="input nomall" >' +
+                    '</td>' +
+                    '<td>' +
+                    '   <input  placeholder="请输入控制器路由" class="input all" type="text">' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '   <input  class="input small" value="99" type="text">' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '   <a href="javascript:void(0)"  class="itemDelRountController">删除</a>' +
+                    '</td>' +
+                    '</tr>';
+            $('#var_box').append(html);
+            $("#nodeids").val($('#var_box tr').length);
+            upName()
+        });
+        $('#var_box').on('click','.itemDelRountController',function () {
+            var node=$(this).attr("node");
+            $(this).parents('tr').eq(0).remove();
+            $("#nodeids").val($('#var_box tr').length);
+            upName()
+        });
+        $('#form1').initValidform();
+    });
+    function upName() {
+        $('#var_box tr').each(function (index) {
+            $(this).find("input").eq(0).attr("name","node["+index+"][title]");
+            $(this).find("input").eq(1).attr("name","node["+index+"][route_action]");
+            $(this).find("input").eq(2).attr("name","node["+index+"][sort]");
+            $(this).find("a").attr("node",index);
+        })
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{{end}}

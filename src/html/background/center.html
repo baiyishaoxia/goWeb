@@ -1,0 +1,146 @@
+﻿{{define "css"}}
+	<title>我的桌面</title>
+{{end}}
+
+{{define "content"}}
+<div class="page-container">
+	<p class="f-20 text-success">欢迎使用 白衣少侠 <span class="f-14">v3.1</span>后台模版！</p>
+	<p>登录次数：{{.AdminInfo.LoginCount}} </p>
+	<p>上次登录IP：{{.client_ip}}  上次登录时间：{{.LastLoginTime}}</p>
+	<p>
+    <form action="/admin/search/all" method="get" id="form">
+        <input type="text" name="keywords" id="" placeholder="任意模块" style="width:250px" class="input-text">
+        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 全局搜索</button>
+    </form>
+	</p>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">信息统计</th>
+			</tr>
+			<tr class="text-c">
+				<th>统计</th>
+				<th>资讯库</th>
+				<th>图片库</th>
+				<th>产品库</th>
+				<th>用户</th>
+				<th>管理员</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>总数</td>
+				<td>{{call $.DataCount "sum" 0}}</td>
+				<td>{{call $.DataCount "sum" 1}}</td>
+				<td>{{call $.DataCount "sum" 2}}</td>
+				<td>{{call $.DataCount "sum" 3}}</td>
+				<td>{{call $.DataCount "sum" 4}}</td>
+			</tr>
+			<tr class="text-c">
+				<td>今日</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+			</tr>
+			<tr class="text-c">
+				<td>昨日</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+			</tr>
+			<tr class="text-c">
+				<td>本周</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+			</tr>
+			<tr class="text-c">
+				<td>本月</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-border table-bordered table-bg mt-20">
+		<thead>
+			<tr>
+				<th colspan="2" scope="col">服务器信息</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th width="30%">服务器计算机名</th>
+				<td><span id="lbServerName">{{call $.WindowsInfo 8}}</span></td>
+			</tr>
+			<tr>
+				<td>服务器IP地址</td>
+				<td>{{.server_ip}}</td>
+			</tr>
+			<tr>
+				<td>服务器开机时长</td>
+				<td>{{call $.WindowsInfo 0}}</td>
+			</tr>
+			<tr>
+				<td>服务器当前用户 </td>
+				<td>{{call $.WindowsInfo 1}}</td>
+			</tr>
+			<tr>
+				<td>GO版本 </td>
+				<td>{{.version}}</td>
+			</tr>
+			<tr>
+				<td>当前系统 </td>
+				<td>{{call $.WindowsInfo 3}}</td>
+			</tr>
+			<tr>
+				<td>服务器操作系统</td>
+				<td>{{.os}}</td>
+			</tr>
+			<tr>
+				<td>BIOS信息 </td>
+				<td>{{call $.WindowsInfo 4}}</td>
+			</tr>
+			<tr>
+				<td>主板信息 </td>
+				<td>{{call $.WindowsInfo 5}}</td>
+			</tr>
+			<tr>
+				<td>CPU信息</td>
+				<td>{{call $.WindowsInfo 6}}</td>
+			</tr>
+			<tr>
+				<td>内存信息</td>
+				<td>{{call $.WindowsInfo 7}}</td>
+			</tr>
+			<tr>
+				<td>服务器当前时间 </td>
+				<td>{{call $.WindowsInfo 9}}</td>
+			</tr>
+			<tr>
+				<td>CPU 总数 </td>
+				<td>{{.cpu_num}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<footer class="footer mt-20">
+	<div class="container">
+		<p>感谢jQuery、layer、laypage、Validform、UEditor、My97DatePicker、iconfont、Datatables、WebUploaded、icheck、highcharts、bootstrap-Switch<br>
+			Copyright &copy;2015-{{.time_now}} H-ui.admin v3.1 All Rights Reserved.<br>
+			本后台系统由<a href="http://www.h-ui.net/" target="_blank" title="H-ui前端框架">H-ui前端框架</a>提供前端技术支持</p>
+	</div>
+</footer>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+</script>
+{{end}}

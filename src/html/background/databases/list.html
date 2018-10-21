@@ -1,0 +1,64 @@
+﻿{{define "css"}}
+<title>数据库管理</title>
+{{end}}
+
+{{define "content"}}
+<form action="" method="get" id="form1">
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 数据库管理 <span class="c-gray en">&gt;</span> 备份管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a  href="/admin/database/backup" class="btn btn-primary radius ajax3"><i class="Hui-iconfont">&#xe6e1;</i> 创建备份</a>
+			<a href="/admin/database/delAll" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+		</span>
+		<span class="r">共有数据：<strong>{{.Count}}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+                <thead>
+					<tr>
+						<th width="10"><input name="" type="checkbox" value=""></th>
+						<th width="5%">序号</th>
+						<th align="left">文件名称</th>
+						<th width="8%">大小</th>
+						<th width="8%">权限</th>
+						<th align="left" width="15%">备份时间</th>
+						<th width="12%">操作</th>
+					</tr>
+                </thead>
+                <tbody>
+				{{range $key,$value:=.Data}}
+					<tr>
+                        <td align="center">
+							<span class="checkall" style="vertical-align:middle;">
+							   <input  name="name[]" type="checkbox" value="{{$value.Name}}">
+							</span>
+                        </td>
+						<td align="center">{{$key}}</td>
+						<td>{{$value.Name}}</td>
+						<td align="center">{{SizeFormat $value.Size}}</td>
+						<td align="center">{{$value.Mode}}</td>
+						<td>
+						{{$value.ModTime.UTC}}
+						</td>
+						<td align="center">
+							<a href="/admin/database/down/{{$value.Name}}" title="下载"><i class="Hui-iconfont">&#xe640;</i></a>&nbsp;&nbsp;
+							<a class="ajax3" href="/admin/database/del/{{$value.Name}}" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						</td>
+					</tr>
+				{{end}}
+                </tbody>
+        </table>
+	</div>
+</div>
+</form>
+<!--_footer 作为公共模版分离出去-->
+{{end}}
+{{define "js"}}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function(){
+	
+});
+</script>
+{{end}}

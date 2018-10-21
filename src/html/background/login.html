@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/background/style/css/login.admin.css">
+    <link rel="stylesheet" href="/public/background/style/font/css/font-awesome.min.css">
+    <script src="/public/background/style/js/jquery.js"></script>
+    <script src="/public/background/layer-v3.1.1/layer/layer.js"></script>
+</head>
+<body style="background:#F3F3F4;">
+<div class="login_box">
+    <h1>Blog</h1>
+    <h2>欢迎使用博客管理平台</h2>
+    <div class="form">
+        <form action="/login" method="post" class="login" id="form1">
+            <ul>
+                <li>
+                    <input type="text" name="username" class="text"/>
+                    <span><i class="fa fa-user"></i></span>
+                </li>
+                <li>
+                    <input type="password" name="password" class="text"/>
+                    <span><i class="fa fa-lock"></i></span>
+                </li>
+                <li>
+                    <input type="text" class="code" name="captcha"/>
+                    <span><i class="fa fa-check-square-o"></i></span>
+                    <img src="/captcha/280/62" class='captcha' style='cursor: pointer;background: #fff' width='280' height='62'/>
+                </li>
+                <li>
+                    <input type="submit"  value="立即登陆"/>
+                </li>
+            </ul>
+        </form>
+        <p><a href="http://localhost:8006/admin/login#">返回首页</a> © 2018 Powered by<a href="https://studygolang.com" target="_blank">https://studygolang.com</a></p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var status = {{.status}};
+        if(status == 201){
+            layer.msg({{.info}},{icon:2,time:2000});
+        }
+        var url=$(".captcha").attr('src');
+        $(".captcha").click(function () {
+            url1 = url + "?tmp" + Math.random();
+            this.src=url1;
+        });
+        $(".login").submit(function () {
+            var username=$("input[name=username]").val();
+            var password=$("input[name=password]").val();
+            var captcha=$("input[name=captcha]").val();
+            var _the_url = $("#form1").attr('action');
+            var theData = {username: username, password: password,captcha:captcha};
+            $.ajax({
+                type: 'POST',
+                url: _the_url,
+                data: theData,
+                success: function (data) {
+                    if (data.status==200) {
+                        layer.msg(data.info);
+                        window.location.href=data.url;
+                        return;
+                    }
+                    else {
+                        layer.msg(data.info);
+                        $(".captcha").click();
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

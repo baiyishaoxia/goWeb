@@ -1,0 +1,115 @@
+﻿{{define "css"}}
+<title>修改角色</title>
+{{end}}
+
+{{define "content"}}
+<article class="page-container">
+    <form action="/admin/role/edit/{{.Role.Id}}" method="post" class="form form-horizontal" id="form1">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色类型：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select name="role_type" class="input-text">
+                    <option value="1" {{if eq .Role.IsSuper false}}selected{{end}}>系统管理员</option>
+                    <option value="0" {{if eq .Role.IsSuper true}}selected{{end}}>超级管理员</option>
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{{.Role.RoleName}}" placeholder="" id="roleName" name="role_name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="" name="abstrct">
+            </div>
+        </div>
+        <div class="row cl" id="power" {{if eq .Role.IsSuper true}}style="display: none" {{end}}>
+            <label class="form-label col-xs-4 col-sm-3">网站角色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="border-table">
+                    <thead>
+                    <tr class="input-text">
+                        <th width="24%">导航管理</th>
+                        <th>权限分配</th>
+                        <th width="12%">全选</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+					{{range $key,$value:=.NavigationRoleData}}
+                    <tr class="input">
+                        <td>
+						{{$value.TitleHtml}}
+                        </td>
+                        <td>
+						{{$value.NodeTitles}}
+                        </td>
+                        <td style="text-align: center">
+						{{if ne $value.NodeTitles "<span class='cbllist'></span>"}}
+                            <input class="all" name="all" type="checkbox" value="1">
+						{{end}}
+                        </td>
+                    </tr>
+					{{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button type="submit" class="btn btn-success radius sure" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+        <input type="hidden" id="checkids" value="{{.RoleRouteIds}}">
+    </form>
+</article>
+
+{{end}}
+{{define "js"}}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //region 数据赋值
+        var checkids=$("#checkids").val();
+        if (checkids!="") {
+            $(checkids.split(",")).each(function () {
+                $("input[value=" + this + "]").prop("checked", true);
+            })
+        }
+        //endregion
+        //全选
+        $('.all').click(function () {
+            if($(this).prop('checked')==true){
+                $(this).parents('tr').eq(0).find("input[type='checkbox']").prop("checked", true);
+            }else {
+                $(this).parents('tr').eq(0).find("input[type='checkbox']").prop("checked", false);
+            }
+        });
+        //状态
+        $("select[name='role_type']").change(function () {
+            var theValue=$(this).find('option:selected').val();
+            switch (theValue){
+                case '0':
+                    $("input[type='checkbox']").each(function () {
+                        $(this).attr('disabled','disabled');
+                    });
+                    $("#power").hide();
+                    break;
+                case '1':
+                    $("input[type='checkbox']").each(function () {
+                        $(this).removeAttr('disabled');
+                    });
+                    $("#power").show();
+                    break;
+            }
+        })
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{{end}}

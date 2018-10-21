@@ -1,0 +1,18 @@
+{{define "css"}}
+{{end}}
+{{define "content"}}
+<input type="hidden" value="{{.Data}}" id="msg">
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+    $(function () {
+        parent.layer.alert($("#msg").val(), {
+            closeBtn: 0
+        }, function(index){
+            parent.layer.close(index);
+            top.location.href = "http://"+ window.location.host + "/admin/main";
+            //window.history.go(-1);
+        });
+    })
+</script>
+{{end}}

@@ -1,0 +1,66 @@
+﻿{{define "css"}}
+	<title>我的桌面</title>
+{{end}}
+
+{{define "content"}}
+<div class="page-container">
+	<p class="f-20 text-success">欢迎使用 白衣少侠 <span class="f-14">v3.1</span>后台模版！</p>
+	<p>登录次数：{{.AdminInfo.LoginCount}} </p>
+	<p>本次登录IP：{{.client_ip}}  上次登录时间：{{.LastLoginTime}}</p>
+	<p>
+    <form action="/admin/search/all" method="get" id="form" name="form1">
+        <input type="text" name="keywords" value="{{.Keywords}}" id="" placeholder="任意模块" style="width:250px" class="input-text">
+        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 全局搜索</button>
+        <input type="button"  class="btn" value="导出当前搜索的数据" onclick="if(confirm('确定要导出吗？'))export_excel()"/>
+	    <div class="text-c">{{include "layouts/page"}}</div>
+    </form>
+	</p>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="8" scope="col">搜索信息</th>
+			</tr>
+			<tr class="text-c">
+				<th colspan="8" >资讯库</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>ID</td>
+				<td>标题</td>
+				<td>简介</td>
+				<td>类别</td>
+				<td>内容</td>
+				<td>作者</td>
+				<td>浏览量(<a href="/admin/search/all?way=1&type_key=count">升</a>|<a href="/admin/search/all?way=2&type_key=count">降</a>)</td>
+				<td>创建时间</td>
+			</tr>
+			{{range $key,$val:=.Article}}
+				<tr class="text-c">
+					<td>{{$val.Id}}</td>
+					<td>{{$val.Title}}</td>
+					<td>{{$val.Intro}}</td>
+					<td>{{$val.CateName}}</td>
+					<td>{{$val.Content}}</td>
+					<td>{{call $.AuthorById $val.AuthorId}}</td>
+					<td>{{$val.Count}}</td>
+					<td>{{$val.CreatedAt}}</td>
+				</tr>
+			{{end}}
+		</tbody>
+	</table>
+</div>
+<footer class="footer mt-20">
+	<div class="container">
+		<p>本后台系统由&nbsp;<a href="https://www.kancloud.cn/xormplus/xorm/167077" target="_blank" title="H-ui前端框架">&nbsp;白衣少侠</a>&nbsp;提供技术支持</p>
+	</div>
+</footer>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+    function export_excel() {
+        document.form1.action="/admin/search/export";
+        document.form1.submit();
+    }
+</script>
+{{end}}

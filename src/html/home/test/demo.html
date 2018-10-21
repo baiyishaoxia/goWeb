@@ -1,0 +1,37 @@
+{{define "css"}}
+{{end}}
+{{define "content"}}
+<center>欢迎使用GO语言</center>
+<!--/数据-->
+<form action="/test" method="get" id="form1">
+<table>
+    <tr>
+        <td width="5%">ID</td>
+        <td width="8%">标题</td>
+        <td width="8%">文件路径</td>
+        <td width="8%">文件大小</td>
+        <td width="8%">下载次数</td>
+        <td width="8%">创建时间</td>
+    </tr>
+{{range $key,$val:=.Data}}
+    <tr>
+        <td>{{$val.BlogToolsContent.Id}}</td>
+        <td>{{$val.BlogToolsContent.Title}}</td>
+        <td>{{$val.BlogToolsContentAttache.Filepath}}</td>
+        <td>{{$val.BlogToolsContentAttache.Filesize}}</td>
+        <td>{{$val.BlogToolsContentAttache.DownCount}}</td>
+        <td>{{$val.BlogToolsContent.CreatedAt}}</td>
+    </tr>
+{{end}}
+    <!--/分页-->
+{{include "layouts/page"}}
+</table>
+</form>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+    $(function(){
+        //alert("这里写js");
+    })
+</script>
+{{end}}

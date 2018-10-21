@@ -1,0 +1,12 @@
+<span class="page_total">共{{.Num}}条记录</span>
+<ul class="pagination">
+{{if gt .Page 1.00}}
+    <a class="disabled" href="?page={{.UpPage}}&keywords={{.Keywords}}"><span>上一页</span></a>
+{{end}}
+    <li class="disabled"><span>{{.Page}}/{{.All}}</span></li>
+{{if lt .Page .All}}
+    <a class="disabled" href="?page={{.DownPage}}&keywords={{.Keywords}}"><span>下一页</span></a>
+{{end}}
+    <input name="page" class="input small" value="{{.Page}}" type="text">
+    <a class="btn-search" href="javascript:void (0)">GO</a>
+</ul>

@@ -1,0 +1,84 @@
+{{define "css"}}
+<title>国家管理</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/script/layui/css/layui.css">
+{{end}}
+
+{{define "content"}}
+<form action="/admin/nations/list" method="get" id="form1">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="/admin/center" class="home"><i></i><span>首页</span></a>
+        <i class="arrow"></i>
+        <span>国家管理</span>
+    </div>
+    <!--/导航栏-->
+
+    <!--工具栏-->
+    <div id="floatHead" class="toolbar-wrap">
+        <div class="toolbar">
+            <div class="box-wrap">
+                <a class="menu-btn"></a>
+                <div class="l-list">
+                    <ul class="icon-list">
+                        <li><a class="add" href="/admin/nations/create"><i></i><span>新增</span></a></li>
+                        <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
+                        <li><a href="/admin/nations/save"  class="save ajax2" ><i></i><span>保存</span></a></li>
+                        <li><a href="/admin/nations/del" class="del btndel" ><i></i><span>删除</span></a></li>
+                    </ul>
+                </div>
+                <div class="r-list">
+                    <input name="keywords" placeholder="请输入国家" class="keyword normal" value="{{.Keywords}}" type="text">
+                    <a class="btn-search" href="javascript:void (0)">查询</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/工具栏-->
+    <!--列表-->
+    <div class="table-container">
+       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
+         <tr>
+             <td align="center">选择</td>
+             <td align="center">国家</td>
+             <td align="center">缩略图</td>
+             <td align="center">排序</td>
+             <td align="center">是否默认</td>
+             <td align="center">是否启用</td>
+             <td align="center" >创建时间</td>
+             <td align="center">操作</td>
+         </tr>
+         {{range $val:=.LangNations}}
+              <tr>
+                  <td align="center">
+                        <span class="checkall" style="vertical-align:middle;">
+                           <input  name="id[]" type="checkbox" value="{{$val.Id}}">
+                        </span>
+                  </td>
+                  <td align="center">{{$val.Title}}</td>
+                  <td align="center"><img src="{{$val.ImageUrl}}" alt="" width="50px" height="50px"></td>
+                  <td align="center">
+                      <input type="hidden" name="data[sort][]" value="{{$val.Id}}">
+                      <input class="sort" name="data[{{$val.Id}}][sort]" type="text" value="{{$val.Sort}}">
+                  </td>
+                  <td align="center">{{if eq $val.IsDefault true}}是{{else}}否{{end}}</td>
+                  <td align="center">{{if eq $val.IsOpen true}}已启用{{else}}未启用{{end}}</td>
+                  <td align="center">{{$val.CreatedAt}}</td>
+                  <td align="center">
+                      <a href="/admin/nations/edit/{{$val.Id}}">编辑</a>
+                  </td>
+              </tr>
+         {{end}}
+
+       </table>
+    </div>
+    <!--/列表-->
+{{include "layouts/page"}}
+</form>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+
+</script>
+{{end}}

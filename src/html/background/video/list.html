@@ -1,0 +1,72 @@
+﻿{{define "css"}}
+<title>视频管理</title>
+{{end}}
+
+{{define "content"}}
+<form action="/admin/video/list" method="get" id="form1">
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 视频管理 <span class="c-gray en">&gt;</span> 视频列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="l">
+        <a href="/admin/video/del" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="video_add('添加视频','/admin/video/create','800','700')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加视频</a>
+        <a class="btn"  href="javascript:void (0)">保存</a>
+    </span>
+        <span class="r">共有数据：<strong>{{.Num}}</strong> 条</span>
+        <div class="page_total">
+            <input name="keywords" placeholder="请输入分类名称" class="input" value="{{.Keywords}}" type="text" style="width:200px;">
+            <a class="btn-search" href="javascript:void (0)">查询</a>
+        </div>
+    </div>
+	<div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+                <tr class="text-c">
+                    <th width="6%"><input name="" type="checkbox" value=""></th>
+                    <th width="10%">标题</th>
+                    <th width="8%">地址</th>
+                    <th width="12%">添加时间</th>
+                    <th width="8%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $key,$value := .Data}}
+                    <tr class="text-c va-m">
+                        <td align="center">
+                            <span class="checkall" style="vertical-align:middle;">
+                                <input  name="id[]" type="checkbox" value="{{$value.Id}}">
+                            </span>
+                        </td>
+                        <td align="center">{{$value.Title}}</td>
+                        <td align="center">{{$value.Url}}</td>
+                        <td align="center">{{$value.CreatedAt}}</td>
+                        <td align="center">
+                            <a title="编辑" href="javascript:;" onclick="video_edit('视频编辑','/admin/video/edit','{{$value.Id}}','800','700')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        </td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+	</div>
+</div>
+</form>
+<!--_footer 作为公共模版分离出去-->
+{{end}}
+{{define "js"}}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function(){
+	
+});
+/*视频-添加*/
+function video_add(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+/*视频-编辑*/
+function video_edit(title,url,id,w,h){
+    layer_show(title,url+"/"+id,w,h);
+}
+</script>
+{{end}}

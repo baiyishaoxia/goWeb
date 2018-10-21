@@ -1,0 +1,102 @@
+{{define "css"}}
+<title>语言管理</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/script/layui/css/layui.css">
+{{end}}
+
+{{define "content"}}
+
+<form action="/admin/lang/list" method="get" id="form1">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="/admin/center" class="home"><i></i><span>首页</span></a>
+        <i class="arrow"></i>
+        <span>语言管理</span>
+    </div>
+    <!--/导航栏-->
+
+    <!--工具栏-->
+    <div id="floatHead" class="toolbar-wrap">
+        <div class="toolbar">
+            <div class="box-wrap">
+                <a class="menu-btn"></a>
+                <div class="l-list">
+                    <ul class="icon-list">
+                        <li><a class="add" href="/admin/lang/create"><i></i><span>新增</span></a></li>
+                        <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
+                        <li><a href="/admin/lang/del" class="del btndel" ><i></i><span>删除</span></a></li>
+                    </ul>
+                </div>
+                <div class="r-list">
+                    <div class="rule-single-select">
+                        <select name="nations_id" class="nations_id">
+                            <option value="all" >全部</option>
+                            {{range $key,$val:=.Nations}}
+                            <option value="{{$val.Id}}" {{if eq $.NationsId $val.Id}} selected {{end}}>{{$val.Title}}</option>
+                            {{end}}
+                        </select>
+                    </div>
+                    <input name="keywords" placeholder="请输入标识符/中文名称" class="keyword normal" value="{{.Keywords}}" type="text" style="width: 150px">
+                    <a class="btn-search" href="javascript:void (0)">查询</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/工具栏-->
+    <!--列表-->
+    <div class="table-container">
+       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
+         <tr>
+             <td align="center">选择</td>
+             <td align="center">调用标识</td>
+             <td align="center">中文名称</td>
+             <td align="center">说明</td>
+             <td align="center">排序</td>
+             <td align="center">创建时间</td>
+             <td align="center">操作</td>
+         </tr>
+       {{range $val:=.Langs}}
+           <tr>
+               <td align="center">
+                        <span class="checkall" style="vertical-align:middle;">
+                           <input  name="id[]" type="checkbox" value="{{$val.Id}}">
+                        </span>
+               </td>
+               <td align="center">{{$val.Mark}}</td>
+               <td align="center">{{$val.Title}}</td>
+               <td align="center">{{$val.Remark}}</td>
+               <td align="center">{{$val.Sort}}</td>
+               <td align="center">{{$val.CreatedAt}}</td>
+               <td align="center">
+                   <a href="/admin/lang/edit/{{$val.Id}}">编辑</a>
+               </td>
+           </tr>
+       {{end}}
+
+       </table>
+    </div>
+    <!--/列表-->
+    <span class="page_total">共{{.Num}}条记录</span>
+    <ul class="pagination">
+    {{if gt .Page 1.00}}
+        <a class="disabled" href="?page={{.UpPage}}&nations_id={{.NationsId}}&keywords={{.Keywords}}"><span>上一页</span></a>
+    {{end}}
+        <li class="disabled"><span>{{.Page}}/{{.All}}</span></li>
+    {{if lt .Page .All}}
+        <a class="disabled" href="?page={{.DownPage}}&nations_id={{.NationsId}}&keywords={{.Keywords}}"><span>下一页</span></a>
+    {{end}}
+        <input name="page" class="input small" value="" type="text">
+        <a class="btn-search" href="javascript:void (0)">GO</a>
+    </ul>
+</form>
+{{end}}
+{{define "js"}}
+<script type="text/javascript">
+            $('.nations_id').change(function () {
+                var the_form=$(this).parents('form').eq(0);
+                the_form.attr('method','get');
+                the_form.submit();
+            })
+</script>
+{{end}}
