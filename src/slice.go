@@ -17,7 +17,7 @@ func main() {
 	s2 = a[5:len(a)]
 	fmt.Println("切片5-最后:", s2)
 
-	//包含3个元素容量为10的slice
+	//包含3个元素容量为10的slice 
 	s3 := make([]int, 3, 10)
 	s3 = a[0:5]
 	fmt.Println("切片a数组", s3, "长度:", len(s3), "容量:", cap(s3))
