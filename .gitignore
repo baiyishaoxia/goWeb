@@ -3,3 +3,4 @@
 /src/runtime/logs/info
 /src/uploads/logs
 /pkg/!documentation.txt
+/pkg/*
