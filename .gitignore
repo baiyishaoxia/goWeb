@@ -1,5 +1,5 @@
-/pkg/*
-/src/.idea/*
-/src/runtime/logs/error/*
-/src/runtime/logs/info/*
-/src/uploads/logs/*
+/src/.idea
+/src/runtime/logs/error
+/src/runtime/logs/info
+/src/uploads/logs
+/pkg
