@@ -2,4 +2,4 @@
 /src/runtime/logs/error
 /src/runtime/logs/info
 /src/uploads/logs
-/pkg
+/pkg/!documentation.txt
