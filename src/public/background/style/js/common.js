@@ -51,6 +51,14 @@ $('.btnsave').click(function () {
 });
 //endregion
 
+//region 点击搜索   搜索
+$('.btn-search').click(function () {
+    $(this).parents('form').eq(0).attr('method','get');
+    $(this).parents('form').eq(0).find("input[name='_token']").remove();
+    $(this).parents('form').eq(0).submit();
+});
+//endregion
+
 //region ajax2提示 [post提交  设置当前a标签属性href提交  返回json数据：status，info，url] ,用于保存等操作，无需关闭layout框
     $(".ajax2").click(function () {
         var url =$(this).attr("href");

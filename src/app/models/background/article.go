@@ -36,13 +36,23 @@ type ArticleAndCategory struct {
 	Category `xorm:"extends"`
 }
 
+//自定义常亮
+const (
+	UserStatue        = 0
+	UserStatueWaiting = 1
+	UserStatueChecked = 2
+)
+
 //region Remark:文章列表 Author:tang
-func GetArticleList(page int, limit int, keywords string) (*[]ArticleAndCategory, float64, float64, int) {
+func GetArticleList(page int, limit int, keywords string, start_time string, end_time string) (*[]ArticleAndCategory, float64, float64, int) {
 	var art = new([]ArticleAndCategory)
 	err := databases.Orm.Desc("article.id").Table("article")
 	err.Join("LEFT", "category", "cate_id = category.id")
 	if keywords != "" {
 		err.Where("article.title like ?", "%"+keywords+"%")
+	}
+	if start_time != "" && end_time != "" {
+		err.Where("start_time < ?", start_time).Where("end_time > ?", end_time)
 	}
 	err1 := *err
 	num, err3 := err1.Count()

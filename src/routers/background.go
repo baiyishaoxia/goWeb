@@ -52,9 +52,14 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.GET("/article/status", background.GetArticleSetStatus)
 	//图片管理
 	v1.GET("/picture/list", background.GetPictureList)
-	v1.GET("/picture/show", background.GetPictureShow)
+	v1.GET("/picture/show/:id", background.GetPictureShow)
 	v1.GET("/picture/create", background.GetPictureCreate)
+	v1.POST("/picture/create", background.PostPictureCreate)
 	v1.GET("/picture/edit/:id", background.GetPictureEdit)
+	v1.POST("/picture/edit/:id", background.PostPictureEdit)
+	v1.POST("/picture/del", background.PostPictureDel)
+	v1.POST("/picture/show/del", background.PostPictureShowDel)
+	v1.GET("/picture/status", background.GetPictureSetStatus)
 	//视频管理
 	v1.GET("/video/list", background.GetVideoList)
 	v1.GET("/video/create", background.GetVideoCreate)

@@ -16,12 +16,15 @@ import (
 
 func GetArticleList(c *gin.Context) {
 	keywords := c.Query("keywords")
+	start_time := c.Query("start_time")
+	end_time := c.Query("end_time")
 	page, _ := strconv.Atoi(c.Query("page"))
 	if page == 0 {
 		page = 1
 	}
+	fmt.Println(keywords)
 	limit := config.Limit
-	data, num, all, page := models.GetArticleList(page-1, limit, keywords)
+	data, num, all, page := models.GetArticleList(page-1, limit, keywords, start_time, end_time)
 	c.HTML(http.StatusOK, "article/list", gin.H{
 		"Title":    "Background Index",
 		"Data":     data,

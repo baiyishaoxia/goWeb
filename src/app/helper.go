@@ -231,3 +231,32 @@ func DownCsv(c *gin.Context, fileName string, b *bytes.Buffer) {
 }
 
 //endregion
+
+//region Remark:格式化时分秒 Author:tang
+func GetTimeName(agoTime int64) string {
+	old_time := time.Unix(agoTime, 0)
+	time_init := time.Now()
+	var num int
+	new_time := time_init.Unix() - old_time.Unix()
+	if new_time >= 31104000 {
+		num = int(new_time / 31104000)
+		return strconv.Itoa(num) + "年前"
+	}
+	if new_time >= 2592000 {
+		num = int(new_time / 2592000)
+		return strconv.Itoa(num) + "月前"
+	}
+	if new_time >= 86400 {
+		num = int(new_time / 86400)
+		return strconv.Itoa(num) + "天前"
+	}
+	if new_time >= 3600 {
+		num = int(new_time / 3600)
+		return strconv.Itoa(num) + "小时前"
+	}
+	if new_time >= 60 {
+		num = int(new_time / 60)
+		return strconv.Itoa(num) + "分钟前"
+	}
+	return old_time.String()
+}

@@ -6,74 +6,30 @@
 {{define "content"}}
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片展示 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="javascript:;" onclick="edit()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6df;</i> 编辑</a> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<div class="portfolio-content">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a href="javascript:;" onclick="edit()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6df;</i> 编辑</a>
+			<a href="/admin/picture/show/del" class="btn btn-danger radius del imgdel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+		</span>
+		<span class="r">共有数据：<strong>{{.Count}}</strong> 条</span>
+	</div>
+    <form action="" id="form1">
+	   <div class="portfolio-content">
 		<ul class="cl portfolio-area">
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/keting.jpg" data-lightbox="gallery" data-title="客厅1"><img src="/public/background/temp/Thumb/keting.jpg"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox "><a href="/public/background/temp/big/keting2.jpg" data-lightbox="gallery" data-title="客厅2"><img src="/public/background/temp/Thumb/keting2.jpg"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/keting3.jpg" data-lightbox="gallery" data-title="客厅3"><img src="/public/background/temp/Thumb/keting3.jpg"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/keting4.jpg" data-lightbox="gallery" data-title="客厅4"><img src="/public/background/temp/Thumb/keting4.jpg"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/chufang.jpg" data-lightbox="gallery" data-title="厨房"><img src="/public/background/temp/Thumb/chufang.jpg"></a></div>
-					<div class="textbox">厨房 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/shufang.jpg" data-lightbox="gallery" data-title="书房"><img src="/public/background/temp/Thumb/shufang.jpg"></a></div>
-					<div class="textbox">书房 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/woshi.jpg" data-lightbox="gallery" data-title="卧室"><img src="/public/background/temp/Thumb/woshi.jpg"></a></div>
-					<div class="textbox">卧室 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/weishengjian.jpg" data-lightbox="gallery" data-title="卫生间1"><img src="/public/background/temp/Thumb/weishengjian.jpg"></a></div>
-					<div class="textbox">卫生间1 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="/public/background/temp/big/weishengjian2.jpg" data-lightbox="gallery" data-title="卫生间2"><img src="/public/background/temp/Thumb/weishengjian2.jpg"></a></div>
-					<div class="textbox">卫生间2 </div>
-				</div>
-			</li>
+			{{range $key,$val:=.Data}}
+				<li class="item">
+					<div class="portfoliobox">
+						<span class="checkall" style="vertical-align:middle;">
+						   <input  name="id[]" type="checkbox" value="{{$val.Id}}" image="{{$val.Image}}">
+						</span>
+						<div class="picbox"><a href="{{$val.Image}}" data-lightbox="gallery" data-title="{{$val.Title}}"><img src="{{$val.Image}}"></a></div>
+						<div class="textbox">{{$val.Title}} </div>
+					</div>
+				</li>
+            {{end}}
 		</ul>
 	</div>
+    </form>
 </div>
 {{end}}
 {{define "js"}}
@@ -82,6 +38,52 @@
 <script type="text/javascript">
 $(function(){
 	$(".portfolio-area li").Huihover();
+});
+$('.imgdel').click(function () {
+    //获取自定义元素
+    obj = document.getElementsByName("id[]");
+    var check_val = [];
+    var ids=[];
+    for(k in obj){
+        if(obj[k].checked){
+            ids.push(obj[k].value);
+            check_val.push(obj[k].getAttribute('image'));
+        }
+    }
+    if ($(".checkall input:checked").length < 1) {
+        layer.msg('对不起，请选中您要操作的记录！');
+        return false;
+    }
+    var msg = "删除记录后不可恢复，您确定吗？";
+    if (arguments.length == 2) {
+        msg = objmsg;
+    }
+    var obj = this;
+    parent.layer.confirm(msg, {
+        btn: ['確定', '取消'] //按钮
+    }, function () {
+        var url =$('.imgdel').attr("href");
+        $.post(url,{ids:ids,images:check_val},function (data) {
+            if(data.status==201){
+                layer.msg(data.info);
+                return
+            }
+            if(data.status==200){
+                parent.layer.msg(data.info,{icon:1,time:2000},function () {
+                    parent.location.reload();// 刷新父窗口
+                    layer_close();
+                });
+                return
+            }
+            if (data.url!=undefined) {
+                setTimeout(function () {
+                    window.location.href = data.url
+                }, 2000);
+            }
+        });
+        parent.layer.close(this);
+    });
+    return false;
 });
 </script>
 {{end}}

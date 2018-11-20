@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/public/background/style/js/common.js"></script>
 <script type="text/javascript" src="/public/home/js/layout.js"></script>
 <script type="text/javascript" src="/public/home/script/layer/layer.js"></script>
+<script type="text/javascript" src="/public/home/js/uploader.js"></script>
 <script type="text/javascript">
         /*个人信息*/
         function myselfinfo() {
@@ -135,6 +136,7 @@
     $('.sure').click(function () {
         var the_form=$(this).parents('form').eq(0);
         var form_url = the_form.attr('action');
+       console.log($("#form1").serialize());
         $.post(form_url,$("#form1").serialize(),function (data) {
             if(data.status==201){
                 layer.msg(data.info);

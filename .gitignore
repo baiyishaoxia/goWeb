@@ -2,5 +2,6 @@
 /src/runtime/logs/error
 /src/runtime/logs/info
 /src/uploads/logs
+/src/uploads/images/*
 /pkg/!documentation.txt
 /pkg/*

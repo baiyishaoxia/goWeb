@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 // region Remark:管理员列表 Author:tang
@@ -168,12 +167,6 @@ func PostAdminEdit(c *gin.Context) {
 		})
 		return
 	}
-
-	loginadmin := models.GetAdminInfo(c)
-	//判断谷歌验证码是否正确
-	managerCreateAt, _ := time.Parse("2006-01-02 15:04:05", loginadmin.CreatedAt.String())
-	managerCreateAt = managerCreateAt.UTC()
-
 	if c.PostForm("is_lock") == "1" {
 		admin.IsLock = true
 	}

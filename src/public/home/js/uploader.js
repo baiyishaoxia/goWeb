@@ -125,6 +125,7 @@
                         parentObj.siblings(".upload-name").val(data.name);
                     } else {
                         addImage(parentObj, data.path, data.url,data.name);
+                        addImage_deal(parentObj, data.path, data.url,data.name);
                     }
                     var progressObj = parentObj.children(".upload-progress");
                     progressObj.children(".txt").html("上传成功：" + file.name);
@@ -172,6 +173,22 @@ function addImage(targetObj, src,url,thename) {
         focusPhotoObj.val(thumbSrc);
         newLi.children(".img-box").addClass("selected");
     }
+}
+//#################处理图像######################
+function addImage_deal(targetObj, src,url,thename) {
+    var _rand=Math.random();
+    //插入到相册UL里面
+    var newLi = $('<li>'
+        + '<input type="hidden" class="path" name="images_list[]" value="' + src + '" />'
+        + '<input type="hidden" class="remark"  value="'+thename+'" />'
+        + '<div class="img-box" onclick="setFocusImg(this);">'
+        + '<img src="' + url + '" bigsrc="' + url + '" />'
+        + '<span class="remark"><i>'+thename+'</i></span>'
+        + '</div>'
+        + '<a href="javascript:;" onclick="setRemark(this);">描述</a>'
+        + '<a href="javascript:;" onclick="delImg(this);">删除</a>'
+        + '</li>');
+    newLi.appendTo(targetObj.siblings(".images-list").children("ul"));
 }
 //设置相册封面
 function setFocusImg(obj) {
