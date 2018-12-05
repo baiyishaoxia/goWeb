@@ -158,4 +158,42 @@
         return false;
     });
     //endregion
+
+    $('.ClickBtn').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: $("#form1").attr('action'),
+            data: $("#form1").serialize(),
+            success: function (data) {
+                if (data.status==200) {
+                    layer.msg(data.info,{icon:1,time:1000},function () {
+                        $('.close').click();
+                    });
+                    return;
+                }
+                else {
+                    layer.msg(data.info);
+                    return;
+                }
+            }
+        });
+        return false;
+    });
+    //启用---停用
+    function status_top(obj,url,id){
+        layer.confirm('确认要更改状态吗？',function(index){
+            $.get(url,{id:id},function (data) {
+                if(data.status == 201){
+                    layer.msg(data.info,{icon: 5,time:1000});
+                    window.location.href=data.url;
+                    return;
+                }
+                if(data.status == 200){
+                    layer.msg(data.info,{icon: 6,time:1000});
+                    window.location.href=data.url;
+                    return false;
+                }
+            });
+        });
+    }
 </script>

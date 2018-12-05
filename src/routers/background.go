@@ -113,10 +113,15 @@ func InitBackGroundRouter() *gin.Engine {
 	//会员管理
 	v1.GET("/member/list", background.GetMemberList)
 	v1.GET("/member/create", background.GetMemberCreate)
+	v1.POST("/member/create", background.PostMemberCreate)
 	v1.GET("/member/edit/:id", background.GetMemberEdit)
+	v1.POST("/member/edit/:id", background.PostMemberEdit)
 	v1.GET("/member/recycle", background.GetMemberDelList)
 	v1.GET("/member/password/edit/:id", background.GetMemberPassword)
-	v1.GET("/member/show", background.GetMemberShow)
+	v1.POST("/member/password/edit/:id", background.PostMemberPassword)
+	v1.GET("/member/show/:id", background.GetMemberShow)
+	v1.POST("/member/del", background.PostMemberDel)
+	v1.GET("/member/status", background.GetMemberStatus)
 	//系统统计
 	v1.GET("/charts/zx", background.GetChartsZx)
 	v1.GET("/charts/sj", background.GetChartsSj)

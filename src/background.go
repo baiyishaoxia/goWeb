@@ -14,6 +14,7 @@ func main() {
 	//databases.Orm.Sync(new(models.Video))
 	//databases.Orm.Sync(new(models.AdminLog))
 	//databases.Orm.Sync(new(models.Picture))
+	//databases.Orm.Sync(new(models.Users))
 	//路由加载
 	gin.SetMode(gin.DebugMode)
 	router := routers.InitBackGroundRouter()

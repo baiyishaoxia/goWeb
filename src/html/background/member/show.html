@@ -5,11 +5,11 @@
 {{define "content"}}
 
 <div class="cl pd-20" style=" background-color:#5bacb6">
-	<img class="avatar size-XL l" src="/public/background/static/h-ui/images/ucnter/avatar-default.jpg">
+	<img class="avatar size-XL l" src="{{.Data.HeadImg}}">
 	<dl style="margin-left:80px; color:#fff">
 		<dt>
-			<span class="f-18">张三</span>
-			<span class="pl-10 f-12">余额：40</span>
+			<span class="f-18">{{.Data.Name}}</span>
+			<span class="pl-10 f-12">余额：0</span>
 		</dt>
 		<dd class="pt-10 f-12" style="margin-left:0">这家伙很懒，什么也没有留下</dd>
 	</dl>
@@ -19,27 +19,27 @@
 		<tbody>
 			<tr>
 				<th class="text-r" width="80">性别：</th>
-				<td>男</td>
+				<td>{{if eq .Data.Sex 1}}男{{else if eq .Data.Sex 2}}女{{else}}保密{{end}}</td>
 			</tr>
 			<tr>
 				<th class="text-r">手机：</th>
-				<td>13000000000</td>
+				<td>{{.Data.Phone}}</td>
 			</tr>
 			<tr>
 				<th class="text-r">邮箱：</th>
-				<td>admin@mail.com</td>
+				<td>{{.Data.Email}}</td>
 			</tr>
 			<tr>
 				<th class="text-r">地址：</th>
-				<td>北京市 海淀区</td>
+				<td>{{.Data.City}}</td>
 			</tr>
 			<tr>
 				<th class="text-r">注册时间：</th>
-				<td>2014.12.20</td>
+				<td>{{.Data.CreatedAt}}</td>
 			</tr>
 			<tr>
 				<th class="text-r">积分：</th>
-				<td>330</td>
+				<td>0</td>
 			</tr>
 		</tbody>
 	</table>
