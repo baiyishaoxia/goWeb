@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/csv"
 	"fmt"
+	"github.com/axgle/mahonia"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
@@ -58,4 +59,12 @@ func structs2StringArray(datas []models.Article) [][]string {
 		})
 	}
 	return searchArr
+}
+func ConvertToString(src string, srcCode string, tagCode string) string {
+	srcCoder := mahonia.NewDecoder(srcCode)
+	srcResult := srcCoder.ConvertString(src)
+	tagCoder := mahonia.NewDecoder(tagCode)
+	_, cdata, _ := tagCoder.Translate([]byte(srcResult), true)
+	result := string(cdata)
+	return result
 }

@@ -5,8 +5,13 @@ import (
 	"app/models/background"
 	"config"
 	"databases"
+	"encoding/csv"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -20,6 +25,7 @@ func GetMemberList(c *gin.Context) {
 	}
 	limit, _ := strconv.ParseInt(models.ReadConfig("sys.paginate"), 10, 64)
 	data, num, all, page := models.GetUsersList(page-1, int(limit), keywords)
+	files, _ := ioutil.ReadDir("./uploads/file/template/") //下载模板文件
 	c.HTML(http.StatusOK, "member/list", gin.H{
 		"Title":    "Background Index",
 		"Data":     data,
@@ -29,6 +35,7 @@ func GetMemberList(c *gin.Context) {
 		"Page":     float64(page),
 		"UpPage":   float64(page - 1),
 		"All":      all,
+		"Files":    files,
 		"Time": func(time time.Time) string {
 			return time.Format("2006-01-02 15:04:05")
 		},
@@ -263,6 +270,82 @@ func GetMemberStatus(c *gin.Context) {
 			"url":    "/admin/member/list",
 		})
 	}
+}
+
+//endregion
+
+//region Remark:导入 Author:tang
+func GetImportCsv(c *gin.Context) {
+	c.HTML(http.StatusOK, "member/csv", gin.H{
+		"Title": "导入",
+	})
+}
+func PostImportCsv(c *gin.Context) {
+	url := c.PostForm("csv_url")
+	file, err := os.Open("." + url)
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
+	// 这个方法体执行完成后，关闭文件
+	defer file.Close()
+	reader := csv.NewReader(file)
+	j := 0
+	db := databases.Orm.NewSession()
+	for {
+		j++
+		// Read返回的是一个数组，它已经帮我们分割了，
+		record, err := reader.Read()
+		// 如果读到文件的结尾，EOF的优先级居然比nil还高！
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			fmt.Println("记录集错误:", err.Error())
+			return
+		}
+		if j > 1 {
+			//序号,姓名,性别,电话,邮箱,城市,密码
+			data := new(models.Users)
+			number, _ := strconv.ParseInt(record[0], 10, 64)
+			name := ConvertToString(record[1], "gbk", "utf-8")
+			has, _ := db.Where("name=?", name).Get(data)
+			var sex int64
+			sex_c := ConvertToString(record[2], "gbk", "utf-8")
+			if sex_c == "男" {
+				sex = 1
+			}
+			if sex_c == "女" {
+				sex = 2
+			}
+			if sex_c == "保密" {
+				sex = 3
+			}
+			phone := record[3]
+			email := record[4]
+			city := ConvertToString(record[5], "gbk", "utf-8")
+			password := record[6]
+			if !has {
+				add := &models.Users{Name: name, Sex: sex, Phone: phone, Email: email, City: city, Password: app.Strmd5(password)}
+				_, err := db.Insert(add)
+				if err != nil {
+					db.Rollback()
+				}
+			}
+			fmt.Println("正在导入序号为:", number, "的数据")
+		}
+	}
+	db.Commit()
+	c.JSON(http.StatusOK, gin.H{
+		"status": config.HttpSuccess,
+		"info":   "导入成功",
+		"url":    "/admin/member/list",
+	})
+	return
+
+}
+func GetImportCsvDownload(c *gin.Context) {
+	zipName := "./uploads/file/template/" + c.Param("name")
+	c.File(zipName)
 }
 
 //endregion

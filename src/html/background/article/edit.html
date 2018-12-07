@@ -131,16 +131,8 @@
 <!--_footer 作为公共模版分离出去-->
 {{end}}
 {{define "js"}}
-
+{{include "layouts/lib_validation"}}
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/public/background/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript" src="/public/background/lib/webuploader/0.1.5/webuploader.min.js"></script>
-<script type="text/javascript" src="/public/background/lib/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="/public/background/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="/public/background/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     $(function(){
         $('.skin-minimal input').iCheck({
@@ -150,11 +142,6 @@
         });
         var ue = UE.getEditor('editor');
     });
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
-<script src="/public/home/script/common.js"></script>
-<script src="/public/home/js/uploader.js"></script>
-<script>
     $(function () {
         $('#form1').initValidform();
         $(".upload-image").each(function () {

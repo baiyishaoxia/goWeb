@@ -13,8 +13,7 @@
 {{define "js"}}
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/public/background/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
-<script type="text/javascript" src="/public/background/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+{{include "layouts/lib_validation"}}
 <script type="text/javascript">
 $(function () {
     $('#container').highcharts({

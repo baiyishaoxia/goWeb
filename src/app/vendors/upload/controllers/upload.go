@@ -20,7 +20,7 @@ func PostUpLoadImg(c *gin.Context) {
 	c.JSON(http.StatusOK, upload(c, "images", "bmp,gif,jpg,jpeg,jpe,png"))
 }
 func PostUpLoadFile(c *gin.Context) {
-	c.JSON(http.StatusOK, upload(c, "file", "zip,rar,pdf,apk"))
+	c.JSON(http.StatusOK, upload(c, "file", "zip,rar,pdf,apk,csv"))
 }
 func PostUpLoadVideo(c *gin.Context) {
 	c.JSON(http.StatusOK, upload(c, "video", "mp4"))

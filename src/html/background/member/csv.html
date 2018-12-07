@@ -1,0 +1,41 @@
+{{define "css"}}
+<title>导入</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+{{end}}
+
+{{define "content"}}
+
+<article class="page-container">
+ <form action="/admin/member/csv" method="post" class="form form-horizontal" id="form1">
+	<div class="competition">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">导入：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					<input class="input normal upload-path" name="csv_url" type="text" value="">
+					<div class="upload-box upload-file"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+     <div class="row cl">
+         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+             <input class="btn btn-primary radius sure" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+         </div>
+     </div>
+  </form>
+</article>
+<!--_footer 作为公共模版分离出去-->
+{{end}}
+{{define "js"}}
+
+
+<!--/请在上方写此页面业务相关的脚本-->
+<script>
+    $(function () {
+        $(".upload-file").each(function () {
+            $(this).InitUploader({sendurl: "/admin/upload/file", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+    })
+</script>
+{{end}}

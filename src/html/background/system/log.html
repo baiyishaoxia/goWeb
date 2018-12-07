@@ -68,9 +68,7 @@
 {{define "js"}}
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/public/background/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/public/background/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/public/background/lib/laypage/1.2/laypage.js"></script>
+{{include "layouts/lib_validation"}}
 <script type="text/javascript">
 $('.table-sort').dataTable({
 	"lengthMenu":false,//显示数量选择 

@@ -24,6 +24,7 @@
             <div class="content-tab-ul-wrap">
                 <ul>
                     <li><a class="selected" href="javascript:;">添加视频信息</a></li>
+                    <li><a href="javascript:;">详细信息</a></li>
                 </ul>
             </div>
         </div>
@@ -58,6 +59,17 @@
             </dd>
         </dl>
     </div>
+    <div class="tab-content" style="display: none">
+        <dl>
+            <dt>详细内容</dt>
+            <dd>
+                <div id="content-editor">
+                </div>
+                <textarea id="content" name="content" style="display: none"></textarea>
+                <span class="Validform_checktip">*</span>
+            </dd>
+        </dl>
+    </div>
     <!--/内容-->
     <!--工具栏-->
     <div class="page-footer">
@@ -72,14 +84,10 @@
 {{end}}
 
 {{define "js"}}
-
 <!--请在下方写此页面业务相关的脚本-->
-<script src="/public/home/script/validform_v5.3.2/Validform_v5.3.2.js"></script>
-<script src="/public/home/script/webuploader/webuploader.min.js"></script>
-<script src="/public/home/script/common.js"></script>
-<script src="/public/home/js/uploader.js"></script>
 <script type="text/javascript">
 $(function(){
+    $('#form1').initValidform();
     $(".upload-video").each(function () {
         $(this).InitUploader({sendurl: "/admin/upload/video", swf: "/public/home/script/webuploader/uploader.swf" });
     });
@@ -87,6 +95,17 @@ $(function(){
     $(".upload-image").each(function () {
         $(this).InitUploader({sendurl: "/admin/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
     });
+    var E = window.wangEditor;
+    var editor = new E('#content-editor');
+    var $text1 = $('#content');
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $text1.val(html)
+    };
+    // 配置服务器端地址
+    editor.customConfig.uploadImgServer = '/admin/upload/wang_editor/image';
+    editor.customConfig.uploadFileName = 'Filedata';
+    editor.create();
 });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

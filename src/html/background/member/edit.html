@@ -16,15 +16,15 @@
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
             <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                 <div class="radio-box">
-                    <input type="radio" id="sex-1" name="sex" value="1" checked>
+                    <input type="radio" id="sex-1" name="sex" value="1" {{if eq .Data.Sex 1}}checked{{end}}>
                     <label for="sex-1">男</label>
                 </div>
                 <div class="radio-box">
-                    <input type="radio" id="sex-2" name="sex" value="2">
+                    <input type="radio" id="sex-2" name="sex" value="2" {{if eq .Data.Sex 2}}checked{{end}}>
                     <label for="sex-2">女</label>
                 </div>
                 <div class="radio-box">
-                    <input type="radio" id="sex-3" name="sex" value="3">
+                    <input type="radio" id="sex-3" name="sex" value="3" {{if eq .Data.Sex 3}}checked{{end}}>
                     <label for="sex-3">保密</label>
                 </div>
             </div>
@@ -94,11 +94,7 @@
 {{define "js"}}
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/public/background/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="/public/background/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript" src="/public/background/lib/webuploader/0.1.5/webuploader.min.js"></script>
+{{include "layouts/lib_validation"}}
 <script type="text/javascript">
     $(function(){
         $('.skin-minimal input').iCheck({

@@ -36,6 +36,9 @@ func InitBackGroundRouter() *gin.Engine {
 	//登陆后的router
 	v1 := router.Group("/admin", background2.Auth())
 	v1.POST("/upload/image", upload.PostUpLoadImg)
+	v1.POST("/upload/file", upload.PostUpLoadFile)
+	v1.POST("/upload/video", upload.PostUpLoadVideo)
+	v1.POST("/upload/wang_editor/image", upload.PostUploadWangEditorImage)
 	v1.GET("/main", background.GetIndex)
 	v1.GET("/center", background.GetCenter)
 	v1.GET("/exit", background.GetExit)
@@ -122,6 +125,9 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.GET("/member/show/:id", background.GetMemberShow)
 	v1.POST("/member/del", background.PostMemberDel)
 	v1.GET("/member/status", background.GetMemberStatus)
+	v1.GET("/member/csv", background.GetImportCsv)
+	v1.POST("/member/csv", background.PostImportCsv)
+	v1.GET("/member/csv/down/:name", background.GetImportCsvDownload)
 	//系统统计
 	v1.GET("/charts/zx", background.GetChartsZx)
 	v1.GET("/charts/sj", background.GetChartsSj)

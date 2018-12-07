@@ -17,6 +17,10 @@
 			<a class="btn btn-danger radius all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
 			<a href="/admin/member/del" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 			<a href="javascript:;" onclick="member_add('添加用户','/admin/member/create','','710')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+			<a href="javascript:;" onclick="member_add('导入','/admin/member/csv','','200')" class="btn"><i class="Hui-iconfont">&#xe600;</i> 导入用户</a>
+            {{range $key,$value:=.Files}}
+                <a href="/admin/member/csv/down/{{$value.Name}}" title="下载模板"><i class="Hui-iconfont">&#xe640;</i></a>
+			{{end}}
 		</span>
 		<span class="r">共有数据：<strong>{{.Num}}</strong> 条</span> </div>
 	<div class="mt-20">
@@ -47,7 +51,7 @@
 				</td>
 				<td><u style="cursor:pointer" class="text-primary" onclick="member_show({{$value.Name}},'/admin/member/show',{{$value.Id}},'500','500')">{{$value.Name}}</u></td>
 				<td><img src="{{$value.HeadImg}}" alt="" width="100px"></td>
-                <td>男</td>
+                <td>{{if eq $value.Sex 1}}男{{else if eq $value.Sex 2}}女{{else}}保密{{end}}</td>
                 <td>{{$value.Phone}}</td>
                 <td>{{$value.Email}}</td>
                 <td class="text-l">北京市 海淀区</td>
@@ -76,9 +80,7 @@
 {{define "js"}}
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/public/background/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/public/background/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/public/background/lib/laypage/1.2/laypage.js"></script>
+{{include "layouts/lib_validation"}}
 <script type="text/javascript">
 $(function(){
 	$('.table-sort').dataTable({
