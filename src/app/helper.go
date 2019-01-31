@@ -5,11 +5,14 @@ import (
 	"bytes"
 	"crypto/md5"
 	"crypto/rand"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
+	"io"
 	"io/ioutil"
+	"math"
 	"math/big"
 	rand1 "math/rand"
 	"net"
@@ -260,3 +263,65 @@ func GetTimeName(agoTime int64) string {
 	}
 	return old_time.String()
 }
+func GetMd5(s string) string {
+	h := md5.New()
+	h.Write([]byte(s))
+	return hex.EncodeToString(h.Sum(nil))
+}
+func Guid() string {
+	b := make([]byte, 48)
+
+	if _, err := io.ReadFull(rand.Reader, b); err != nil {
+		return ""
+	}
+	return GetMd5(base64.URLEncoding.EncodeToString(b))
+}
+
+//region Remark: 获取上个月的开始时间和结束 Author tang
+func LastMonthStartAndEnd() (time.Time, time.Time) {
+	year, month, _ := time.Now().Date()
+	thisMonth := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+	start := thisMonth.AddDate(0, -1, 0)
+	end := thisMonth.AddDate(0, 0, -1)
+	return start, end
+}
+
+//region Remark: 获取该月时间 Author tang
+func GetThisMonthTime() time.Duration {
+	year, month, _ := time.Now().Date()
+	start := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+	end := start.AddDate(0, 1, 0)
+	return end.Sub(start)
+}
+
+//endregion
+
+//region Remark:距现在时长 Author:   tang
+func timeSub(t1, t2 time.Time) int {
+	t1 = time.Date(t1.Year(), t1.Month(), t1.Day(), 0, 0, 0, 0, time.Local)
+	t2 = time.Date(t2.Year(), t2.Month(), t2.Day(), 0, 0, 0, 0, time.Local)
+
+	return int(t1.Sub(t2).Hours() / 24)
+}
+func FromNowTime(deal_time time.Time) string {
+	toBeCharge := time.Now().Sub(deal_time)
+	hour := toBeCharge.Hours()
+	minutes := toBeCharge.Minutes()
+	if deal_time.Format("2006-01-02") != time.Now().Format("2006-01-02") {
+		return strconv.Itoa(timeSub(time.Now(), deal_time)) + " 天前"
+	} else if hour > 1 && hour < 24 {
+		data := math.Ceil(hour)
+		return strconv.FormatFloat(data, 'f', -1, 64) + " 小时前"
+	} else {
+		if minutes > 0 {
+			data := math.Ceil(minutes)
+			return strconv.FormatFloat(data, 'f', -1, 64) + " 分钟前"
+		} else {
+			data := float64(1)
+			return strconv.FormatFloat(data, 'f', -1, 64) + " 分钟前"
+		}
+	}
+
+}
+
+//endregion

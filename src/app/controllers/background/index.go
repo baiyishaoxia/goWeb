@@ -33,7 +33,14 @@ func GetCenter(c *gin.Context) {
 	key := "admin:last_login_time:" + strconv.FormatInt(int64(admin_info.Id), 10)
 	last_login_time, _ := redis.String(models2.Get(key))
 	//获取windows操作系统信息
-	info, _, _ := controller.WindowsInfo()
+	var info []string
+	var liunx bool = false //是否在liunx下运行
+	if liunx == false {
+		info, _, _ = controller.WindowsInfo()
+	} else {
+		info = []string{"暂无", "LinuxOs", runtime.GOOS, "暂无", "暂无", "暂无", "暂无", "暂无", "暂无", time.Now().Format("2006-01-02 15:04:05")}
+	}
+
 	c.HTML(http.StatusOK, "center", gin.H{
 		"Title":         "Background Center",
 		"client_ip":     c.ClientIP(),
