@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -282,6 +283,27 @@ func GetImportCsv(c *gin.Context) {
 }
 func PostImportCsv(c *gin.Context) {
 	url := c.PostForm("csv_url")
+	if url == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"status": config.HttpError,
+			"info":   "请上传需要导入的csv文件！",
+		})
+		return
+	}
+	suff := strings.Index(url, ".")
+	if suff != -1 {
+		if url[suff:] != ".zip" {
+			c.JSON(http.StatusOK, gin.H{
+				"status": config.HttpError,
+				"info":   "请导入csv格式的文件！",
+			})
+			return
+		}
+	}
+	//创建文件夹 并 解压文件
+	//path := "/uploads/file/" + time.Now().Format("2006/0102/") + "/" + time.Now().Format("150403/")
+	//directory.DirectoryMkdir(path)
+	//app.Unzip("."+url, "."+path)
 	file, err := os.Open("." + url)
 	if err != nil {
 		fmt.Println("Error", err)
