@@ -395,3 +395,14 @@ func TemplateeDown(c *gin.Context) {
 }
 
 //endregion
+
+//字符串分割数组并去空
+func StrSplitArray(str string) (res []string) {
+	arr := strings.Split(str, ",")
+	for _, val := range arr {
+		if val != "" {
+			res = append(res, val)
+		}
+	}
+	return
+}

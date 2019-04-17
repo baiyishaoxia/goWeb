@@ -1,6 +1,7 @@
 package background
 
 import (
+	"app"
 	"app/models/background"
 	"config"
 	"databases"
@@ -117,7 +118,8 @@ func GetPictureEdit(c *gin.Context) {
 		return
 	}
 	//格式化批量图片
-	images := strings.Split(picture.Images, ",")
+	images := app.StrSplitArray(picture.Images)
+	fmt.Println(images)
 	c.HTML(http.StatusOK, "picture/edit", gin.H{
 		"Title":         "Background Index",
 		"Data":          picture,

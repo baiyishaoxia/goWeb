@@ -5,7 +5,6 @@ import (
 	"databases"
 	"fmt"
 	"math"
-	"strings"
 )
 
 type Picture struct {
@@ -77,7 +76,7 @@ func GetPictureInfo(id int64) (*Picture, map[int]map[string]interface{}) {
 		fmt.Println(err.Error())
 	}
 	//格式化源数据
-	data := strings.Split(picture.Images, ",")
+	data := app.StrSplitArray(picture.Images)
 	images := make(map[int]map[string]interface{}, 0)
 	for key, val := range data {
 		images[key] = make(map[string]interface{})
