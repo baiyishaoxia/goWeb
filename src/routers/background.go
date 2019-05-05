@@ -36,6 +36,8 @@ func InitBackGroundRouter() *gin.Engine {
 	//登陆后的router
 	v1 := router.Group("/admin", background2.Auth())
 	v1.POST("/upload/image", upload.PostUpLoadImg)
+	v1.GET("/upload/ueditor", upload.GetUpLoadImg)
+	v1.POST("/upload/ueditor", upload.PostUEditUpload)
 	v1.POST("/upload/file", upload.PostUpLoadFile)
 	v1.POST("/upload/video", upload.PostUpLoadVideo)
 	v1.POST("/upload/wang_editor/image", upload.PostUploadWangEditorImage)
@@ -76,7 +78,7 @@ func InitBackGroundRouter() *gin.Engine {
 	//by 分类
 	v1.GET("/category/list", background.GetCategoryList)
 	v1.GET("/category/create", background.GetCategoryCreate)
-	v1.POST("/category/create", background.PosCategoryCreate)
+	v1.POST("/category/create", background.PostCategoryCreate)
 	v1.GET("/category/edit/:id", background.GetCategoryEdit)
 	v1.POST("/category/edit/:id", background.PostCategoryEdit)
 	v1.POST("/category/del", background.PostCategoryDel)
@@ -84,8 +86,12 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.POST("/category/save", background.PostCategorySave)
 	//by 产品
 	v1.GET("/product/list", background.GetProductList)
+	v1.GET("/product/znodes", background.GetProductZnodes)
 	v1.GET("/product/create", background.GetProductCreate)
+	v1.POST("/product/create", background.PostProductCreate)
 	v1.GET("/product/edit/:id", background.GetProductEdit)
+	v1.POST("/product/edit/:id", background.PostProductEdit)
+	v1.POST("/product/del", background.PostProductDel)
 	//评论管理
 	v1.GET("/comments/list", background.GetCommentsList)
 	v1.GET("/feedback/list", background.GetFeedbackList)

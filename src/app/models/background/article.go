@@ -44,12 +44,15 @@ const (
 )
 
 //region Remark:文章列表 Author:tang
-func GetArticleList(page int, limit int, keywords string, start_time string, end_time string) (*[]ArticleAndCategory, float64, float64, int) {
+func GetArticleList(page int, limit int, keywords string, cate_id int64, start_time string, end_time string) (*[]ArticleAndCategory, float64, float64, int) {
 	var art = new([]ArticleAndCategory)
 	err := databases.Orm.Desc("article.id").Table("article")
 	err.Join("LEFT", "category", "cate_id = category.id")
 	if keywords != "" {
 		err.Where("article.title like ?", "%"+keywords+"%")
+	}
+	if cate_id != 0 {
+		err.Where("article.cate_id = ?", cate_id)
 	}
 	if start_time != "" && end_time != "" {
 		err.Where("start_time < ?", start_time).Where("end_time > ?", end_time)

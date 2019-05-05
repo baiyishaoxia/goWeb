@@ -115,12 +115,12 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">文章内容：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <script id="editor" type="text/plain" style="width:100%;height:400px;">{{.Data.Content}}</script></div>
+               <textarea id="editor" name="content" type="text/plain" style="width:100%;height:400px;">{{.Data.Content}}</textarea>
             </div>
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+                <button class="btn btn-primary radius sure" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
                 <button class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
                 <button class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
             </div>

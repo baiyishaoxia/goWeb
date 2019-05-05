@@ -7,7 +7,8 @@
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="javascript:;" onclick="article_add('添加资讯','/admin/article/create')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
 							<li><a href="javascript:;" onclick="picture_add('添加图片','/admin/picture/create')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-							<li><a href="javascript:;" onclick="product_add('添加产品','/admin/category/create')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
+							<li><a href="javascript:;" onclick="product_add('添加分类','/admin/category/create')"><i class="Hui-iconfont">&#xe620;</i> 分类</a></li>
+							<li><a href="javascript:;" onclick="product_add('添加产品','/admin/product/create')"><i class="Hui-iconfont">&#xe637;</i> 产品</a></li>
 							<li><a href="javascript:;" onclick="member_add('添加用户','/admin/member/create','','700')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
 						</ul>
 					</li>
@@ -20,9 +21,9 @@
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a onclick="myselfinfo()">个人信息</a></li>
                             <li><a onclick="common_show('修改密码','/admin/repass','','500','300')">修改密码</a></li>
-							<li><a href="/admin/exit" class="ajax">切换账户</a></li>
-							<li><a href="/admin/clear" class="ajax">清理缓存</a></li>
-							<li><a href="/admin/exit" class="ajax">退出</a></li>
+							<li><a href="javascript" url="/admin/exit" class="ajax_get">切换账户</a></li>
+							<li><a href="javascript" url="/admin/clear" class="ajax_get">清理缓存</a></li>
+							<li><a href="javascript" url="/admin/exit" class="ajax_get">退出</a></li>
 						</ul>
 					</li>
 					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -42,11 +43,11 @@
 	</div>
 </header>
 <div class="admin_info" style="display: none">
-        <label class="label"><span class="c-red">*</span>登录账号：{{.AdminInfo.Username}}</label><br/>
-        <label class="label"><span class="c-red">*</span>    密码：{{.AdminInfo.Password}}</label><br/>
-        <label class="label"><span class="c-red">*</span>担任角色：{{.AdminInfo.Role.RoleName}}</label><br/>
-        <label class="label"><span class="c-red">*</span>    邮箱：{{.AdminInfo.Email}}</label><br/>
-        <label class="label"><span class="c-red">*</span>    电话：{{.AdminInfo.Mobile}}</label><br/>
-        <label class="label"><span class="c-red">*</span>登录次数：{{.AdminInfo.LoginCount}}</label><br/>
-        <label class="label"><span class="c-red">*</span>最后登录时间：{{.AdminInfo.LastLogin}}</label>
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="登录账号----------{{.AdminInfo.Username}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="密码---------------{{.AdminInfo.Password}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="担任角色----------{{.AdminInfo.Role.RoleName}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="邮箱---------------{{.AdminInfo.Email}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="电话---------------{{.AdminInfo.Mobile}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="登录次数-----------{{.AdminInfo.LoginCount}}">
+        <input type="text" placeholder="默认尺寸" class="input-text radius size-M" value="最后登录时间------{{.AdminInfo.LastLogin}}">
 </div>

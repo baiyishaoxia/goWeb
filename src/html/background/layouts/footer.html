@@ -20,7 +20,7 @@
         function myselfinfo() {
             layer.open({
                 type: 1,
-                area: ['400px', '200px'],
+                area: ['500px', '400'],
                 fix: false, //不固定
                 maxmin: true,
                 shade: 0.4,
@@ -116,6 +116,31 @@
         var the_form=$(this).parents('form').eq(0);
         var form_url = the_form.attr('action');
         $.post(form_url,$("#form1").serialize(),function (data) {
+            if(data.status==201){
+                layer.msg(data.info);
+                return
+            }
+            if(data.status==200){
+                layer.msg(data.info);
+                setTimeout(function () {
+                    window.location.href=data.url
+                },2000);
+                return
+            }
+            if (data.url!=undefined) {
+                setTimeout(function () {
+                    window.location.href = data.url
+                }, 2000);
+            }
+        });
+        return false;
+    })
+    //endregion
+
+    //region Ajax提示 [get提交  a标签提交  url设置为请求地址  返回json数据：status，info，url]
+    $(".ajax_get").click(function () {
+        var url=$(this).attr('url');
+        $.get(url,{},function (data) {
             if(data.status==201){
                 layer.msg(data.info);
                 return

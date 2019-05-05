@@ -11,7 +11,7 @@
          <span class="select-box inline">
             <select name="cate_id" class="select">
                 {{range $key,$val:=.Category}}
-                    <option value="{{$val.Id}}" {{if eq $val.Id 0}} selected {{end}}>{{$val.TitleHtml}}</option>
+                    <option value="{{$val.Id}}" {{if eq $val.Id $.CateId}} selected {{end}}>{{$val.TitleHtml}}</option>
                 {{end}}
             </select>
             </span> 日期范围：
