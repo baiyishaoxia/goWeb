@@ -254,11 +254,11 @@ $(function(){
 		}
 	});
 	/*左侧菜单*/
-	$(".Hui-aside").Huifold({
-		titCell:'.menu_dropdown dl dt',
-		mainCell:'.menu_dropdown dl dd',
-	});
-	
+	// $(".Hui-aside").Huifold({
+	// 	titCell:'.menu_dropdown dl dt',
+	// 	mainCell:'.menu_dropdown dl dd',
+	// });
+
 	/*选项卡导航*/
 	$(".Hui-aside").on("click",".menu_dropdown a",function(){
 		Hui_admin_tab(this);
@@ -314,4 +314,39 @@ $(function(){
 		var hrefRes=hrefStr.substring(0,hrefStr.lastIndexOf('skin/'))+'skin/'+v+'/skin.css';
 		$(window.frames.document).contents().find("#skin").attr("href",hrefRes);
 	});
-}); 
+});
+/*ajax初始化后导航菜单*/
+window.onload = function() {
+    var oUl = document.getElementById("sidebar-nav");
+    var aH1 =  (oUl !=null) ? oUl.getElementsByTagName("dt"):[];
+    var oU2 =  (oUl !=null) ? oUl.getElementsByTagName("dd"):[];
+    var oLi = null;
+    var arrLi = [];
+    for (var i = 0; i < aH1.length; i++) {
+        aH1[i].index = i;
+        aH1[i].onclick = function() {
+            if (this.className == "") {
+                oU2[this.index].style.display = "block";
+                this.className = "selected";
+            } else {
+                oU2[this.index].style.display = "none";
+                this.className = "";
+            }
+        }
+    }
+    for (i = 0; i < oU2.length; i++) {
+        oLi = oU2[i].getElementsByTagName("li");
+        for (j = 0; j < oLi.length; j++) {
+            arrLi.push(oLi[j]); //数组中添加新元素
+        }
+    }
+    for (i = 0; i < arrLi.length; i++) {
+        arrLi[i].onclick = function() {
+            for (i = 0; i < arrLi.length; i++) {
+                arrLi[i].className = "";
+            }
+            this.className = "menu_select";
+        }
+    }
+    console.log(arrLi);
+}

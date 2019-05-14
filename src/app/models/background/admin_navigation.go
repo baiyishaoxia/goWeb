@@ -137,11 +137,11 @@ func NavHtml(admin *BlogAdmin) string {
 		if admin.Role.IsSuper {
 			admin_navigations := make([]*AdminNavigation, 0)
 			databases.Orm.Where("is_show =?", true).Asc("sort").Find(&admin_navigations)
-			the_html = BuildNavHtml(admin_navigations)
+			the_html = BuildNavHtmlBack(admin_navigations)
 		} else {
 			admin_navigations := make([]*AdminNavigation, 0)
 			databases.Orm.Where("is_show =?", true).Where("id in(select admin_navigation_id from admin_role_node where admin_role_id=?)", admin.Role.Id).Asc("sort").Find(&admin_navigations)
-			the_html = BuildNavHtml(admin_navigations)
+			the_html = BuildNavHtmlBack(admin_navigations)
 		}
 		//写入到Redis
 		newredis.Set(redis_key, the_html, 60*60)
@@ -236,6 +236,29 @@ func BuildNavHtml(admin_navigations []*AdminNavigation) (html string) {
 		the_html = the_html + "</div>"
 	}
 	return the_html
+}
+func BuildNavHtmlBack(admin_navigations []*AdminNavigation) (html string) {
+	navigation_list := make(map[int64][]AdminNavigation)
+	for _, parent := range admin_navigations {
+		for _, child := range admin_navigations {
+			if parent.Id == child.ParentId {
+				navigation_list[parent.Id] = append(navigation_list[parent.Id], *child)
+			}
+		}
+	}
+	for _, val := range admin_navigations {
+		if val.ParentId == 0 {
+			html += "<dl class='menu-class'>"
+			html += "<dt><i class='Hui-iconfont'>&#xe616;</i> " + val.Title + "<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>"
+			html += "<dd><ul>"
+			for _, v2 := range navigation_list[val.Id] {
+				html += "<li><a data-href='" + v2.Url + "' data-title='" + v2.Title + "' href='javascript:void(0)'>" + v2.Title + "</a></li>"
+			}
+			html += "</dd></ul>"
+			html += "</dl>"
+		}
+	}
+	return html
 }
 
 /**

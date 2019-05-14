@@ -8,6 +8,18 @@
 	<p>登录次数：{{.AdminInfo.LoginCount}} </p>
 	<p>上次登录IP：{{.client_ip}}  上次登录时间：{{.LastLoginTime}}</p>
 	<p>
+	<!--全局菜单-->
+	<a class="btn-paograms" onclick="togglePopMenu2();"><i class="Hui-iconfont">&#xe62b;</i></a>
+	<div class="pop-menu" id="pop-menu" style="display: none">
+		<div class="pop-box" style="width: 610px;">
+			<h1 class="title"><i></i>导航菜单</h1>
+			<i class="close" onclick="togglePopMenu();">关闭</i>
+			<div class="list-box">
+			</div>
+		</div>
+		<i class="arrow">箭头</i>
+	</div>
+	 <!--/全局菜单-->
     <form action="/admin/search/all" method="get" id="form">
         <input type="text" name="keywords" id="" placeholder="任意模块" style="width:250px" class="input-text">
         <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 全局搜索</button>
@@ -141,6 +153,5 @@
 </footer>
 {{end}}
 {{define "js"}}
-<script type="text/javascript">
-</script>
+
 {{end}}

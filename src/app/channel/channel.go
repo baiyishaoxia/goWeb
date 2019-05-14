@@ -3,11 +3,10 @@ package channel
 import (
 	"app/models/home"
 	"app/vendors/redis/datasource"
-	"databases"
 )
 
 var (
-	// 活动订单生成管道
+	// 活动抽奖订单生成管道
 	UserAmountActiveOrderChan = make(chan *models.UserAmountActiveOrder, 1000000)
 )
 
@@ -16,20 +15,10 @@ func HandleConcurrent() {
 	for {
 		select {
 		case userAmountActiveOrder := <-UserAmountActiveOrderChan:
-			//region Remark:添加活动支付订单
-			db := databases.Orm.NewSession()
-			db.Begin()
-			res, err := AddUserAmountActiveOrder(userAmountActiveOrder, db)
-			if res == 0 || err != nil {
-				datasource.RedisPool.HSet(userAmountActiveOrder.Uuid, "status", -1)
-				datasource.RedisPool.HSet(userAmountActiveOrder.Uuid, "msg", err)
-				db.Rollback()
+			//添加活动抽奖支付订单
+			if AddUserAmountActiveOrder(userAmountActiveOrder) == false {
 				break
 			}
-			datasource.RedisPool.HSet(userAmountActiveOrder.Uuid, "status", 1)
-			datasource.RedisPool.HSet(userAmountActiveOrder.Uuid, "msg", "成功")
-			db.Commit()
-			//endregion
 		}
 	}
 }

@@ -13,6 +13,10 @@ import (
 	"strconv"
 )
 
+func GetNavigation(c *gin.Context) {
+	c.String(http.StatusOK, "%s", models.NavHtml(models.GetAdminInfo(c)))
+}
+
 func GetNavigationList(c *gin.Context) {
 	var data []models.AdminNavigation
 	//判断redis是否有缓存数据

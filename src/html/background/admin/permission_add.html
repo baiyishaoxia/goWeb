@@ -10,6 +10,17 @@
 {{define "content"}}
 <form method="POST" action="/admin/permission/create" id="form1">
 <article class="page-container">
+    <!--导航栏-->
+    <div class="location">
+        <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
+        <a href="/admin/center" class="home"><i></i><span>首页</span></a>
+        <i class="arrow"></i>
+        <a href="/admin/permission/list"><span>后台导航管理</span></a>
+        <i class="arrow"></i>
+        <span>添加后台导航</span>
+    </div>
+    <div class="line10"></div>
+    <!--/导航栏-->
     <!--内容-->
     <div id="floatHead" class="content-tab-wrap">
         <div class="content-tab">
@@ -131,7 +142,7 @@
                     '   <input type="text"  placeholder="名称" class="input nomall" >' +
                     '</td>' +
                     '<td>' +
-                    '   <input  placeholder="请输入控制器路由" class="input all" type="text">' +
+                    '   <input  placeholder="请输入控制器路由app/controllers/..." class="input all" type="text">' +
                     '</td>' +
                     '<td align="center">' +
                     '   <input  class="input small" value="99" type="text">' +

@@ -1,3 +1,4 @@
+/*
 $(function() {
     $(".ajax").click(function () {
         var url = $(this).attr("href");
@@ -17,3 +18,15 @@ $(function() {
         return false;
     })
 })
+*/
+function AlertLnfo(alert_content,wide,height) {
+    layer.open({
+        type: 1,
+        area: [wide,height],
+        fix: false, //不固定
+        maxmin: true,
+        shade: 0.4,
+        title: '查看信息',
+        content:$(""+alert_content+""),
+    });
+}

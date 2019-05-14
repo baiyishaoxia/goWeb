@@ -48,7 +48,7 @@ func Auth() gin.HandlerFunc {
 		}
 
 		//验证权限
-		fmt.Println("验证开始")
+		//fmt.Println("验证开始")
 		nowLoginManagerInfo := models.GetAdminInfo(c)
 		//上一次请求路由
 		handler_name := c.HandlerName()
@@ -61,6 +61,7 @@ func Auth() gin.HandlerFunc {
 					c.HTML(http.StatusOK, "layouts/no_power", gin.H{
 						"Title": "Background Login",
 						"Data":  "您没有管理该页面的权限，请勿非法进入！",
+						"Route": handler_name,
 					})
 				} else {
 					c.JSON(http.StatusOK, gin.H{
@@ -72,7 +73,7 @@ func Auth() gin.HandlerFunc {
 			}
 		}
 		//endregion
-		fmt.Println("权限操作验证结束!")
+		//fmt.Println("权限操作验证结束!")
 		//region 判断数据库里面是有有这个权限节点，没有则需要进行添加
 		//admin_navigation_node := new(models.AdminNavigationNode)
 		//res, _ := databases.Orm.Where("route_action=?", handler_name).Exist(admin_navigation_node)
@@ -91,7 +92,7 @@ func Auth() gin.HandlerFunc {
 		//	c.Abort()
 		//}
 		//endregion
-		fmt.Println("权限标识验证结束!")
+		//fmt.Println("权限标识验证结束!")
 		//生成请求日志
 		if background.RequestAllToLog(c) == false {
 			c.Abort()

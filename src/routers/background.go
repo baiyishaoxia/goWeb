@@ -103,6 +103,8 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.GET("/role/edit/:id", background.GetRoleEdit)
 	v1.POST("/role/edit/:id", background.PostRoleEdit)
 	v1.POST("/role/del", background.PostRoleDel)
+	//by  导航管理
+	v1.GET("/navigation", background.GetNavigation)
 	//by 权限管理
 	v1.GET("/permission/list", background.GetNavigationList)
 	v1.GET("/permission/create/:id", background.GetNavigationCreate)
