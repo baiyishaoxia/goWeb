@@ -187,5 +187,27 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.GET("/database/down/:name", background.GetDatabaseDown)
 	//endregion
 
+	//-------------------Blog子站路由-------------------
+	v1.GET("/time_line/list", background.GetTimeLineList)
+	v1.GET("/time_line/create", background.GetTimeLineCreate)
+	v1.POST("/time_line/create", background.PostTimeLineCreate)
+	v1.GET("/time_line/edit/:id", background.GetTimeLineEdit)
+	v1.POST("/time_line/edit/:id", background.PostTimeLineEdit)
+	v1.POST("/time_line/del", background.PostTimeLineDel)
+	//banner图分类管理
+	v1.GET("/banner_category/list", background.GetBannerCategoryList)
+	v1.GET("/banner_category/create", background.GetBannerCategoryCreate)
+	v1.POST("/banner_category/create", background.PostBannerCategoryCreate)
+	v1.GET("/banner_category/edit/:id", background.GetBannerCategoryEdit)
+	v1.POST("/banner_category/edit/:id", background.PostBannerCategoryEdit)
+	v1.POST("/banner_category/del", background.PostBannerCategoryDel)
+	//banner图内容管理
+	v1.GET("/banner/list", background.GetBannerList)
+	v1.GET("/banner/create", background.GetBannerCreate)
+	v1.POST("/banner/create", background.PostBannerCreate)
+	v1.GET("/banner/edit/:id", background.GetBannerEdit)
+	v1.POST("/banner/edit/:id", background.PostBannerEdit)
+	v1.POST("/banner/del", background.PostBannerDel)
+	v1.POST("/banner/save", background.PostBannerSave)
 	return router
 }

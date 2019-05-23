@@ -1,0 +1,80 @@
+<!-- 底部 -->
+<footer id="f" class="blog-footer">
+    <p><span>Copyright</span><span>©</span><span>2019</span>
+        <a href="http://www.long225.cn">Tang博客</a><span>Design By tangBoy</span></p>
+    <p>
+        <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备*******号</a>
+    </p>
+</footer>
+<!--侧边导航-->
+<ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
+    <li class="layui-nav-item">
+        <a href="index.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="mixed_pic.html"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="timeline.html"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+    </li>
+    <span class="layui-nav-bar"></span>
+</ul>
+<!--分享窗体-->
+<div class="blog-share layui-hide shareOut">
+    <div class="blog-share-body">
+        <div style="width: 200px;height:100%;">
+            <div class="bdsharebuttonbox bdshare-button-style0-32" data-bd-bind="1533783925417">
+                <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--遮罩-->
+<div class="blog-mask animated layui-hide"></div>
+
+<script src="/public/home/default/js/jquery.min.js"></script>
+
+<script src="/public/home/default/layui/layui.js"></script>
+
+<script src="/public/home/default/js/global.js"></script>
+<script type="text/javascript">
+    //禁用Enter键表单自动提交
+    document.onkeydown = function(event) {
+        var target, code, tag;
+        if (!event) {
+            event = window.event; //针对ie浏览器
+            target = event.srcElement;
+            code = event.keyCode;
+            if (code == 13) {
+                tag = target.tagName;
+                if (tag == "TEXTAREA") { return true; }
+                else { return false; }
+            }
+        }
+        else {
+            target = event.target; //针对遵循w3c标准的浏览器，如Firefox
+            code = event.keyCode;
+            if (code == 13) {
+                tag = target.tagName;
+                if (tag == "INPUT") { return false; }
+                else { return true; }
+            }
+        }
+    };
+    //region 点击搜索
+    $('.btn-search').click(function () {
+        $(this).parents('form').eq(0).attr('method','get');
+        $(this).parents('form').eq(0).find("input[name='_token']").remove();
+        $(this).parents('form').eq(0).submit();
+    });
+    //endregion
+</script>

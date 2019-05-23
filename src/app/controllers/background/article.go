@@ -112,7 +112,6 @@ func PostArticleEdit(c *gin.Context) {
 	source := c.PostForm("source")
 	keywords := c.PostForm("keywords")
 	content := c.PostForm("content")
-	fmt.Println("------", content)
 	start_time := c.PostForm("start_time")
 	end_time := c.PostForm("end_time")
 	article := models.Article{

@@ -9,25 +9,29 @@ import (
 )
 
 type Article struct {
-	Id        int64         `xorm:"pk autoincr BIGINT"`
-	Title     string        `xorm:"not null unique VARCHAR(255)"`
-	Img       string        `xorm:"VARCHAR(255)"`
-	Content   template.HTML `xorm:"TEXT"`
-	CateId    int64
-	Type      int `xorm:"default 0 INTEGER"`
-	Sort      int `xorm:"default 99 INTEGER"`
-	Count     int `xorm:"not null default 0 INTEGER"`
-	Status    int `xorm:"not null default 1 INTEGER"`
-	Keywords  string
-	Intro     string
-	AuthorId  int64
-	Source    string
-	IsComment bool     `xorm:"default true"`
-	StartTime string   `xorm:"VARCHAR(255)"`
-	EndTime   string   `xorm:"VARCHAR(255)"`
-	CreatedAt app.Time `xorm:"created"`
-	UpdatedAt app.Time `xorm:"updated"`
-	CateName  string   `xorm:"- <- ->"`
+	Id         int64         `xorm:"pk autoincr BIGINT" json:"id"`
+	Title      string        `xorm:"not null unique VARCHAR(255)" json:"title"`
+	Img        string        `xorm:"VARCHAR(255)" json:"img"`
+	Content    template.HTML `xorm:"TEXT" json:"content"`
+	CateId     int64         `xorm:"BIGINT" json:"cate_id"`
+	Type       int           `xorm:"default 0 INTEGER" json:"type"`
+	Sort       int           `xorm:"default 99 INTEGER" json:"sort"`
+	CountNum   int64         `xorm:"not null default 0 INTEGER" json:"count_num"` //评论量
+	ClickNum   int64         `xorm:"not null default 0 INTEGER" json:"click_num"` //浏览量
+	Status     int           `xorm:"not null default 1 INTEGER" json:"status"`
+	Keywords   string        `xorm:"VARCHAR(255)" json:"keywords"`
+	Intro      string        `xorm:"VARCHAR(255)" json:"intro"`
+	AuthorId   int64         `xorm:"BIGINT" json:"author_id"`
+	Source     string        `xorm:"VARCHAR(255)" json:"source"`
+	IsComment  bool          `xorm:"bool default true" json:"is_comment"` //是否评论
+	IsRed      bool          `xorm:"bool default true" json:"is_red"`     //是否推荐
+	IsTop      bool          `xorm:"bool default true" json:"is_top"`     //是否置顶
+	StartTime  string        `xorm:"VARCHAR(255)" json:"start_time"`
+	EndTime    string        `xorm:"VARCHAR(255)" json:"end_time"`
+	CreatedAt  app.Time      `xorm:"created" json:"created_at"`
+	UpdatedAt  app.Time      `xorm:"updated" json:"updated_at"`
+	CateName   string        `xorm:"- <- ->"`
+	AuthorName string        `xorm:"- <- ->"`
 }
 
 //关联分类表
@@ -36,7 +40,7 @@ type ArticleAndCategory struct {
 	Category `xorm:"extends"`
 }
 
-//自定义常亮
+//自定义常量
 const (
 	UserStatue        = 0
 	UserStatueWaiting = 1
@@ -100,7 +104,7 @@ func GetArticleTypeById(id int) string {
 //endregion
 //region Remark:自定义文章作者 Author:tang
 func GetArticleAuthor() map[int]string {
-	article_type := map[int]string{1: "白衣少侠", 2: "阿猛", 3: "池建", 4: "邹琴"}
+	article_type := map[int]string{1: "白衣少侠", 2: "张三", 3: "李四", 4: "王五"}
 	return article_type
 }
 func GetArticleAuthorById(id int) string {
@@ -108,11 +112,11 @@ func GetArticleAuthorById(id int) string {
 	case 1:
 		return "白衣少侠"
 	case 2:
-		return "阿猛"
+		return "张三"
 	case 3:
-		return "池建"
+		return "李四"
 	case 4:
-		return "邹琴"
+		return "王五"
 	default:
 		return "--"
 	}
@@ -153,7 +157,7 @@ func SearchArticleBykeys(keywords string, imgHost string, limit int64, page int6
 		} else {
 			data[key].CateName = val.Category.Title
 		}
-		data[key].Count = val.Count
+		data[key].ClickNum = val.ClickNum
 	}
 	//总记录数
 	num := float64(len(data))

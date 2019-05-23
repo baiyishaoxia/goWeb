@@ -1,0 +1,172 @@
+﻿{{define "css"}}
+<!-- 本页样式表 -->
+<link href="/public/home/default/css/about.css" rel="stylesheet" />
+<link href="/public/home/default/css/blog.css" rel="stylesheet" />
+{{end}}
+{{define "content"}}
+
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+        	<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="/" title="网站首页">网站首页</a>
+                <a><cite>关于本站</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
+                    <ul class="layui-tab-title">
+                        <li lay-id="1" class="layui-this">关于博客</li>
+                        <li lay-id="2">关于作者</li>
+                        <li lay-id="3" id="frinedlink">友情链接</li>
+                        <li lay-id="4">留言墙</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                    	<div class="layui-tab-item layui-show">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                	<img alt="博客Log" src="/public/home/default/img/admin.jpg" />
+                                    <div><a class="long_wang animated fadeInLeftBig" href="http://www.long225.cn">{{.Data1.Title}}</a></div>
+                                </div>
+                                <p class="aboutinfo-introduce animated fadeInRightBig">{{.Data1.Intro}}</p>
+                                <p class="aboutinfo-location animated fadeInLeftBig"><i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank" href="http://www.long225.cn">{{.Data1.Url}}</a></p>
+                                <hr />
+                                <div class="aboutinfo-contact animated fadeInRightBig">
+                                    <a title="网站首页" href="/"><i class="fa fa-home fa-2x" style="font-size:2.5em;position:relative;top:3px"></i></a>
+                                    <a title="文章专栏" href="/article"><i class="fa fa-file-text fa-2x"></i></a>
+                                    <a title="杂七杂八" href="/mixed/pic"><i class="fa fa-paper-plane-o fa-2x"></i></a>
+                                    <a title="点点滴滴" href="/time/line"><i class="fa fa-hourglass-half fa-2x"></i></a>
+                                </div>
+
+                                <fieldset class="layui-elem-field layui-field-title animated fadeInLeftBig">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract">
+                                        <p style="text-align:center;">{{call $.Html .Data1.Content}}</p>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <!--关于网站End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                     <img src="/public/home/default/img/admin.jpg"  />
+                                </div>
+                                <p class="aboutinfo-nickname">{{.Data2.Title}}</p>
+                                <p class="aboutinfo-introduce animated fadeInLeftBig">{{.Data2.Intro}}</p>
+                                <p class="aboutinfo-location animated fadeInLeftBig"><i class="fa fa-location-arrow"></i>&nbsp;<span >中国 - 深圳</span></p>
+                                <hr />
+                                <div class="aboutinfo-contact animated bounceIn">
+                                    <a target="_blank" title="QQ交流" href="http://shang.qq.com/email/stop/email_stop.html?qq=2273465837"><i class="fa fa-qq fa-2x"></i></a>
+                                    <a target="_blank" title="给我写信" href="mailto:2273465837@qq.com"><i class="fa fa-envelope fa-2x"></i></a>
+                                    <a target="_blank" title="新浪微博" href="https://weibo.com/u/5380022242"><i class="fa fa-weibo fa-2x"></i></a>
+                                    <a target="_blank" title="后台管理" href="/toLogin"><i class="fa fa-database fa-2x"></i></a>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title animated bounceInUp">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract abstract-bloger">
+                                        <p>{{call $.Html .Data2.Content}}</p>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <!--关于作者End-->
+                    	<div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/public/home/default/images/handshake.png" alt="友情链接" />
+                                </div>
+                                <p class="aboutinfo-nickname">{{.Data3.Title}}</p>
+                                <p class="aboutinfo-introduce">{{.Data3.Url}}</p>
+                                <p class="aboutinfo-location">
+                                    {{call $.Html .Data3.Intro}}
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">{{call $.Html .Data3.Content}}</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title animated fadeInRightBig">
+                                    <legend>Friend Link</legend>
+                                    <div class="layui-field-box">
+                                        <ul class="friendlink">
+											<li>
+											<a target="_blank" href="http://wurao.xin" title="勿扰博客" class="friendlink-item">
+											<p class="friendlink-item-pic"><img src="/public/home/default/img/jzytp.JPG" alt="勿扰博客"></p>
+											<p class="friendlink-item-title">勿扰博客</p>
+											<p class="friendlink-item-domain">http://wurao.xin</p>
+											</a>
+											</li>
+											<li>
+											<a target="_blank" href="http://blog.itcodai.com" title="ITcodai博客" class="friendlink-item">
+											<p class="friendlink-item-pic"><img src="/public/home/default/img/jzytp.JPG" alt="ITcodai博客"></p>
+											<p class="friendlink-item-title">ITcodai博客</p>
+											<p class="friendlink-item-domain">http://blog.itcodai.com</p>
+											</a>
+											</li>
+											<li>
+											<a target="_blank" href="https://www.zqfirst.top" title="旧时光" class="friendlink-item">
+											<p class="friendlink-item-pic"><img src="/public/home/default/img/jzytp.JPG" alt="旧时光"></p>
+											<p class="friendlink-item-title">旧时光</p>
+											<p class="friendlink-item-domain">https://www.zqfirst.top</p>
+											</a>
+											</li>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <!--友情链接End-->
+                    	<div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/public/home/default/images/messagewall.png" alt="留言墙" />
+                                </div>
+                                <p class="aboutinfo-nickname">{{.Data4.Title}}</p>
+                                <p class="aboutinfo-introduce">{{.Data4.Intro}}</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">{{call $.Html .Data4.Content}}</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Leave a message</legend>
+                                    <div class="layui-field-box">
+                                        <div class="leavemessage" style="text-align:initial">
+                                            <form class="layui-form">
+                                            <input type="hidden" id="user" name="user" lay-verify="userId" />
+                                                <div class="layui-form-item">
+                                                    <textarea name="content" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                                </div>
+                                            </form>
+                                            <ul class="blog-comment" style="text-align:left;" id="messageList"></ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <!--留言墙End-->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+{{end}}
+{{define "js"}}
+<!-- 本页脚本 -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fa-info").parent().parent().addClass("layui-this");
+        systemTime();
+    });
+</script>
+<script src="/public/home/default/js/about.js"></script>
+{{end}}

@@ -54,7 +54,7 @@ func structs2StringArray(datas []models.Article) [][]string {
 			val.CateName,
 			string(val.Content),
 			strconv.Itoa(int(val.AuthorId)),
-			strconv.FormatFloat(float64(val.Count), 'f', 2, 64),
+			strconv.FormatFloat(float64(val.ClickNum), 'f', 2, 64),
 			val.CreatedAt.String(),
 		})
 	}

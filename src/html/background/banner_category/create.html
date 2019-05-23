@@ -1,0 +1,86 @@
+{{define "css"}}
+<title>新增分类 - 图片分类管理</title>
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/skin/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/home/script/layui/css/layui.css">
+{{end}}
+
+{{define "content"}}
+<article class="page-container">
+	<form action="/admin/banner_category/create" class="form form-horizontal" id="form-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder=""  name="title">
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>关键字：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder=""  name="index">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>简介：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea class="textarea" placeholder="说点什么..." rows="" cols="" name="intro"></textarea>
+            </div>
+        </div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+				<button class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
+				<button class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+{{end}}
+{{define "js"}}
+
+<!--请在下方写此页面业务相关的脚本-->
+{{include "layouts/lib_validation"}}
+<script type="text/javascript">
+$(function() {
+    $('.skin-minimal input').iCheck({
+        checkboxClass: 'icheckbox-blue',
+        radioClass: 'iradio-blue',
+        increaseArea: '20%'
+    });
+    //表单验证
+    $("#form-add").validate({
+        rules: {
+            title: {
+                required: true,
+            },
+            start_time: {
+                required: true,
+            },
+            content: {
+                required: true,
+            },
+
+        },
+        onkeyup: false,
+        focusCleanup: true,
+        success: "valid",
+        submitHandler: function (form) {
+            //$(form).ajaxSubmit();
+            var index = parent.layer.getFrameIndex(window.name);
+            //parent.$('.btn-refresh').click();
+            parent.layer.close(index);
+        }
+    });
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+<script>
+    $(function () {
+        $('#form-add').initValidform();
+        $(".upload-image").each(function () {
+            $(this).InitUploader({sendurl: "/admin/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
+        });
+    })
+</script>
+{{end}}

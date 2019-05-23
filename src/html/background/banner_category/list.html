@@ -1,0 +1,121 @@
+﻿{{define "css"}}
+<title>图片分类列表</title>
+{{end}}
+
+{{define "content"}}
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片分类管理 <span class="c-gray en">&gt;</span> 图片分类列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <form action="/admin/banner_category/list" method="get" id="form1">
+        <div class="text-c">
+            <button onclick="removeIframe()" class="btn btn-primary radius">关闭选项卡</button>
+         <span class="select-box inline">
+            </span> 日期范围：
+            <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}',dateFmt: 'yyyy-MM-dd' })" name="start_time" id="logmin" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',dateFmt: 'yyyy-MM-dd' })" name="end_time" id="logmax" class="input-text Wdate" style="width:120px;">
+            <input type="text" name="keywords" value="{{.Keywords}}" placeholder="图片分类名称" style="width:250px" class="input-text">
+            <button  class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜分类</button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="/admin/banner_category/del" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+                <a class="btn btn-primary radius" data-title="添加图片分类" data-href="/admin/banner_category/create" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加图片分类</a>
+            </span>
+            <span class="r">共有数据：<strong>{{.Num}}</strong> 条</span>
+        </div>
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+                <thead>
+                    <tr class="text-c">
+                        <th width="5%"><input type="checkbox" name="" value=""></th>
+                        <th width="5%">ID</th>
+                        <th width="10%">标题</th>
+                        <th width="50%">关键字</th>
+                        <th width="10%">简介</th>
+                        <th width="10%">创建时间</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{range $key,$val:=.Data}}
+                    <tr class="text-c">
+                        <td align="center">
+                            <span class="checkall" style="vertical-align:middle;">
+                               <input  name="id[]" type="checkbox" value="{{$val.Id}}">
+                            </span>
+                        </td>
+                        <td>{{$val.Id}}</td>
+                        <td>{{$val.Title}}</td>
+                        <td>{{$val.Index}}</td>
+                        <td>{{$val.Intro}}</td>
+                        <td>{{call $.TimeInit $val.CreatedAt}}</td>
+                        <td class="f-14 td-manage">
+                            <a style="text-decoration:none" class="ml-5" onClick="article_edit('时光轴编辑','/admin/banner_category/edit',{{$val.Id}})" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-5" onClick="article_del(this,{{$val.Id}})" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                  {{end}}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+{{end}}
+{{define "js"}}
+{{include "layouts/lib_validation"}}
+<script type="text/javascript">
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "pading":false,
+        "aoColumnDefs": [
+            {"orderable":false,"aTargets":[3]}// 不参与排序的列
+        ]
+    });
+
+    /*图片分类-添加*/
+    function article_add(title,url,w,h){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+    /*图片分类-编辑*/
+    function article_edit(title,url,id,w,h){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url+"/"+id
+        });
+        layer.full(index);
+    }
+    /*图片分类-删除*/
+    function article_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: 'POST',
+                url: '/admin/banner_category/del',
+                data:{id:id},
+                dataType: 'json',
+                success: function(data){
+                    if(data.status == 200){
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }else{
+                        setTimeout(function () {
+                            layer.msg(data.info);
+                        },2000)
+                    }
+                },
+                error:function(data) {
+                    console.log(data.info);
+                },
+            });
+        });
+    }
+</script>
+{{end}}

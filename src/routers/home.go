@@ -3,6 +3,7 @@ package routers
 import (
 	"app"
 	"app/controllers/home"
+	"app/controllers/home/blog"
 	"app/middlewares/common"
 	"app/middlewares/home"
 	captcha "app/vendors/captcha/controllers"
@@ -26,7 +27,7 @@ func InitHomeRouter() *gin.Engine {
 	router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
 		Root:         "html/home",
 		Extension:    ".html",
-		Master:       "layouts/main",
+		Master:       "layouts/default/main",
 		DisableCache: true,
 		Funcs:        app.TemplateFunc(),
 	})
@@ -47,8 +48,18 @@ func InitHomeRouter() *gin.Engine {
 	v1.POST("/index/edit/:id", home.PostIndexEdit)
 	v1.POST("/index/del", home.PostLinksDel)
 	v1.POST("/index/save", home.PostLinksSort)
-	//自定义组
-	router.GET("/", home.GetMain)
 	router.GET("/captcha/:width/:height", captcha.GetCaptcha)
+	//自定义组
+	router.GET("/", blog.GetMain)                                //默认首页
+	router.GET("/article", blog.GetBlogArticle)                  //文章专栏
+	router.POST("/article/ajax", blog.PostArticleList)           // 文章专栏(Ajax)
+	router.POST("/category/ajax", blog.PostArticleCatgory)       // 文章分类(Ajax)
+	router.GET("/article/right", blog.GetArticleRight)           // 文章推荐(Ajax)
+	router.GET("/article/detail/:id", blog.GetBlogArticleDetail) //文章详情
+	router.GET("/mixed/pic", blog.GetBlogMixedPic)               //杂七杂八
+	router.GET("/time/line", blog.GetBlogTimeLine)               //点点滴滴
+	router.GET("/time/line/ajax", blog.GetBlogTimeLineAjax)      //点点滴滴(Ajax)
+	router.GET("/about", blog.GetBlogAbout)                      //关于本站
+	router.POST("/about/ajax", blog.PostBannerList)              //关于本站(Ajax)
 	return router
 }

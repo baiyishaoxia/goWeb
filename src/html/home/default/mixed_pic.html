@@ -1,0 +1,30 @@
+﻿{{define "css"}}
+<link href="/public/home/default/css/mixed.css" rel="stylesheet" />
+{{end}}
+{{define "content"}}
+
+
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+        	<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="/" title="网站首页">网站首页</a>
+                <a><cite>杂七杂八</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="child-nav shadow">
+	                <span class="child-nav-btn child-nav-btn-this">照片墙</span>
+	                <span class="child-nav-btn" onclick="layer.msg('暂未开发');">其他作品</span>
+	                <span class="child-nav-btn" onclick="layer.msg('暂未开发');">游戏墙</span>
+                </div>
+                <div class="mixed-main" id="pic"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+{{end}}
+{{define "js"}}
+<script src="/public/home/default/js/mixed_pic.js"></script>
+{{end}}
