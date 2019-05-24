@@ -1,0 +1,1 @@
+function play(){var rul=document.getElementById("url").value;if(rul==""){alert("TangBoy提示您：请输入链接，没链接我给你解析个锤子哦")}else{var obj=document.getElementById("jk");var index=obj.selectedIndex;var text=obj.options[index].text;var value=obj.options[index].value;var srcsoures=value+rul;$("#palybox").attr('src',srcsoures);srcsoures="";}}

@@ -132,7 +132,7 @@ func PostBannerEdit(c *gin.Context) {
 	item.Abstract = abstract
 	item.Image = image
 	item.Content = content
-	has, err := databases.Orm.Cols("title", "sort", "url", "banner_category_id", "image", "intro", "abstract").ID(id).Update(item)
+	has, err := databases.Orm.Cols("title", "sort", "url", "banner_category_id", "image", "intro", "abstract", "content").ID(id).Update(item)
 	fmt.Println(has, err)
 	if has < 1 || err != nil {
 		c.JSON(http.StatusOK, gin.H{

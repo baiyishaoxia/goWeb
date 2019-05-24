@@ -1,0 +1,316 @@
+{{define "css"}}
+<meta name="apple-mobile-web-app-title" content="全网VIP解析">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="stylesheet" href="/public/home/default/css/style.css" />
+<link rel="stylesheet" href="/public/home/default/css/bootstrap.css" />
+{{end}}
+{{define "content"}}
+<header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">导航切换</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="http://www.wurao.xin/home.html" title="TangBoy-VIP视频解析"><img src="/public/home/default/picture/logo.png" /></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="container-fluid video-box">
+    <div class="container ">
+        <div class="tit-name">
+            <span>正在播放:</span>
+            <h1 id="tittext">感谢您使用TangBoy视频解析服务,正在播放视频/MV！</h1>
+        </div>
+        <iframe id="palybox" src="http://app.baiduoos.cn:2019/time/time.php" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
+        <div class="url-box">
+            <div class="input-group">
+                <input type="text" id="url" class="form-control url-text" aria-label="Text input with segmented button dropdown" placeholder="请粘贴视频网址>ㅂ<ﾉ ☆" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！" value="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4">
+                <div class="input-group-addon">
+                    <select class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！" id="jk">
+                        <option value="http://yun.baiyug.cn/vip/?url=">
+                            大众线路一
+                        </option>
+                        <option value="http://333c48.sh.1251081682.clb.myqcloud.com/?url=">
+                            电脑线路二
+                        </option>
+                        <option value="http://www.ibb6.com/jx/?url=" selected>
+                            默认一 </option>
+                        <option value="http://www.ibb6.com/svip/v.php?url=">
+                            线路一 </option>
+                        <option value="http://www.ibb6.com/jiexi/?url=">
+                            线路二 </option>
+                        <option value="http://www.ibb6.com/playm3u8/?url=">
+                            线路三 </option>
+                        <option value="http://www.ibb6.com/yunjx/?url=">
+                            线路四 </option>
+                        <option value="http://www.ibb6.com/vip/?url=">
+                            线路六 </option>
+                        <option value="http://www.ibb6.com/yun/?url=">
+                            线路七 </option>
+                        <option value="http://www.ibb6.com/ipsign/player.php?v=">
+                            线路八 </option>
+                        <option value="http://www.ibb6.com/jx/2mm.php?url=">
+                            恋恋影视 </option>
+                        <option value="http://www.ibb6.com/jx/?url=">
+                            待添加 </option>
+                    </select>
+                </div>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-play" title="点击开始解析并开始播放" onclick="play()">解析播放</button>
+                </div>
+            </div>
+        </div>
+        <div class="tit-gg">
+            <span></span>
+        </div>
+    </div>
+</div>
+<div class="container-fluid logo-box">
+    <div class="container ">
+        <span></span>
+    </div>
+</div>
+
+<div class="container-fluid logo-box">
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-tit">
+                    <h4>支持以下网站视频</h4>
+                    <p>敬请关注，近期将开放支持更多平台。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://vip.iqiyi.com/" target="_blank" title="爱奇艺会员">
+                        <img class="img-responsive" src="/public/home/default/picture/iqiyilogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://film.qq.com/" target="_blank" title="腾讯会员中心">
+                        <img class="img-responsive" src="/public/home/default/picture/qqlogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://vip.youku.com/" target="_blank" title="优酷会员中心">
+                        <img class="img-responsive" src="/public/home/default/picture/youkulogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.mgtv.com/vip/" target="_blank" title="芒果会员中心">
+                        <img class="img-responsive" src="/public/home/default/picture/hunantvlogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://yuanxian.le.com/" target="_blank" title="乐视会员中心">
+                        <img class="img-responsive" src="/public/home/default/picture/letvlogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://vip.tudou.com" target="_blank" title="土豆会员中心">
+                        <img class="img-responsive" src="/public/home/default/picture/tudoulogo.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.baofeng.com/" target="_blank" title="暴风会员">
+                        <img class="img-responsive" src="/public/home/default/picture/baofeng.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://vip.1905.com/" target="_blank" title="1905电影网视频">
+                        <img class="img-responsive" src="/public/home/default/picture/1905logo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://vip.kankan.com/" target="_blank" title="天天看看">
+                        <img class="img-responsive" src="/public/home/default/picture/kankan.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.pptv.com/" target="_blank" title="PPTV聚力">
+                        <img class="img-responsive" src="/public/home/default/picture/pptv.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.yinyuetai.com/" target="_blank" title="音悦台MV">
+                        <img class="img-responsive" src="/public/home/default/picture/yinyuetailogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.56.com/" target="_blank" title="56视频">
+                        <img class="img-responsive" src="/public/home/default/picture/56logo.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.fun.vip" target="_blank" title="风行视频">
+                        <img class="img-responsive" src="/public/home/default/picture/fengxing.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://movie.ku6.com/" target="_blank" title="酷6视频">
+                        <img class="img-responsive" src="/public/home/default/picture/ku6logo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://vip.wasu.cn/" target="_blank" title="WASU华数视频">
+                        <img class="img-responsive" src="/public/home/default/picture/wasulogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://video.sina.com.cn/" target="_blank" title="新浪视频">
+                        <img class="img-responsive" src="/public/home/default/picture/sinalogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="https://film.sohu.com/" target="_blank" title="搜狐视频">
+                        <img class="img-responsive" src="/public/home/default/picture/sohulogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.baomihua.com/" target="_blank" title="爆米花">
+                        <img class="img-responsive" src="/public/home/default/picture/baomihualogo.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a target="_blank" title="看看新闻网视频">
+                        <img class="img-responsive" src="/public/home/default/picture/kankannewslogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a target="_blank" title="糖豆视频">
+                        <img class="img-responsive" src="/public/home/default/picture/tangdoulogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://tv.cctv.com/" target="_blank" title="央视网">
+                        <img class="img-responsive" src="/public/home/default/picture/cntvlogo.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.acfun.cn/" target="_blank" title="Ac弹幕网">
+                        <img class="img-responsive" src="/public/home/default/picture/acfun.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.bilibili.com/" target="_blank" title="哔哩哔哩">
+                        <img class="img-responsive" src="/public/home/default/picture/bilibili.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.aipai.com/" target="_blank" title="爱拍原创">
+                        <img class="img-responsive" src="/public/home/default/picture/aipai.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid logo-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-tit">
+                    <h4>畅所欲言评论一下 </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cy-box">
+    <div class="container">
+        <div id="SOHUCS"></div>
+        <script type="text/javascript">
+            (function(){
+                var appid = 'cytudE8BC';
+                var conf = 'prod_f36f3ef203c35cdc84a04b9edcc596bc';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="/public/home/default/js/changyan_mobile.js' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+        </script>
+    </div>
+</div>
+{{end}}
+{{define "js"}}
+<script>
+    console.log("%c%c源码作者%cTangBoy", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:4px;background:#FADFA3;color:#000;line-height:28px;font-size:14px;");
+    console.log("%c%c网站地址%chttp://www.wurao.xin", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:6px 6px 6px 2px;background:#FADFA3;color:#0093fff;line-height:28px;font-size:12px;");
+    console.log("%c%c新浪微博%cTangBoy的故事", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:4px;background:#FADFA3;color:red;line-height:28px;font-size:14px;");
+    console.log("%c%c就知道阻挡不住你观看源码的冲动，但你至少要记住我！-----TangBoy", "line-height:28px;", "line-height:28px;padding:4px 0px;color:#fff;font-size:16px;background-image:-webkit-gradient(linear,left top,right top,color-stop(0,#ff22ff),color-stop(1,#5500ff));color:transparent;-webkit-background-clip:text;");
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fa-sigu-video").parent().parent().addClass("layui-this");
+    });
+</script>
+<script src="/public/home/default/js/tv-beipy.js"></script>
+<script src="/public/home/default/js/wb.js" type="text/javascript" charset="utf-8"></script>
+{{end}}
