@@ -6,7 +6,6 @@ import (
 	models2 "app/vendors/redis/models"
 	newredis "app/vendors/redis/models"
 	session "app/vendors/session/models"
-	"app/vendors/windows/controller"
 	"config"
 	"databases"
 	"github.com/garyburd/redigo/redis"
@@ -34,9 +33,9 @@ func GetCenter(c *gin.Context) {
 	last_login_time, _ := redis.String(models2.Get(key))
 	//获取windows操作系统信息
 	var info []string
-	var liunx bool = false //是否在liunx下运行
+	var liunx bool = true //是否在liunx下运行
 	if liunx == false {
-		info, _, _ = controller.WindowsInfo()
+		//info, _, _ = controller.WindowsInfo()
 	} else {
 		info = []string{"暂无", "LinuxOs", runtime.GOOS, "暂无", "暂无", "暂无", "暂无", "暂无", "暂无", time.Now().Format("2006-01-02 15:04:05")}
 	}

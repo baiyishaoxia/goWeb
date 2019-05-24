@@ -6,3 +6,5 @@
 /src/uploads/file/!template
 /pkg/!documentation.txt
 /pkg/*
+/src/_gsdata_
+/.idea

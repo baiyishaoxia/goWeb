@@ -75,12 +75,18 @@ func GetTimeLineByTime(year string, mouth string) *[]TimeLine {
 	if year == "" {
 		//查询不同年份的数据
 		data := new([]TimeLine)
-		databases.Orm.Distinct("year").Desc("time").Find(data)
+		err := databases.Orm.GroupBy("year").Desc("time").Find(data)
+		if err != nil {
+			fmt.Println(err)
+		}
 		return data
 	} else if mouth != "" {
 		//查询当前月份下数据
 		data := new([]TimeLine)
-		databases.Orm.Where("time like ?", year+"-"+mouth+"%").Desc("time").Find(data)
+		err := databases.Orm.Where("time like ?", year+"-"+mouth+"%").Desc("time").Find(data)
+		if err != nil {
+			fmt.Println(err)
+		}
 		return data
 	} else {
 		//查询当前年份下数据
@@ -94,6 +100,7 @@ func GetTimeLineByTime(year string, mouth string) *[]TimeLine {
 }
 func LineToLine() []map[string]interface{} {
 	list := GetTimeLineByTime("", "")
+	fmt.Println(*list)
 	data := make([]map[string]interface{}, 0)
 	item := make(map[string]interface{}) //年--月
 	for _, val := range *list {

@@ -76,7 +76,8 @@
 });
 
 function classifyList(id){
-    	layer.msg('功能要自己写');
+    article_list(id);
+    layer.msg('加载完成！');
 }
 
 
