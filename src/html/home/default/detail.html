@@ -32,9 +32,10 @@
 								<fieldset class="layui-elem-field layui-field-title" style="margin-bottom:0">
 									<legend>来说两句吧</legend>
 									<div class="layui-field-box">
-                                        <form class="layui-form blog-editor" action="">
-                                            <input type="hidden" id="user" name="user" lay-verify="userId" value="">
-                                            <input type="hidden" id="article" name="article" value="26">
+                                        <form class="layui-form blog-editor">
+                                            <input type="hidden" id="user" name="user_id" lay-verify="userId" value="1">
+                                            <input type="hidden" id="article" name="article_id" value="{{.Data.Id}}">
+                                            <input type="hidden" name="type" value="2"/>
                                             <div class="layui-form-item">
                                                 <textarea name="content" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
                                                 <div class="layui-layedit">
@@ -50,8 +51,8 @@
 													</div>
 												</div>
                                             </div>
-                                            <div class="layui-form-item ">
-                                                <button class="layui-btn " lay-submit="formLeaveMessage " lay-filter="formLeaveMessage ">提交评论</button>
+                                            <div class="layui-form-item">
+                                                <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
                                             </div>
                                         </form>
                                     </div>

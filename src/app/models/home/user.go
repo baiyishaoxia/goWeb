@@ -8,20 +8,23 @@ import (
 )
 
 type Users struct {
-	Id          int64     `json:"id"`
-	Name        string    `json:"account"`
-	Nickname    string    `json:"nickname"`
-	Mobile      string    `json:"mobile"`
-	Password    string    `json:"-"`
-	Sex         int64     `json:"sex"`
-	IsLock      bool      `json:"is_lock"`
-	HeadUrl     string    `json:"head_url"`
-	AreaCode    string    `json:"area_code"`
-	LimitTime   int64     `json:"-"`
-	Token       string    `json:"token"`
-	FailureTime time.Time `json:"failure_time"` //失效时间
+	Id          int64     `xorm:"pk autoincr BIGINT" json:"id"`
+	Name        string    `xorm:"not null unique VARCHAR(255)" json:"name"`
+	Sex         int64     `xorm:"not null default 1 INTEGER" json:"sex"`
+	Phone       string    `xorm:"VARCHAR(255)" json:"phone"`
+	Email       string    `xorm:"VARCHAR(255)" json:"email"`
+	City        string    `xorm:"VARCHAR(255)" json:"city"`
+	HeadImg     string    `xorm:"VARCHAR(255)" json:"head_img"`
+	Password    string    `xorm:"VARCHAR(255)" json:"password"`
+	IsLock      bool      `xorm:"default true" json:"is_lock"`
+	LoginCount  int64     `xorm:"not null default 0 INTEGER" json:"login_count"`
+	LastLogin   time.Time `json:"last_login"`
 	CreatedAt   app.Time  `xorm:"created" json:"created_at"`
-	UpdatedAt   app.Time  `xorm:"updated" json:"-"`
+	UpdatedAt   app.Time  `xorm:"updated" json:"updated_at"`
+	Nickname    string    `xorm:"- <- ->" json:"-"`
+	AreaCode    string    `xorm:"- <- ->" json:"-"`
+	Token       string    `xorm:"- <- ->" json:"-"`
+	FailureTime time.Time `xorm:"- <- ->" json:"-"` //失效时间
 }
 
 //region Remark: 通过id查询用户 Author: tang

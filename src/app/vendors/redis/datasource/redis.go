@@ -32,7 +32,7 @@ type redisDbConf struct {
 	}
 }
 
-func init() {
+func init2() {
 	var redisDbConfData = redisDbConf{}
 	yamlFile, err := ioutil.ReadFile("./config/redis.yml")
 	if err != nil {

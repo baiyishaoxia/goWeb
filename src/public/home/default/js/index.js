@@ -215,10 +215,36 @@ $(document).on('click','#page_load',function(){
     var keywords  = '';
     article_list(0,page,limit,"page_load");
 });
+//加载最近评论
+function user_message(){
+    $.ajax({
+        'url': "/message/ajax",
+        'type': 'get',
+        'dataType': 'json',
+        'data': {'limit': 10,'type':"index"},
+        'success': function (data) {
+            if (data.status == 200) {
+                var strVar = "";
+                var _list = data.data;
+                for(var i=0;i<_list.length;i++) {
+                    strVar +="<li class=\"hotusers-list-item\">\n" +
+                             "<div data-name=\""+ _list[i]["name"]+"\" class=\"remark-user-avator\">\n" +
+                             "  <img src=\""+ _list[i]["head_img"]+"\" width=\"45\" height=\"45\">\n" +
+                             "</div>\n" +
+                             "<div class=\"remark-content\">"+_list[i]["content"]+"</div>\n" +
+                             "<span class=\"hotusers-icons\"></span>\n" +
+                             "</li>"
+                }
+                $(".recent-list").empty().append(strVar);
+            }
+        }
+    });
+}
 $(function () {
     article_right();
     site_author();
     article_list();
+    user_message();
 });
 
 

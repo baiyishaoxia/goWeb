@@ -62,5 +62,8 @@ func InitHomeRouter() *gin.Engine {
 	router.GET("/about", blog.GetBlogAbout)                      //关于本站
 	router.POST("/about/ajax", blog.PostBannerList)              //关于本站(Ajax)
 	router.GET("/sigu/video", blog.GetBlogSiguVideo)             //思古视频
+	router.GET("/qq/login", blog.GetBlogQQLogin)                 //QQ互联登录
+	router.GET("/message/ajax", blog.GetBlogMessageAjax)         //获取留言(Ajax)
+	router.POST("/message/create", blog.PostBlogMessageCreate)   //提交留言(Ajax)
 	return router
 }

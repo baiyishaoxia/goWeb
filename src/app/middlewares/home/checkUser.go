@@ -24,7 +24,7 @@ func CheckLogin() gin.HandlerFunc {
 				"data":   "",
 			})
 		} else {
-			key := user.Mobile + strconv.FormatInt(int64(user.Id), 10)
+			key := user.Phone + strconv.FormatInt(int64(user.Id), 10)
 			code, _ := redis.String(models2.Get(key))
 			if code != token {
 				c.Abort()

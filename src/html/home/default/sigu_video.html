@@ -3,25 +3,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <link rel="stylesheet" href="/public/home/default/css/style.css" />
 <link rel="stylesheet" href="/public/home/default/css/bootstrap.css" />
+<style>
+    .blog-nav {position:static}
+    a:hover {
+        text-decoration: none;
+    }
+</style>
 {{end}}
 {{define "content"}}
-<header>
-    <div class="container">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">导航切换</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="http://www.wurao.xin/home.html" title="TangBoy-VIP视频解析"><img src="/public/home/default/picture/logo.png" /></a>
-                </div>
-            </div>
-        </nav>
-    </div>
-</header>
+
 
 <div class="container-fluid video-box">
     <div class="container ">
@@ -32,7 +22,7 @@
         <iframe id="palybox" src="http://app.baiduoos.cn:2019/time/time.php" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
         <div class="url-box">
             <div class="input-group">
-                <input type="text" id="url" class="form-control url-text" aria-label="Text input with segmented button dropdown" placeholder="请粘贴视频网址>ㅂ<ﾉ ☆" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！" value="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4">
+                <input type="text" id="url" class="form-control url-text" aria-label="Text input with segmented button dropdown" placeholder="请粘贴或输入视频网址进行解析：" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！" value="">
                 <div class="input-group-addon">
                     <select class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！" id="jk">
                         <option value="http://yun.baiyug.cn/vip/?url=">
