@@ -2,9 +2,12 @@ package blog
 
 import (
 	"app"
+	models2 "app/models/background"
 	"app/models/home"
 	"app/service/background"
 	"config"
+	"databases"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -52,6 +55,7 @@ func PostBlogMessageCreate(c *gin.Context) {
 	user := models.GetUserById(user_id)
 	var add *background.Message
 	if flag == 2 {
+		//来自于文章的评论
 		item := models.GetArticleById(article_id)
 		if item.IsComment == false {
 			c.JSON(http.StatusOK, gin.H{
@@ -74,6 +78,9 @@ func PostBlogMessageCreate(c *gin.Context) {
 			})
 			return
 		}
+		//当前文章评论数+1
+		res, err := databases.Orm.Id(item.Id).Incr("count_num").Update(&models2.Article{Id: item.Id})
+		fmt.Println("--------", res, err)
 		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id} //article_id
 	} else {
 		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}

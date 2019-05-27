@@ -163,14 +163,35 @@ func PostArticleDel(c *gin.Context) {
 //region Remark:设置资讯状态 Author:tang
 func GetArticleSetStatus(c *gin.Context) {
 	id := c.Query("id")
+	key := c.Query("type")
 	article := new(models.Article)
 	databases.Orm.Id(id).Get(article)
-	if article.Status == 1 {
-		article.Status = 2 //下架
-	} else {
-		article.Status = 1 //发布
+	switch key {
+	case "status":
+		if article.Status == 1 {
+			article.Status = 2 //下架
+		} else {
+			article.Status = 1 //置顶
+		}
+		break
+	case "red":
+		if article.IsRed == true {
+			article.IsRed = false //下架
+		} else {
+			article.IsRed = true //推荐
+		}
+		break
+	case "top":
+		if article.IsTop == true {
+			article.IsTop = false //下架
+		} else {
+			article.IsTop = true //发布
+		}
+		break
+	default:
+		break
 	}
-	res, _ := databases.Orm.Id(id).Update(article)
+	res, _ := databases.Orm.Id(id).Cols("status", "is_red", "is_top").Update(article)
 	if res >= 1 {
 		c.JSON(http.StatusOK, gin.H{
 			"status": config.HttpSuccess,

@@ -13,16 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"math"
 	"math/big"
 	rand1 "math/rand"
 	"net"
-	"net/http"
-	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -156,30 +154,6 @@ func Round2(f float64, n int) float64 {
 	floatStr := fmt.Sprintf("%."+strconv.Itoa(n)+"f", f)
 	inst, _ := strconv.ParseFloat(floatStr, 64)
 	return inst
-}
-
-//绑定旅游卡验证
-func CheckLyk() {
-	resp, err := http.PostForm("http://zslyapi.yytxlyw.com/User/bindPassport",
-		url.Values{"mobile": {"13528837032"},
-			"passport_num":  {"123456"},
-			"passport_code": {"123456"},
-			"real_name":     {"123456"},
-			"id_number":     {"123456"},
-			"gender":        {"123456"},
-		})
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	fmt.Println(string(body))
 }
 
 //生成指定范围的随机数
@@ -396,6 +370,32 @@ func TemplateeDown(c *gin.Context) {
 
 //endregion
 
+//region Remark:除去文档中的样式
+func RemoveHtmlStyle(src string) string {
+	//将HTML标签全转换成小写
+	re, _ := regexp.Compile("\\<[\\S\\s]+?\\>")
+	src = re.ReplaceAllStringFunc(src, strings.ToLower)
+	//去除STYLE
+	re, _ = regexp.Compile("\\<style[\\S\\s]+?\\</style\\>")
+	src = re.ReplaceAllString(src, "")
+	//去除SCRIPT
+	re, _ = regexp.Compile("\\<script[\\S\\s]+?\\</script\\>")
+	src = re.ReplaceAllString(src, "")
+	//去除所有尖括号内的HTML代码，并换成换行符
+	re, _ = regexp.Compile("\\<[\\S\\s]+?\\>")
+	src = re.ReplaceAllString(src, "\n")
+	//去除连续的换行符
+	re, _ = regexp.Compile("\\s{2,}")
+	src = re.ReplaceAllString(src, "\n")
+	// 去除空格
+	src = strings.Replace(src, " ", "", -1)
+	// 去除换行符
+	src = strings.Replace(src, "\n", "", -1)
+	return src
+}
+
+//endregion
+
 //字符串分割数组并去空
 func StrSplitArray(str string) (res []string) {
 	arr := strings.Split(str, ",")
@@ -406,3 +406,20 @@ func StrSplitArray(str string) (res []string) {
 	}
 	return
 }
+
+//region Remark:除去 script
+func RemoveHtmlScript(src string) string {
+	//去除SCRIPT
+	re, _ := regexp.Compile("\\<script[\\S\\s]+?\\</script\\>")
+	src = re.ReplaceAllString(src, "")
+	//去除连续的换行符
+	re, _ = regexp.Compile("\\s{2,}")
+	src = re.ReplaceAllString(src, "\n")
+	// 去除空格
+	src = strings.Replace(src, " ", "", -1)
+	// 去除换行符
+	src = strings.Replace(src, "\n", "", -1)
+	return src
+}
+
+//endregion

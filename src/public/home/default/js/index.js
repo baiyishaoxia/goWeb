@@ -184,8 +184,8 @@ function article_list(id=0,page=1,limit=10,load=""){
                         "                            <span class=\"article-author\"><i class=\"fa fa-user\"></i>&nbsp;&nbsp;"+_list[i].author+"</span>\n" +
                         "                            <span><i class=\"fa fa-tag\"></i>&nbsp;&nbsp;<a href=\"javascript:void(0);\"> "+_list[i].keywords+"</a></span>\n" +
                         "                            <span><i class=\"fa fa-fa\"></i>&nbsp;&nbsp;<a href=\"javascript:classifyList("+_list[i].cate_id+");\"> "+_list[i].cate_title+"</a></span>\n" +
-                        "                            <span class=\"article-viewinfo\"><i class=\"fa fa-eye\"></i>&nbsp;"+_list[i].count_num+"</span>\n" +
-                        "                            <span class=\"article-viewinfo\"><i class=\"fa fa-commenting\"></i>&nbsp;"+_list[i].click_num+"</span>\n" +
+                        "                            <span class=\"article-viewinfo\"><i class=\"fa fa-eye\"></i>&nbsp;"+_list[i].click_num+"</span>\n" +
+                        "                            <span class=\"article-viewinfo\"><i class=\"fa fa-commenting\"></i>&nbsp;"+_list[i].count_num+"</span>\n" +
                         "                        </div>\n" +
                         "                    </div>";
                 }
