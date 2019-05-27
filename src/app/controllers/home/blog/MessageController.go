@@ -50,9 +50,9 @@ func PostBlogMessageCreate(c *gin.Context) {
 	user := models.GetUserById(user_id)
 	var add *background.Message
 	if flag == 2 {
-		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true} //article_id
+		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id} //article_id
 	} else {
-		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id}
+		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}
 	}
 	_, message := background.InsertMessage(add)
 	c.JSON(http.StatusOK, gin.H{

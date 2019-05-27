@@ -62,9 +62,10 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function(){
                         html += " <span class=\"is_bloger\">博主</span>&nbsp;";
                     }
                     html += '</div><div class="content">' + data.field.content + '</div><p class="info info-footer"><span class="time">' + message["created_at"] + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>中国</span>&nbsp;&nbsp;<a class="btn-reply"href="javascript:;" style="color: #009688;font-size:14px;" onclick="btnReplyClick(this)">回复</a></p></div><hr /><!--回复表单默认隐藏--><div class="replycontainer layui-hide">' +
-                        '<form class="layui-form"action="">            ' +
+                        '<form class="layui-form" action="">            ' +
                         '<input type="hidden" id="comment" name="parent_id" value="' + message["id"] + '" />       ' +
-                        '<input type="hidden" id="user" lay-verify="userId" name="user" value="' +message["users_id"] + '" />                    ' +
+                        '<input type="hidden" id="user" lay-verify="userId" name="user_id" value="' +message["users_id"] + '" />                    ' +
+                        '<input type="hidden" id="article" lay-verify="userId" name="article_id" value="' +$('#article').val() + '" />                    ' +
                         '<div class="layui-form-item"><textarea name="content" lay-verify="replyContent"placeholder="回复@' + user["name"] + '"class="layui-textarea"style="min-height:80px;"></textarea>' +
                         '</div><div class="layui-form-item"><button class="layui-btn layui-btn-mini"lay-submit="formReply"lay-filter="formReply">提交</button></div>' +
                         '</form></div></li>';
@@ -131,7 +132,8 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function(){
                         "               <div class=\"replycontainer layui-hide\">\n" +
                         "                   <form class=\"layui-form\" action=\"/reply/list/\">\n" +
                         "                   <input type=\"hidden\" id=\"comment\" name=\"parent_id\" value=\"" + data[i]['id'] + "\" />\n" +
-                        "                   <input type=\"hidden\" id=\"user\" lay-verify=\"userId\" name=\"user\" value=\"" + $('#user').val() + "\" />\n" +
+                        "                   <input type=\"hidden\" id=\"user\" lay-verify=\"userId\" name=\"user_id\" value=\"" + $('#user').val() + "\" />\n" +
+                        "                   <input type=\"hidden\" id=\"article\" name=\"article_id\" value=\""+ $('#article').val() +"\">"+
                         "                       <div class=\"layui-form-item\">\n" +
                         "                           <textarea name=\"content\" lay-verify=\"replyContent\" placeholder=\"回复  @" + data[i]['name'] + ":\" class=\"layui-textarea\" style=\"min-height:80px;\"></textarea>\n" +
                         "                       </div>\n" +
