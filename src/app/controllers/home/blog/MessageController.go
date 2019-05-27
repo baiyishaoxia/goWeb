@@ -1,12 +1,14 @@
 package blog
 
 import (
+	"app"
 	"app/models/home"
 	"app/service/background"
 	"config"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 //region   获取留言数据   Author:tang
@@ -46,10 +48,32 @@ func PostBlogMessageCreate(c *gin.Context) {
 	flag, _ := strconv.ParseInt(c.PostForm("type"), 10, 64)             //类型来自于(1留言墙，2文章评论)
 	article_id, _ := strconv.ParseInt(c.PostForm("article_id"), 10, 64) //类型来自于(1留言墙，2文章评论)
 	parent_id, _ := strconv.ParseInt(c.PostForm("parent_id"), 10, 64)   //父级ID
-	content := c.PostForm("content")                                    //评论内容
+	content := app.RemoveHtmlScript(c.PostForm("content"))              //评论内容
 	user := models.GetUserById(user_id)
 	var add *background.Message
 	if flag == 2 {
+		item := models.GetArticleById(article_id)
+		if item.IsComment == false {
+			c.JSON(http.StatusOK, gin.H{
+				"status": config.HttpError,
+				"data":   "博主对该文章暂未开放评论",
+			})
+			return
+		}
+		if item.StartTime > time.Now().Format("2006-01-02 15:04:05") {
+			c.JSON(http.StatusOK, gin.H{
+				"status": config.HttpError,
+				"data":   "该文章评论于" + item.StartTime + "开放",
+			})
+			return
+		}
+		if time.Now().Format("2006-01-02 15:04:05") > item.EndTime {
+			c.JSON(http.StatusOK, gin.H{
+				"status": config.HttpError,
+				"data":   "该文章评论已于" + item.EndTime + "结束",
+			})
+			return
+		}
 		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id} //article_id
 	} else {
 		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}

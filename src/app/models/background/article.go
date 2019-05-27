@@ -18,7 +18,7 @@ type Article struct {
 	Sort       int           `xorm:"default 99 INTEGER" json:"sort"`
 	CountNum   int64         `xorm:"not null default 0 INTEGER" json:"count_num"` //评论量
 	ClickNum   int64         `xorm:"not null default 0 INTEGER" json:"click_num"` //浏览量
-	Status     int           `xorm:"not null default 1 INTEGER" json:"status"`
+	Status     int           `xorm:"not null default 1 INTEGER" json:"status"`    //状态(1发布2下架)
 	Keywords   string        `xorm:"VARCHAR(255)" json:"keywords"`
 	Intro      string        `xorm:"VARCHAR(255)" json:"intro"`
 	AuthorId   int64         `xorm:"BIGINT" json:"author_id"`

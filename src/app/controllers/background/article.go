@@ -60,9 +60,10 @@ func PostArticleCreate(c *gin.Context) {
 	content := c.PostForm("content")
 	start_time := c.PostForm("start_time")
 	end_time := c.PostForm("end_time")
+	is_comment, _ := strconv.ParseBool(c.PostForm("is_comment"))
 	article := models.Article{
 		Title: title, AuthorId: author_id, CateId: cate_id, Img: img, Content: template.HTML(content),
-		Intro: intro, Keywords: keywords, StartTime: start_time, EndTime: end_time, Source: source, Type: int(art_type),
+		Intro: intro, Keywords: keywords, StartTime: start_time, EndTime: end_time, Source: source, Type: int(art_type), IsComment: is_comment,
 	}
 	has, _ := databases.Orm.Insert(article)
 	if has >= 1 {
@@ -114,11 +115,12 @@ func PostArticleEdit(c *gin.Context) {
 	content := c.PostForm("content")
 	start_time := c.PostForm("start_time")
 	end_time := c.PostForm("end_time")
+	is_comment, _ := strconv.ParseBool(c.PostForm("is_comment"))
 	article := models.Article{
 		Title: title, AuthorId: author_id, CateId: cate_id, Img: img, Content: template.HTML(content),
-		Intro: intro, Keywords: keywords, StartTime: start_time, EndTime: end_time, Source: source, Type: int(art_type),
+		Intro: intro, Keywords: keywords, StartTime: start_time, EndTime: end_time, Source: source, Type: int(art_type), IsComment: is_comment,
 	}
-	has, _ := databases.Orm.Cols("title", "author_id", "cate_id", "type", "img", "intro", "source", "keywords", "content", "start_time", "end_time").Update(article, models.Article{Id: id})
+	has, _ := databases.Orm.Cols("title", "author_id", "cate_id", "type", "img", "intro", "source", "keywords", "content", "start_time", "end_time", "is_comment").Update(article, models.Article{Id: id})
 	if has >= 1 {
 		c.JSON(http.StatusOK, gin.H{
 			"status": config.HttpSuccess,

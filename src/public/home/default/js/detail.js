@@ -78,8 +78,8 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function(){
                     layer.msg("评论成功", {
                         icon: 1
                     });
-                } else {
-                    layer.msg("评论失败！");
+                }else{
+                    layer.msg(res.data);
                 }
             },
             error: function(data) {
@@ -181,7 +181,7 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function(){
                         icon: 1
                     });
                 } else {
-                    layer.msg("回复失败！");
+                    layer.msg(res.data);
                 }
             },
             error: function(data) {
