@@ -4,6 +4,7 @@ import (
 	"app/models/background"
 	"config"
 	"databases"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -75,17 +76,18 @@ func PostCommentDel(c *gin.Context) {
 		ids = append(ids, c.PostForm("id"))
 	}
 	_, err := databases.Orm.In("id", ids).Delete(&models.Message{})
+	fmt.Println(ids, err)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"status": config.HttpSuccess,
-			"info":   "删除成功",
-			"url":    "/admin/comments/list/",
+			"status": config.HttpError,
+			"info":   "删除失败",
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status": config.HttpError,
-		"info":   "删除失败",
+		"status": config.HttpSuccess,
+		"info":   "删除成功",
+		"url":    "/admin/comments/list/",
 	})
 	return
 }

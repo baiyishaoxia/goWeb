@@ -145,15 +145,15 @@ func PostArticleDel(c *gin.Context) {
 	_, err := databases.Orm.In("id", ids).Delete(&models.Article{})
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"status": config.HttpSuccess,
-			"info":   "删除成功",
-			"url":    "/admin/article/list/",
+			"status": config.HttpError,
+			"info":   "删除失败",
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status": config.HttpError,
-		"info":   "删除失败",
+		"status": config.HttpSuccess,
+		"info":   "删除成功",
+		"url":    "/admin/article/list/",
 	})
 	return
 }

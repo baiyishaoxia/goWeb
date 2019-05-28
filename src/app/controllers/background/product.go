@@ -376,15 +376,15 @@ func PostProductDel(c *gin.Context) {
 	_, err := databases.Orm.In("id", ids).Delete(&models.Product{})
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"status": config.HttpSuccess,
-			"info":   "删除成功",
-			"url":    "/admin/product/list/",
+			"status": config.HttpError,
+			"info":   "删除失败" + err.Error(),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status": config.HttpError,
-		"info":   "删除失败",
+		"status": config.HttpSuccess,
+		"info":   "删除成功",
+		"url":    "/admin/product/list",
 	})
 	return
 }

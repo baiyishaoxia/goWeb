@@ -3,9 +3,9 @@
 {{end}}
 
 {{define "content"}}
+<form action="/admin/comments/list" method="get" id="form1">
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 评论管理 <span class="c-gray en">&gt;</span> 意见反馈 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <form action="/admin/comments/list" method="get">
 		<div class="text-c"> 日期范围：
 			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
 			-
@@ -13,67 +13,66 @@
 			<input type="text" class="input-text" style="width:250px" placeholder="输入关键词" id="" name="keywords" value="{{.Keywords}}">
             <button  class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜留言、评论</button>
 		</div>
-    </form>
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
-		<span class="l">
-			<a href="/admin/comments/del" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-		</span>
-		<span class="r">共有数据：<strong>{{.Num}}</strong> 条</span>
-	</div>
-	<div class="mt-20">
-		<table class="table table-border table-bordered table-hover table-bg table-sort">
-			<thead>
-				<tr class="text-c">
-					<th width="3%"><input type="checkbox" name="" value=""></th>
-					<th width="3%">ID</th>
-					<th width="7%">用户名</th>
-					<th>留言内容</th>
-					<th width="5%">是否显示</th>
-					<th width="7%">操作</th>
-				</tr>
-			</thead>
-			<tbody>
-			{{range $key,$val:=.Data}}
-				<tr class="text-c">
-                    <td align="center">
-                        <span class="checkall" style="vertical-align:middle;">
-                           <input  name="id[]" type="checkbox" value="{{$val.Message.Id}}">
-                        </span>
-                    </td>
-					<td>{{$val.Message.Id}}</td>
-					<td>
-						<a href="javascript:;" onclick="member_show('{{$val.Users.Name}}','member-show.html','10001','360','400')"><i class="avatar size-L radius"><img alt="" src="{{$val.Users.HeadImg}}"></i></a>
-					</td>
-					<td class="text-l">
-						<div class="c-999 f-12">
-							<u style="cursor:pointer" class="text-primary" onclick="member_show('{{$val.Users.Name}}','member-show.html','10001','360','400')">{{$val.Users.Name}}</u>
-						    <time title="{{$val.Message.CreatedAt}}" datetime="{{$val.Message.CreatedAt}}">{{$val.Message.CreatedAt}}</time>
-						    <span class="ml-20">{{$val.Users.Phone}}</span> <span class="ml-20">{{$val.Users.Email}}</span>
-                            <span class="ml-20">来自于：{{call $.Type $val.Message.MessageCateId}}</span>
-						</div>
-						<div class="f-12 c-999">
-							<a href="http://www.h-ui.net/Hui-4.22-comment.shtml" target="_blank">{{$val.Message.Address}}</a>
-						</div>
-						<div>{{$val.Message.Content}}</div>
-					</td>
-					<td align="center">
-					{{if eq $val.Message.IsShow true}}
-                        <a style="text-decoration:none" onClick="comment_status(this,{{$val.Message.Id}})" href="javascript:;" title="取消显示">取消显示</a>
-					{{else}}
-                        <a style="text-decoration:none" onClick="comment_status(this,{{$val.Message.Id}})" href="javascript:;" title="显示">显示</a>
-					{{end}}
-					</td>
-					<td class="td-manage">
-						<a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td>
-				</tr>
-			{{end}}
-			</tbody>
-		</table>
-	</div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l">
+				<a href="/admin/comments/del" class="btn btn-danger radius del btndel"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+			</span>
+			<span class="r">共有数据：<strong>{{.Num}}</strong> 条</span>
+		</div>
+		<div class="mt-20">
+			<table class="table table-border table-bordered table-hover table-bg table-sort">
+				<thead>
+					<tr class="text-c">
+						<th width="3%"><input type="checkbox" name="" value=""></th>
+						<th width="3%">ID</th>
+						<th width="7%">用户名</th>
+						<th>留言内容</th>
+						<th width="5%">是否显示</th>
+						<th width="7%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				{{range $key,$val:=.Data}}
+					<tr class="text-c">
+						<td align="center">
+							<span class="checkall" style="vertical-align:middle;">
+							   <input  name="id[]" type="checkbox" value="{{$val.Message.Id}}">
+							</span>
+						</td>
+						<td>{{$val.Message.Id}}</td>
+						<td>
+							<a href="javascript:;" onclick="member_show('{{$val.Users.Name}}','member-show.html','10001','360','400')"><i class="avatar size-L radius"><img alt="" src="{{$val.Users.HeadImg}}"></i></a>
+						</td>
+						<td class="text-l">
+							<div class="c-999 f-12">
+								<u style="cursor:pointer" class="text-primary" onclick="member_show('{{$val.Users.Name}}','member-show.html','10001','360','400')">{{$val.Users.Name}}</u>
+								<time title="{{$val.Message.CreatedAt}}" datetime="{{$val.Message.CreatedAt}}">{{$val.Message.CreatedAt}}</time>
+								<span class="ml-20">{{$val.Users.Phone}}</span> <span class="ml-20">{{$val.Users.Email}}</span>
+								<span class="ml-20">来自于：{{call $.Type $val.Message.MessageCateId}}</span>
+							</div>
+							<div class="f-12 c-999">
+								<a href="http://www.h-ui.net/Hui-4.22-comment.shtml" target="_blank">{{$val.Message.Address}}</a>
+							</div>
+							<div>{{$val.Message.Content}}</div>
+						</td>
+						<td align="center">
+						{{if eq $val.Message.IsShow true}}
+							<a style="text-decoration:none" onClick="comment_status(this,{{$val.Message.Id}})" href="javascript:;" title="取消显示">取消显示</a>
+						{{else}}
+							<a style="text-decoration:none" onClick="comment_status(this,{{$val.Message.Id}})" href="javascript:;" title="显示">显示</a>
+						{{end}}
+						</td>
+						<td class="td-manage">
+							<a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						</td>
+					</tr>
+				{{end}}
+				</tbody>
+			</table>
+		</div>
 </div>
-
+</form>
 {{end}}
 {{define "js"}}
 

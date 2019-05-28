@@ -85,7 +85,7 @@ func GetMessageListApi(wheres map[string]interface{}) []map[string]interface{} {
 	data := messageInIt(message)
 	for k, v := range data {
 		item := make([]*Message, 0)
-		databases.Orm.Where("parent_id=?", v["id"]).Find(&item)
+		databases.Orm.Where("parent_id=?", v["id"]).Where("is_show=?", true).Find(&item)
 		child := messageInIt(item)
 		data[k]["child"] = child
 	}

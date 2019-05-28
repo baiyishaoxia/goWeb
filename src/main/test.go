@@ -3,6 +3,10 @@ package main
 import "fmt"
 
 func main() {
+	aa := "sdsa"
+	mobile := string([]byte(aa)[:3]) + "****" + string([]byte(aa)[7:11])
+	fmt.Println("----", mobile)
+
 	c := make(chan int, 2)
 	c <- 10
 	c <- 100
