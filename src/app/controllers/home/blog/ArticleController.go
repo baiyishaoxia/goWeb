@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"app"
 	"app/models/background"
 	models2 "app/models/home"
 	"app/service/home"
@@ -9,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -102,9 +104,19 @@ func GetArticleRight(c *gin.Context) {
 //文章详情
 func GetBlogArticleDetail(c *gin.Context) {
 	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
-	data := home.GetArticleById(id)
+	data, preNext := home.GetArticleById(id)
 	c.HTML(http.StatusOK, "default/detail", gin.H{
-		"Title": "欢迎使用GO语言编程",
-		"Data":  data,
+		"Title":   "欢迎使用GO语言编程",
+		"Data":    data,
+		"PreNext": preNext,
+		"StrSub": func(str string) string {
+			if str == "" {
+				return "无"
+			}
+			if strings.Count(str, "")-1 > 10 {
+				return app.SubString(str, 0, 8) + "..."
+			}
+			return str
+		},
 	})
 }

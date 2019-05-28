@@ -94,6 +94,8 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.POST("/product/del", background.PostProductDel)
 	//评论管理
 	v1.GET("/comments/list", background.GetCommentsList)
+	v1.GET("/comments/status", background.GetCommentsStatus)
+	v1.POST("/comments/del", background.PostCommentDel)
 	v1.GET("/feedback/list", background.GetFeedbackList)
 	//管理员管理
 	//by 角色管理

@@ -3,6 +3,7 @@ package home
 import (
 	"app/models/background"
 	"databases"
+	"fmt"
 	"github.com/go-xorm/xorm"
 	"math"
 )
@@ -49,16 +50,28 @@ func GetNewsByRight(limit int) ([]*models.Article, []*models.Article) {
 //endregion
 
 //region   根据id获取文章信息   Author:tang
-func GetArticleById(id int64) *models.Article {
+func GetArticleById(id int64) (*models.Article, map[string]interface{}) {
 	item := new(models.Article)
 	databases.Orm.Where("id=?", id).Get(item)
+	data := make(map[string]interface{}, 2)
 	if item != nil {
 		item.AuthorName = models.GetArticleAuthorById(int(item.AuthorId))
 		item.CateName = models.GetCategoryById(item.CateId).Title
 		item.ClickNum = item.ClickNum + 1
 		databases.Orm.Cols("click_num").Update(item, models.Article{Id: item.Id})
+		type upDown struct {
+			Id    int64  `json:"id"`
+			Title string `json:"title"`
+		}
+		pre, next := new(upDown), new(upDown)
+		has1, _ := databases.Orm.Table("article").Where("id<? and cate_id=?", item.Id, item.CateId).Desc("id").Get(pre)
+		has2, _ := databases.Orm.Table("article").Where("id>? and cate_id=?", item.Id, item.CateId).Asc("id").Get(next)
+		fmt.Println("上一篇，下一篇", has1, has2)
+		data["up"] = *pre
+		data["down"] = *next
+		return item, data
 	}
-	return item
+	return item, nil
 }
 
 //endregion

@@ -26,6 +26,16 @@
 								<div id="articleContent" style="overflow: hidden;" class="article-detail-content">
 									<p>{{.Data.Content}}</p>
 								</div>
+                                <div class="layui-col-md12">
+								{{range $key,$val:=.PreNext}}
+								{{if eq $key "up"}}
+                                    <span class="layui-col-md3">上一篇： <a href="/article/detail/{{$val.Id}}" class="blog-module-title">{{call $.StrSub $val.Title}}</a> </span>
+								{{else}}
+                                    <span class="layui-col-md9">下一篇： <a href="/article/detail/{{$val.Id}}" class="blog-module-title">{{call $.StrSub $val.Title}}</a></span>
+								{{end}}
+								{{end}}
+                                </div>
+								<p style="margin-top: 10px"></p>
 							</div>
 
 							<div class="blog-module shadow" style="box-shadow: 0 1px 8px #a6a6a6;">
