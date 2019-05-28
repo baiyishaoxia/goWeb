@@ -55,6 +55,9 @@ func PostArticleList(c *gin.Context) {
 		data[key]["cate_id"] = val.CateId
 		data[key]["click_num"] = val.ClickNum
 		data[key]["count_num"] = val.CountNum
+		data[key]["source"] = val.Source
+		data[key]["is_top"] = val.IsTop
+		data[key]["count_num"] = val.CountNum
 		data[key]["created_at"] = time.Time(val.CreatedAt).Format("2006-01-02")
 	}
 	c.JSON(http.StatusOK, gin.H{

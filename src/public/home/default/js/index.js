@@ -171,9 +171,14 @@ function article_list(id=0,page=1,limit=10,load=""){
                         "                            <img src=\""+_list[i].image+"\" alt=\""+_list[i].title+"\">\n" +
                         "                        </div>\n" +
                         "                        <div class=\"article-right\">\n" +
-                        "                            <div class=\"article-title\">\n" +
-                        "                                <span class=\"article_is_top\">置顶</span>&nbsp;<span class=\"article_is_yc\">原创</span>&nbsp;\n" +
-                        "                                <a href=\"/article/detail/"+_list[i].id+"\">"+_list[i].title+"</a>\n" +
+                        "                            <div class=\"article-title\">\n";
+                        if(_list[i].is_top == true){
+                          strVar+="<span class=\"article_is_top\">置顶</span>&nbsp;";
+                        }
+                        if(_list[i].source=="原创"){
+                          strVar+=" <span class=\"article_is_yc\">原创</span>&nbsp;\n";
+                        }
+                        strVar+="    <a href=\"/article/detail/"+_list[i].id+"\">"+_list[i].title+"</a>\n" +
                         "                            </div>\n" +
                         "                            <div class=\"article-abstract\">\n" +
                         "                                "+_list[i].intro+"</div>\n" +
