@@ -26,6 +26,10 @@ func PostArticleList(c *gin.Context) {
 	id, _ := strconv.ParseInt(c.PostForm("id"), 10, 64) //分类的id
 	page, _ := strconv.Atoi(c.DefaultPostForm("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultPostForm("limit", "10"))
+	keywords := c.PostForm("keywords")
+	wheres := map[string]interface{}{
+		"keywords": keywords,
+	}
 	var category_id int64 = 0
 	if id != 0 {
 		cate := new(models.Category)
@@ -41,7 +45,7 @@ func PostArticleList(c *gin.Context) {
 			return
 		}
 	}
-	news, num, all, page_c := home.GetNewsByCategoryId(category_id, limit, page-1)
+	news, num, all, page_c := home.GetNewsByCategoryId(category_id, limit, page-1, wheres)
 	var data = make([]map[string]interface{}, len(*news))
 	for key, val := range *news {
 		data[key] = make(map[string]interface{})

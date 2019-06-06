@@ -157,12 +157,6 @@ function article_list(id=0,page=1,limit=10,load=""){
         'data':{'id':id,'page':page,'limit':limit},
         'success':function(data){
             if(data.status == 200){
-                if(data.data.num / limit <= page){
-                    $("#page_load").remove();
-                    $("#articleList").append($('<div class="layui-flow-more">\n' +
-                        '                        <a href="javascript:;"><cite>没有更多了</cite></a>\n' +
-                        '                    </div>'));
-                }
                 var _list = data.data.news;
                 var strVar = "";
                 for(var i=0;i<_list.length;i++) {
@@ -201,6 +195,12 @@ function article_list(id=0,page=1,limit=10,load=""){
                         "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
                         "                    </div>";
                     $("#articleList").empty().append(strVar);
+                }
+                if(data.data.num / limit <= page){
+                    $("#page_load").remove();
+                    $("#articleList").append($('<div class="layui-flow-more">\n' +
+                        '                        <a href="javascript:;"><cite>没有更多了</cite></a>\n' +
+                        '                    </div>'));
                 }
             }else{
                 layer.msg('加载失败');

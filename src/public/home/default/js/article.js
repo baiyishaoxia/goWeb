@@ -2,10 +2,10 @@ layui.use('form', function(){
     var form = layui.form;
     form.on('submit(searchForm)', function(data){
         var keywords=$("#keywords").val();
-        if(keywords==null || keywords==""){
-            layer.msg('请输入要搜索的关键字');
-            return false;
-        }
+        // if(keywords==null || keywords==""){
+        //     layer.msg('请输入要搜索的关键字');
+        //     return false;
+        // }
         search();
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
@@ -26,10 +26,14 @@ $(function(){
             search();
         }
     });
+    $("#keywords").bind('input porpertychange',function(){
+        search();
+    });
 });
 
 function search() {
-	layer.msg('功能要自己写哦！');
+    var keywords=$("#keywords").val();
+    article_list(0,1,10,"",keywords);   //获取数据
 }
 
 function classifyList(id) {
@@ -37,20 +41,14 @@ function classifyList(id) {
 	layer.msg('加载完成！');
 }
 //公共请求加载文章数据 function
-function article_list(id=0,page=1,limit=10,load=""){
+function article_list(id=0,page=1,limit=10,load="",keywords=""){
     $.ajax({
         'url':"/article/ajax",
         'type':'post',
         'dataType':'json',
-        'data':{'id':id,'page':page,'limit':limit},
+        'data':{'id':id,'page':page,'limit':limit,'keywords':keywords},
         'success':function(data){
             if(data.status == 200){
-                if(data.data.num / limit <= page){
-                    $("#page_load").remove();
-                    $("#articleList").append($('<div class="layui-flow-more">\n' +
-                        '                        <a href="javascript:;"><cite>没有更多了</cite></a>\n' +
-                        '                    </div>'));
-                }
                 var _list = data.data.news;
                 var strVar = "";
                 for(var i=0;i<_list.length;i++) {
@@ -89,6 +87,12 @@ function article_list(id=0,page=1,limit=10,load=""){
                         "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
                         "                    </div>";
                     $("#articleList").empty().append(strVar);
+                }
+                if(data.data.num / limit <= page){
+                    $("#page_load").remove();
+                    $("#articleList").append($('<div class="layui-flow-more">\n' +
+                        '                        <a href="javascript:;"><cite>没有更多了</cite></a>\n' +
+                        '                    </div>'));
                 }
             }else{
                 layer.msg('加载失败');
@@ -179,12 +183,10 @@ $(document).on('click','#page_load',function(){
     var page = $(this).attr('page'); //分页的页码
     page = parseInt(page)+1;
     $(this).attr('page',page); //下一页+1
-    var sort = '';
     var total = $(this).attr('total'); //数据总数
     var limit = 10; //每页分页的数量
-    var status  = '';
-    var keywords  = '';
-    article_list(0,page,limit,"page_load");
+    var keyword=$("#keywords").val();
+    article_list(0,page,limit,"page_load",keyword);
 });
 //自定义搜索
 function GetQueryString(name) {

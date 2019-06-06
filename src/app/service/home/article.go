@@ -9,7 +9,7 @@ import (
 )
 
 //region   根据分类的ID获取新闻内容列表   Author:tang
-func GetNewsByCategoryId(category_id int64, limit int, nowPage int) (*[]models.Article, float64, float64, int64) {
+func GetNewsByCategoryId(category_id int64, limit int, nowPage int, wheres map[string]interface{}) (*[]models.Article, float64, float64, int64) {
 	var (
 		num  int64
 		page int64
@@ -24,6 +24,10 @@ func GetNewsByCategoryId(category_id int64, limit int, nowPage int) (*[]models.A
 	} else {
 		//每个分类下的所有文章
 		db = databases.Orm.Where("cate_id=?", category_id).OrderBy("sort asc").OrderBy("id desc").Where("status=?", 1) //倒序
+	}
+	if wheres["keywords"].(string) != "" {
+		fmt.Println(wheres["keywords"].(string))
+		db = db.Where("title like ?", "%"+wheres["keywords"].(string)+"%")
 	}
 	err := *db
 	num, _ = db.Count(new(models.Article))
