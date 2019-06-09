@@ -9,9 +9,13 @@ func main() {
 	q := queue.Queue{}
 	q.Put("queue_1")
 	q.Put("queue_2")
+	ss := map[string]interface{}{
+		"test": 1,
+	}
+	q.Put(ss)
 	travselQueue(&q)
 
-	q.Pop()
+	q.Pop() //出队列
 	travselQueue(&q)
 }
 
