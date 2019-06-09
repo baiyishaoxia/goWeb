@@ -1,9 +1,13 @@
 <!-- 底部 -->
 <footer id="f" class="blog-footer">
-    <p><span>Copyright</span><span>©</span><span>2019</span>
-        <a href="javascript:void(0)">Tang博客</a><span>Design By tangBoy</span></p>
+    <p>
+        <span>Copyright</span><span>©</span><span>2019</span>
+        <a href="javascript:void(0)">Tang博客</a><span>Design By tangBoy</span>
+    </p>
     <p>
         <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备18032684号-1</a>
+        <input type="button" value="繁体" onclick="zh_tran('t');"/>
+        <input type="button" value="简体" onclick="zh_tran('s');"/>
     </p>
 </footer>
 <!--侧边导航-->
@@ -49,6 +53,7 @@
 <script src="/public/home/default/layui/layui.js"></script>
 
 <script src="/public/home/default/js/global.js"></script>
+<script src="/public/home/default/js/zh_lang.js"></script>
 <!-- 天气预报 -->
 <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
 <script>tpwidget("init", {
