@@ -2,6 +2,7 @@ package main
 
 import (
 	"app/channel/chat"
+	chatRoom "app/controllers/home/chat"
 	"app/grpc"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -47,7 +48,15 @@ func main() {
 	})
 	//创建聊天室
 	g.Go(func() error {
-		routers.InitHttpRouter()
+		// Create a simple file server
+		//fs := http.FileServer(http.Dir("./html/home/chat"))
+		//http.Handle("/", fs)
+		fs := http.FileServer(http.Dir("public"))
+		http.Handle("/public/", http.StripPrefix("/public/", fs))
+		http.HandleFunc("/chat", chatRoom.GetIndex) //聊天室
+
+		// Configure webSocket route
+		http.HandleFunc("/ws", chat.HandleConnections)
 
 		// Start listening for incoming chat messages
 		go chat.HandleMessages()
@@ -55,7 +64,7 @@ func main() {
 		go chat.DataSent(&chat.Conns, chat.ToMessage) // 启动服务器广播线程
 
 		// Start the server on localhost port 8000 and log any errors
-		log.Println("http server started on :9092")
+		log.Println("http server started on :8000")
 		err := http.ListenAndServe(":9092", nil)
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
