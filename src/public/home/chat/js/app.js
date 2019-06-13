@@ -13,7 +13,7 @@ new Vue({
 
     created: function() {
         var self = this;
-        this.ws = new WebSocket('ws://' + window.location.host + '/ws');
+        this.ws = new WebSocket('ws://' + window.location.host + '/v2/ws');
         this.ws.addEventListener('message', function(e) {
             //console.log("ws",e);
             //console.log(e);
@@ -121,7 +121,7 @@ var vm2 = new Vue({
 
     created: function() {
         var self = this;
-        this.ws = new WebSocket('ws://' + window.location.host + '/ws');
+        this.ws = new WebSocket('ws://' + window.location.host + '/v2/ws');
         this.ws.addEventListener('message', function(e) {
             //console.log("ws",e);
             //console.log(e);
