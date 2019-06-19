@@ -3,7 +3,6 @@
 {{end}}
 {{define "content"}}
 
-
     <!-- 主体（一般只改变这里的内容） -->
     <div class="blog-body">
         <!-- 这个一般才是真正的主体内容 -->
@@ -11,6 +10,7 @@
         	<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
                 <a href="/" title="网站首页">网站首页</a>
                 <a href="/mixed/pic"><cite>相册列表</cite></a>
+                <a><cite>相册详情</cite></a>
             </blockquote>
             <div class="blog-main">
                 <div class="child-nav shadow">
@@ -23,8 +23,8 @@
             <div class="clear"></div>
         </div>
     </div>
-
+    <input type="hidden" id="picture_id" value="{{.Id}}">
 {{end}}
 {{define "js"}}
-<script src="/public/home/default/js/mixed_pic.js"></script>
+<script src="/public/home/default/js/mixed_pic_detail.js"></script>
 {{end}}

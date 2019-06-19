@@ -23,6 +23,7 @@ type Users struct {
 	UpdatedAt   app.Time  `xorm:"updated" json:"updated_at"`
 	Nickname    string    `xorm:"- <- ->" json:"-"`
 	AreaCode    string    `xorm:"- <- ->" json:"-"`
+	Mobile      string    `xorm:"- <- ->" json:"-"`
 	Token       string    `xorm:"- <- ->" json:"-"`
 	FailureTime time.Time `xorm:"- <- ->" json:"-"` //失效时间
 }
