@@ -2,11 +2,6 @@ package models
 
 import (
 	"app"
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/go-xorm/xorm"
-	"strconv"
-	"time"
 )
 
 type ActiveTrading struct {
@@ -25,24 +20,4 @@ type ActiveTrading struct {
 	OrderNumber  string   `json:"order_number"`  //订单号
 	CreatedAt    app.Time `xorm:"created" json:"created_at"`
 	UpdatedAt    app.Time `xorm:"updated" json:"updated_at"`
-}
-
-func CreateActiveTrading(c *gin.Context, db *xorm.Session) (*xorm.Session, bool, *ActiveTrading, string) {
-	token := c.Request.Header.Get("token")
-	user_id := GetUserByToken(token).Id
-	active_id, _ := strconv.ParseInt(c.PostForm("active_id"), 10, 64)
-	ticket_id, _ := strconv.ParseInt(c.PostForm("ticket_id"), 10, 64)
-	order_number := time.Now().Format("20060102150405") + strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	add := &ActiveTrading{
-		UserId: user_id, ActiveId: active_id, TicketId: ticket_id, Number: 1, Money: 0.01, Price: 0.01,
-		Check: 1, Status: 1, Payment: 1, OrderNumber: order_number}
-	res, err := db.Insert(add)
-	if res < 1 {
-		return db, false, add, "订单数据生成失败"
-	}
-	if err != nil {
-		fmt.Println(err.Error())
-		return db, false, add, "订单数据生成失败"
-	}
-	return db, true, add, "订单数据生成成功"
 }

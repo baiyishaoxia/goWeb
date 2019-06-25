@@ -1,13 +1,7 @@
 package channel
 
 import (
-	"app/models/home"
 	"app/vendors/redis/datasource"
-)
-
-var (
-	// 活动抽奖订单生成管道
-	UserAmountActiveOrderChan = make(chan *models.UserAmountActiveOrder, 1000000)
 )
 
 //region Remark:处理并发问题 Author:tang

@@ -11,6 +11,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/satori/go.uuid"
 	"html/template"
 	"io"
 	"math"
@@ -395,6 +396,11 @@ func RemoveHtmlStyle(src string) string {
 }
 
 //endregion
+
+func Uuid() string {
+	u, _ := uuid.NewV4()
+	return u.String()
+}
 
 //字符串分割数组并去空
 func StrSplitArray(str string) (res []string) {
