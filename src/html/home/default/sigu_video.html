@@ -292,7 +292,7 @@
 {{define "js"}}
 <script>
     console.log("%c%c源码作者%cTangBoy", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:4px;background:#FADFA3;color:#000;line-height:28px;font-size:14px;");
-    console.log("%c%c网站地址%chttp://www.wurao.xin", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:6px 6px 6px 2px;background:#FADFA3;color:#0093fff;line-height:28px;font-size:12px;");
+    console.log("%c%c网站地址%chttp://go.afurun.xyz", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:6px 6px 6px 2px;background:#FADFA3;color:#0093fff;line-height:28px;font-size:12px;");
     console.log("%c%c新浪微博%cTangBoy的故事", "line-height:28px;", "line-height:28px;padding:4px;background:#222;color:#FADFA3;font-size:14px;", "padding:4px;background:#FADFA3;color:red;line-height:28px;font-size:14px;");
     console.log("%c%c就知道阻挡不住你观看源码的冲动，但你至少要记住我！-----TangBoy", "line-height:28px;", "line-height:28px;padding:4px 0px;color:#fff;font-size:16px;background-image:-webkit-gradient(linear,left top,right top,color-stop(0,#ff22ff),color-stop(1,#5500ff));color:transparent;-webkit-background-clip:text;");
 </script>
@@ -300,6 +300,24 @@
     $(document).ready(function() {
         $(".fa-sigu-video").parent().parent().addClass("layui-this");
     });
+</script>
+<script>
+    $.ajax({
+        'url':"/about/ajax",
+        'type':"post",
+        'dataType': 'json',
+        'data': {"index":"sigu_video"},
+        'success': function (data) {
+            if (data.status == 200) {
+                var _list = data.data.info;
+                var str = "";
+                for(var i=0;i<_list.length;i++){
+                    str+='<option value="'+_list[i].url+'" selected>'+_list[i].title+' </option>';
+                }
+                $('#jk').empty().append(str);
+            }
+        }
+    })
 </script>
 <script src="/public/home/default/js/tv-beipy.js"></script>
 <script src="/public/home/default/js/wb.js" type="text/javascript" charset="utf-8"></script>

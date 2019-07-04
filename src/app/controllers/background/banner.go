@@ -19,6 +19,11 @@ func GetBannerList(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	data, num, all, page := background.PageBannerList(keywords, banner_category_id, limit, page-1)
+	if app.IsAjax(c) {
+		data := background.PageBannerListAjax(keywords, banner_category_id, limit, page-1)
+		c.String(http.StatusOK, data)
+		return
+	}
 	cate := new([]background.BannerCategory)
 	databases.Orm.Find(cate)
 	//模版

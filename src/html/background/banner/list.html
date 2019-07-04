@@ -11,7 +11,14 @@
         <div class="text-c">
             <button onclick="removeIframe()" class="btn btn-primary radius">关闭选项卡</button>
          <span class="select-box inline">
-            </span> 日期范围：
+                 <select name="banner_category_id" class="select">
+                     <option value="0">所有类别</option>
+                 {{range $key,$val:=.Category}}
+                     <option value="{{$val.Id}}" {{if eq $val.Id $.BannerCategoryId}} selected {{end}}>{{$val.Title}}</option>
+                 {{end}}
+                 </select>
+         </span>
+            日期范围：
             <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}',dateFmt: 'yyyy-MM-dd' })" name="start_time" id="logmin" class="input-text Wdate" style="width:120px;">
             -
             <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',dateFmt: 'yyyy-MM-dd' })" name="end_time" id="logmax" class="input-text Wdate" style="width:120px;">
@@ -31,13 +38,13 @@
                     <tr class="text-c">
                         <th width="3%"><input type="checkbox" name="" value=""></th>
                         <th width="3%">ID</th>
-                        <th width="5%">类别</th>
+                        <th width="8%">类别</th>
                         <th width="10%">标题</th>
-                        <th width="35%">简介</th>
-                        <th width="10%">链接</th>
+                        <th width="20%">简介</th>
+                        <th width="15%">链接</th>
                         <th width="5%">图片</th>
                         <th width="5%">排序</th>
-                        <th width="10%">创建时间</th>
+                        <th width="8%">创建时间</th>
                         <th width="10%">操作</th>
                     </tr>
                 </thead>
@@ -66,21 +73,56 @@
                 </tbody>
             </table>
         </div>
+        <!--/列表-->
+        <span class="page_total">共{{.Num}}条记录</span>
+        <ul class="pagination">
+        {{if gt .Page 1.00}}
+            <a class="disabled" href="?page={{.UpPage}}&banner_category_id={{.BannerCategoryId}}&keywords={{.Keywords}}"><span>上一页</span></a>
+        {{end}}
+            <li class="disabled"><span>{{.Page}}/{{.All}}</span></li>
+        {{if lt .Page .All}}
+            <a class="disabled" href="?page={{.DownPage}}&banner_category_id={{.BannerCategoryId}}&keywords={{.Keywords}}"><span>下一页</span></a>
+        {{end}}
+            <input name="page" class="input small" value="" type="text" style="margin-top: 4px">
+            <a class="btn-search" href="javascript:void (0)">GO</a>
+        </ul>
     </form>
 </div>
 {{end}}
 {{define "js"}}
 {{include "layouts/lib_validation"}}
 <script type="text/javascript">
-    $('.table-sort').dataTable({
-        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-        "bStateSave": true,//状态保存
-        "pading":false,
-        "aoColumnDefs": [
-            {"orderable":false,"aTargets":[3]}// 不参与排序的列
-        ]
-    });
-
+    // $('.table-sort').dataTable({
+        // "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        // "bStateSave": true,//状态保存
+        //"serverSide" : true, //已保证页面在加载时就请求后台
+        //"processing" : true ,//加载效果
+        //"ajax" : "/admin/banner/list" , //请求接口
+        // "pading":false,
+        // "aoColumnDefs": [
+        //     {"orderable":false,"aTargets":[3]}// 不参与排序的列
+        // ]
+    // });
+    // $(document).ready(function() {
+    //     $("#datatable").dataTable({
+    //         "processing": true,
+    //         "serverSide": true,
+    //         "ajax" : "/admin/banner/list",
+    //         "columns": [
+    //             {"data": "id", "bSortable": false},
+    //             {"data":"category_title","render": function(d) {
+    //                     return d.banner_category.title;
+    //                 }
+    //             },
+    //             {"data": "intro"},
+    //             {"data": "url"},
+    //             {"data": "image"},
+    //             {"data": "sort"},
+    //             {"data": "created_at"},
+    //             {"data": "created_at"},
+    //         ],
+    //     });
+    // });
     /*图片内容-添加*/
     function article_add(title,url,w,h){
         var index = layer.open({

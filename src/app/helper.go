@@ -401,6 +401,18 @@ func Uuid() string {
 	u, _ := uuid.NewV4()
 	return u.String()
 }
+func IsAjax(c *gin.Context) bool {
+	if c.GetHeader("X-Requested-With") == "XMLHttpRequest" {
+		return true
+	} else {
+		return false
+	}
+}
+
+//说明：draw: 表示请求次数，recordsTotal: 总记录数，recordsFiltered: 过滤后的总记录数，data: 具体的数据对象数组
+func TableJson(code int, count int64, msg string, data string) string {
+	return "{\"draw\":" + strconv.Itoa(code) + ",\"recordsTotal\":" + strconv.FormatInt(count, 10) + ",\"data\":" + data + ",\"recordsFiltered\":\"" + msg + "\"}"
+}
 
 //字符串分割数组并去空
 func StrSplitArray(str string) (res []string) {
