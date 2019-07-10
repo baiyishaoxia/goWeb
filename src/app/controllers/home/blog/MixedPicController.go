@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"app/service/common"
 	"app/service/home"
 	"config"
 	"github.com/gin-gonic/gin"
@@ -10,16 +11,20 @@ import (
 
 //杂七杂八
 func GetBlogMixedPic(c *gin.Context) {
+	user := common.ValidateLogin(c)
 	c.HTML(http.StatusOK, "default/mixed_pic", gin.H{
 		"Title": "欢迎使用GO语言编程",
+		"User":  user,
 	})
 }
 
 func GetBlogMixedPicDetail(c *gin.Context) {
+	user := common.ValidateLogin(c)
 	id := c.Param("id")
 	c.HTML(http.StatusOK, "default/mixed_pic_detail", gin.H{
 		"Title": "欢迎使用GO语言编程",
 		"Id":    id,
+		"User":  user,
 	})
 }
 

@@ -64,6 +64,19 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                     if(_list[i].source=="原创"){
                         strVar+=" <span class=\"article_is_yc\">原创</span>&nbsp;\n";
                     }
+                    //一键分享
+                    var share ="               <div class=\"projectCon-share\">\n" +
+                        "                            <span>\n" +
+                        "                                <div class=\"bdsharebuttonbox\">\n" +
+                        "                                    <a target=\"_blank\" href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&title="+ _list[i].title+"&summary="+ _list[i].intro+"...&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
+                        "                                       class=\"bds_qzone\" title=\"分享到QQ空间\"></a>\n" +
+                        "                                    <a target=\"_blank\" href=\"http://service.weibo.com/share/share.php?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&sharesource=weibo&title="+  _list[i].title +"&pic=http://go.afurun.xyz/public/home/default/img/admin.jpg&searchPic=false\" class=\"bds_tsina\"  title=\"分享到新浪微博\"></a>\n" +
+                        "                                    <a href=\"#\" class=\"bds_weixin\" data-id=\""+_list[i].id +"\" data-cmd=\"weixin\" title=\"分享到微信\"></a>\n" +
+                        "                                    <a target=\"_blank\" href=\"http://connect.qq.com/widget/shareqq/index.html?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&sharesource=qzone&title="+ _list[i].title+"&summary="+ _list[i].intro +"...&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
+                        "                                       class=\"bds_sqq\" title=\"分享到QQ好友\"></a>\n" +
+                        "                                </div>\n" +
+                        "                            </span>\n" +
+                        "                        </div>";
                     strVar+="             <a href=\"/article/detail/"+_list[i].id+"\">"+_list[i].title+"</a>\n" +
                         "                            </div>\n" +
                         "                            <div class=\"article-abstract\">\n" +
@@ -77,6 +90,7 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                         "                            <span><i class=\"fa fa-fa\"></i>&nbsp;&nbsp;<a href=\"javascript:classifyList("+_list[i].cate_id+");\"> "+_list[i].cate_title+"</a></span>\n" +
                         "                            <span class=\"article-viewinfo\"><i class=\"fa fa-eye\"></i>&nbsp;"+_list[i].click_num+"</span>\n" +
                         "                            <span class=\"article-viewinfo\"><i class=\"fa fa-commenting\"></i>&nbsp;"+_list[i].count_num+"</span>\n" +
+                        ""+share+""+
                         "                        </div>\n" +
                         "                    </div>";
                 }
@@ -135,6 +149,7 @@ function article_right(){
                 var strVar1 = "";
                 var strVar2 = "";
                 for(var i=0;i<_click.length;i++) {
+                    //点击排行 top(1,2,3)的样式
                     if(i==0){
                         strVar1+="<li>\n" +
                             "         <span><i class=\"layui-badge-rim layui-bg-red\" id=\"item"+i+"\">"+(i+1)+"</i></span> &nbsp;&nbsp;\n" +

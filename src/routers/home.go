@@ -55,6 +55,7 @@ func InitHomeRouter() *gin.Engine {
 	router.POST("/article/ajax", blog.PostArticleList)                 // 文章专栏(Ajax)
 	router.POST("/category/ajax", blog.PostArticleCatgory)             // 文章分类(Ajax)
 	router.GET("/article/right", blog.GetArticleRight)                 // 文章推荐(Ajax)
+	router.GET("/hot/user", blog.GetHotMessageUser)                    // 热评用户(Ajax)
 	router.GET("/article/detail/:id", blog.GetBlogArticleDetail)       //文章详情
 	router.GET("/mixed/pic", blog.GetBlogMixedPic)                     //杂七杂八
 	router.POST("/mixed/pic/ajax", blog.PostMixedPic)                  //杂七杂八(Ajax)
@@ -66,8 +67,9 @@ func InitHomeRouter() *gin.Engine {
 	router.POST("/about/ajax", blog.PostBannerList)                    //关于本站(Ajax)
 	router.GET("/sigu/video", blog.GetBlogSiguVideo)                   //思古视频
 	router.GET("/qq/login", blog.GetBlogQQLogin)                       //QQ互联登录
+	router.GET("/logout", blog.GetBlogExit)                            //退出
 	router.GET("/message/ajax", blog.GetBlogMessageAjax)               //获取留言(Ajax)
-	router.POST("/message/create", blog.PostBlogMessageCreate)         //提交留言(Ajax)
+	router.POST("/message/create", blog.PostBlogMessageCreate)         //提交文章评论、留言(Ajax)
 	router.GET("/download", blog.FileDownload)                         //文件下载
 	return router
 }

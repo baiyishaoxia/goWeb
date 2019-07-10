@@ -2,12 +2,17 @@ package blog
 
 import (
 	"app"
+	models3 "app/models"
 	"app/models/background"
 	models2 "app/models/home"
+	"app/service/common"
 	"app/service/home"
+	session "app/vendors/session/models"
 	"config"
 	"databases"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/zcshan/d3outh"
 	"net/http"
 	"strconv"
 	"strings"
@@ -16,8 +21,33 @@ import (
 
 //文章专栏
 func GetBlogArticle(c *gin.Context) {
+	//QQ登录后回调地址
+	var (
+		code  = c.Query("code")  //获取Authorization Code
+		state = c.Query("state") //获取state
+	)
+	if state == "state" {
+		qqconf := &d3auth.Auth_conf{Appid: AppId, Appkey: AppKey, Rurl: RUrl}
+		qqouth := d3auth.NewAuth_qq(qqconf)
+		token, err := qqouth.Get_Token(code) //回调页收的code 获取token
+		fmt.Println("---------error---------", err)
+		me, err := qqouth.Get_Me(token) //获取第三方id
+		fmt.Println("---------token---------", token, "---------openid---------", me.OpenID)
+		userinfo, _ := qqouth.Get_User_Info(token, me.OpenID) //获取用户信息 userinfo 是一个json字符串返回
+		//fmt.Println("---------info---------", userinfo)
+		res, err, user_id := models3.AddQQUser(userinfo, me.OpenID) //新增QQ用户
+		fmt.Println("---------login---------", res, err, user_id)
+		if res {
+			session.SetSession(c, "userid", user_id) //写入session并进行用户登录
+			c.Redirect(http.StatusMovedPermanently, "/")
+			c.Abort()
+		}
+	}
+	user := common.ValidateLogin(c)
+	//视图
 	c.HTML(http.StatusOK, "default/article", gin.H{
 		"Title": "欢迎使用GO语言编程",
+		"User":  user,
 	})
 }
 
@@ -110,10 +140,12 @@ func GetArticleRight(c *gin.Context) {
 
 //文章详情
 func GetBlogArticleDetail(c *gin.Context) {
+	user := common.ValidateLogin(c)
 	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	data, preNext := home.GetArticleById(id)
 	c.HTML(http.StatusOK, "default/detail", gin.H{
 		"Title":   "欢迎使用GO语言编程",
+		"User":    user,
 		"Data":    data,
 		"PreNext": preNext,
 		"StrSub": func(str string) string {

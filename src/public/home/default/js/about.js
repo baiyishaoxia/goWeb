@@ -28,6 +28,9 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function() {
 	//评论和留言的编辑器的验证
 	layui.form.verify({
 		content: function(value) {
+            if($("#user").attr('value') == 0){
+                return "请先登录";
+            }
 			value = $.trim(layedit.getText(editIndex));
 			if(value == "") return "至少得有一个字吧";
 			layedit.sync(editIndex);
@@ -36,6 +39,9 @@ layui.use(['jquery', 'form', 'layedit', 'flow'], function() {
 			if(value == "" || value == null) return "至少你得先登录吧！";
 		},
 		replyContent: function(value) {
+            if($("#user").attr('value') == 0){
+                return "请先登录";
+            }
 			if($.trim(value) == "") {
 				return "至少得有一个字吧!";
 			}

@@ -130,6 +130,26 @@ function article_right(){
         }
     });
 }
+
+//加载热评用户
+function hot_users(){
+    $.ajax({
+        'url': "/hot/user",
+        'type': 'get',
+        'dataType': 'json',
+        'data': {'limit':5},
+        'success': function (data) {
+            if (data.status == 200) {
+                var _data = data.data;
+                var strVar = "";
+                for(var i=0;i<_data.length;i++) {
+
+                }
+                $('#hotusers-list').empty().append(strVar);
+            }
+        }
+    });
+}
 //加载作者信息数据
 function site_author(){
     $.ajax({
@@ -250,6 +270,7 @@ $(function () {
     site_author();
     article_list();
     user_message();
+    hot_users();
 });
 
 

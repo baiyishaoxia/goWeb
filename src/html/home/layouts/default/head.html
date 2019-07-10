@@ -15,10 +15,15 @@
 
     <nav id="h" class="blog-nav layui-header">
         <div class="blog-container">
-
-            <a href="/qq/login" class="blog-user">
-                <i class="fa fa-qq"></i>
-            </a>
+            {{if eq .User.Id 0}}
+                    <a href="/qq/login" class="blog-user">
+                        <i class="fa fa-qq"></i>
+                    </a>
+            {{else}}
+                <a href="javascript:void(0)" class="blog-user"  url="/logout" onclick="logout(this)" >
+                    <img id="loginOut" src="{{.User.HeadImg}}" alt="{{.User.Name}}">
+                </a>
+            {{end}}
 
             <a class="blog-logo" href="/">Tang</a>
 
@@ -48,3 +53,13 @@
             </a>
         </div>
     </nav>
+    <script>
+        function logout(obj) {
+            $.get($(obj).attr('url'),function(data){
+                if(data.status == 200) {
+                    layer.msg(data.info);
+                    window.location.href = data.url;
+                }
+            });
+        }
+    </script>

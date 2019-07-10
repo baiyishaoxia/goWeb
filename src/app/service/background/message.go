@@ -68,8 +68,10 @@ func GetMessageNew() []map[string]interface{} {
 //endregion
 
 //region   获取首页热评用户   Author:tang
-func GetMessageHot(limit int) {
-
+func GetMessageHot(limit int) []Message {
+	item := make([]Message, 0)
+	databases.Orm.GroupBy("users_id").Limit(limit).Find(&item)
+	return item
 }
 
 //endregion

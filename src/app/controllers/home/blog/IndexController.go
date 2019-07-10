@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"app/service/common"
 	"app/service/home"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -9,10 +10,15 @@ import (
 )
 
 func GetMain(c *gin.Context) {
+	user := common.ValidateLogin(c)
+	if user.Id != 0 {
+		fmt.Println("登录成功", user)
+	}
 	banner, _ := home.BannerList("pc_banner")
 	c.HTML(http.StatusOK, "default/index", gin.H{
 		"Title":  "欢迎使用GO语言编程",
 		"Banner": banner,
+		"User":   user,
 	})
 }
 

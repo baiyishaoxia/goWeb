@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"app/service/common"
 	"app/service/home"
 	"config"
 	"github.com/gin-gonic/gin"
@@ -16,6 +17,7 @@ func GetBlogAbout(c *gin.Context) {
 	data4, _ := home.BannerList("about_wall")
 	c.HTML(http.StatusOK, "default/about", gin.H{
 		"Title": "欢迎使用GO语言编程",
+		"User":  common.ValidateLogin(c),
 		"Data1": *data1[0],
 		"Data2": *data2[0],
 		"Data3": *data3[0],

@@ -13,7 +13,6 @@
             <a href="/article"><cite>文章专栏</cite></a>
         </blockquote>
         <div class="blog-main">
-
             <div id="parentArticleList" class="blog-main-left animated slideInLeft">
                 <div class="flow-default" id="articleList">
                     <div class="article shadow animated zoomIn">
@@ -259,6 +258,7 @@
                 <div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
             </div>
         </div>
+        <input type="hidden" id="url" url="http://go.afurun.xyz/article/detail/">
         <div class="clear"></div>
     </div>
 </div>
@@ -266,4 +266,36 @@
 {{end}}
 {{define "js"}}
 <script src="/public/home/default/js/article.js"></script>
+<script>
+    //页面分享
+    setTimeout(function(){
+        var ShareId = "";
+        var url = $("#url").attr('url');
+        //绑定所有分享按钮所在A标签的鼠标移入事件，从而获取动态ID
+        $(".bdsharebuttonbox a").mouseover(function () {
+            ShareId = $(this).attr("data-id");
+        });
+        function SetShareUrl(cmd, config) {
+            if (ShareId) {
+                config.bdUrl = url + '/' + ShareId;
+            }
+            return config;
+        }
+
+        //百度分享
+        window._bd_share_config = {
+            "common": {
+                onBeforeClick: SetShareUrl,
+                "bdSnsKey": {},
+                "bdText": "",
+                "bdMini": "2",
+                "bdMiniList": false,
+                "bdPic": "",
+                "bdStyle": "0",
+                "bdSize": "32"
+            },
+            "share": {}};
+        with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+ ~(-new Date() / 36e5)];
+    },3000);
+</script>
 {{end}}

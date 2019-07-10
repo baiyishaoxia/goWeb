@@ -35,6 +35,9 @@ func GetSystemBase(c *gin.Context) {
 		"port":          models.ReadConfig("port"),
 		"email_name":    models.ReadConfig("email_name"),
 		"email_address": models.ReadConfig("email_address"),
+
+		"qq_appid":  models.ReadConfig("qq_appid"),
+		"qq_appkey": models.ReadConfig("qq_appkey"),
 	})
 }
 
@@ -65,6 +68,14 @@ func PostSystemBase(c *gin.Context) {
 		models.Config{
 			Name:  "ip",
 			Value: c.DefaultPostForm("ip", ""),
+		},
+		models.Config{
+			Name:  "qq_appid",
+			Value: c.DefaultPostForm("qq_appid", ""),
+		},
+		models.Config{
+			Name:  "qq_appkey",
+			Value: c.DefaultPostForm("qq_appkey", ""),
 		},
 	}
 	//保存修改

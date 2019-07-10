@@ -19,6 +19,8 @@ type Users struct {
 	IsLock      bool      `xorm:"default true" json:"is_lock"`
 	LoginCount  int64     `xorm:"not null default 0 INTEGER" json:"login_count"`
 	LastLogin   time.Time `json:"last_login"`
+	HotCount    int64     `xorm:"not null default 0 INTEGER" json:"hot_count"` //热评次数
+	Level       int64     `xorm:"not null default 0 INTEGER" json:"level"`     //等级(潜水,活跃等)
 	CreatedAt   app.Time  `xorm:"created" json:"created_at"`
 	UpdatedAt   app.Time  `xorm:"updated" json:"updated_at"`
 	Nickname    string    `xorm:"- <- ->" json:"-"`

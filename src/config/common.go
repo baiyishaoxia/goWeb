@@ -7,4 +7,5 @@ const (
 	VueSuccess  = 1   //成功
 	VueError    = 0   //错误
 	VueRelogin  = 2   //重新登录
+
 )

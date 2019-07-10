@@ -40,7 +40,12 @@ func GetBlogMessageAjax(c *gin.Context) {
 //region   获取热评用户   Author:tang
 func GetHotMessageUser(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "5"))
-	background.GetMessageHot(limit)
+	data := background.GetMessageHot(limit)
+	c.JSON(http.StatusOK, gin.H{
+		"status": config.HttpSuccess,
+		"data":   data,
+	})
+	return
 }
 
 //endregion
@@ -49,8 +54,8 @@ func GetHotMessageUser(c *gin.Context) {
 func PostBlogMessageCreate(c *gin.Context) {
 	user_id, _ := strconv.ParseInt(c.PostForm("user_id"), 10, 64)       //用户ID
 	flag, _ := strconv.ParseInt(c.PostForm("type"), 10, 64)             //类型来自于(1留言墙，2文章评论)
-	article_id, _ := strconv.ParseInt(c.PostForm("article_id"), 10, 64) //类型来自于(1留言墙，2文章评论)
-	parent_id, _ := strconv.ParseInt(c.PostForm("parent_id"), 10, 64)   //父级ID
+	article_id, _ := strconv.ParseInt(c.PostForm("article_id"), 10, 64) //文章ID
+	parent_id, _ := strconv.ParseInt(c.PostForm("parent_id"), 10, 64)   //评论的父级ID
 	content := app.RemoveHtmlScript(c.PostForm("content"))              //评论内容
 	user := models.GetUserById(user_id)
 	var add *background.Message

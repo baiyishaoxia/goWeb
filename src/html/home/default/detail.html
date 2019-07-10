@@ -43,7 +43,7 @@
 									<legend>来说两句吧</legend>
 									<div class="layui-field-box">
                                         <form class="layui-form blog-editor">
-                                            <input type="hidden" id="user" name="user_id" lay-verify="userId" value="1">
+                                            <input type="hidden" id="user" name="user_id" lay-verify="userId" value="{{.User.Id}}">
                                             <input type="hidden" id="article" name="article_id" value="{{.Data.Id}}">
                                             <input type="hidden" name="type" value="2"/><!--文章评论-->
                                             <div class="layui-form-item">
