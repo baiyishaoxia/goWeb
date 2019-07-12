@@ -46,7 +46,7 @@ func GetUserById(id int64) *Users {
 
 //endregion
 
-//region   通过id获取用户信息   Author:tang
+//region   验证用户信息是否失效   Author:tang
 func GetUserByToken(token string) *Users {
 	user := new(Users)
 	has, err := databases.Orm.Where("token = ?", token).Where("failure_time>?", time.Now().Format("2006-01-02 15:04:05")).Get(user)
@@ -58,6 +58,52 @@ func GetUserByToken(token string) *Users {
 		return nil
 	}
 	return user
+}
+
+//endregion
+
+//region   为用户增加热评次数   Author:tang
+func UserHotCountInrc(user_id int64) {
+	item := new(Users)
+	res, _ := databases.Orm.Where("id=?", user_id).Get(item)
+	if res {
+		item.HotCount = item.HotCount + 1
+		databases.Orm.Cols("hot_count").Update(item, Users{Id: item.Id})
+	}
+}
+
+//endregion
+
+//region   获取所有用户   Author:tang
+func GetUsersList() []Users {
+	item := make([]Users, 0)
+	databases.Orm.Desc("id").Find(&item)
+	return item
+}
+
+//endregion
+
+//region   活跃度升级方式   Author:tang
+func GetLevelUpdate(level int64) string {
+	item := "新手"
+	switch level {
+	case 1:
+		item = "潜水"
+		break
+	case 2:
+		item = "活跃"
+		break
+	case 3:
+		item = "吐槽"
+		break
+	case 4:
+		item = "传说"
+		break
+	case 5:
+		item = "至尊"
+		break
+	}
+	return item
 }
 
 //endregion

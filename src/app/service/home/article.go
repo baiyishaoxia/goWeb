@@ -9,11 +9,10 @@ import (
 )
 
 //region   根据分类的ID获取新闻内容列表   Author:tang
-func GetNewsByCategoryId(category_id int64, limit int, nowPage int, wheres map[string]interface{}) (*[]models.Article, float64, float64, int64) {
+func GetNewsByCategoryId(category_id int64, limit int, page int, wheres map[string]interface{}) (*[]models.Article, float64, float64, int64) {
 	var (
-		num  int64
-		page int64
-		db   *xorm.Session
+		num int64
+		db  *xorm.Session
 	)
 	if limit <= 0 {
 		limit = 10
@@ -37,8 +36,8 @@ func GetNewsByCategoryId(category_id int64, limit int, nowPage int, wheres map[s
 	}
 	//数据
 	news := new([]models.Article)
-	err.Limit(limit, nowPage*limit).Find(news)
-	return news, float64(num), all, page + 1
+	err.Limit(limit, page*limit).Find(news)
+	return news, float64(num), all, int64(page + 1)
 }
 
 //endregion

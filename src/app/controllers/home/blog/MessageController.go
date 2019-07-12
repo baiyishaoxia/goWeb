@@ -91,6 +91,7 @@ func PostBlogMessageCreate(c *gin.Context) {
 		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}
 	}
 	_, message := background.InsertMessage(add)
+	models.UserHotCountInrc(user_id) //为当前评论用户增加“热评”次数
 	c.JSON(http.StatusOK, gin.H{
 		"status":  config.HttpSuccess,
 		"data":    "提交成功",

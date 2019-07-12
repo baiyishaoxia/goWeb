@@ -68,10 +68,19 @@ func GetMessageNew() []map[string]interface{} {
 //endregion
 
 //region   获取首页热评用户   Author:tang
-func GetMessageHot(limit int) []Message {
-	item := make([]Message, 0)
-	databases.Orm.GroupBy("users_id").Limit(limit).Find(&item)
-	return item
+func GetMessageHot(limit int) []map[string]interface{} {
+	item := make([]models.Users, 0)
+	databases.Orm.OrderBy("hot_count desc").Asc("id").Select("head_img,name,hot_count,level").Limit(limit).Find(&item)
+	data := make([]map[string]interface{}, len(item))
+	for key, val := range item {
+		data[key] = make(map[string]interface{})
+		data[key]["name"] = val.Name
+		data[key]["head_img"] = val.HeadImg
+		data[key]["hot_count"] = val.HotCount
+		data[key]["level"] = val.Level
+		data[key]["level_name"] = models.GetLevelUpdate(val.Level)
+	}
+	return data
 }
 
 //endregion

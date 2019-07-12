@@ -64,7 +64,7 @@ func InitHomeRouter() *gin.Engine {
 	router.GET("/time/line", blog.GetBlogTimeLine)                     //点点滴滴
 	router.GET("/time/line/ajax", blog.GetBlogTimeLineAjax)            //点点滴滴(Ajax)
 	router.GET("/about", blog.GetBlogAbout)                            //关于本站
-	router.POST("/about/ajax", blog.PostBannerList)                    //关于本站(Ajax)
+	router.POST("/about/ajax", blog.PostBannerList)                    //关于本站、关键字获取(Ajax)
 	router.GET("/sigu/video", blog.GetBlogSiguVideo)                   //思古视频
 	router.GET("/qq/login", blog.GetBlogQQLogin)                       //QQ互联登录
 	router.GET("/logout", blog.GetBlogExit)                            //退出

@@ -65,7 +65,7 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                         strVar+=" <span class=\"article_is_yc\">原创</span>&nbsp;\n";
                     }
                     //一键分享
-                    var share ="               <div class=\"projectCon-share\">\n" +
+                    var share1 ="               <div class=\"projectCon-share\">\n" +
                         "                            <span>\n" +
                         "                                <div class=\"bdsharebuttonbox\">\n" +
                         "                                    <a target=\"_blank\" href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&title="+ _list[i].title+"&summary="+ _list[i].intro+"...&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
@@ -77,6 +77,17 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                         "                                </div>\n" +
                         "                            </span>\n" +
                         "                        </div>";
+                    var share2 = "\t\t<span class=\"shareHover\">\n" +
+                        "\t\t\t<div class=\"bdsharebuttonbox shareBox\" >\n" +
+                        "\t\t\t\t<a target=\"_blank\" href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=url=http://go.afurun.xyz/article/detail/"+  _list[i].id +"&title="+ _list[i].title+"&summary="+ _list[i].intro +"&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
+                        "\t\t\t\tclass=\"bds_qzone\" title=\"分享到QQ空间\">QQ空间</a>\n" +
+                        "\t\t\t\t<a target=\"_blank\" href=\"http://connect.qq.com/widget/shareqq/index.html?url=http://go.afurun.xyz/article/detail/"+_list[i].id +"&sharesource=qzone&title="+_list[i].title +"&summary="+ _list[i].intro+"&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
+                        "\t\t\t\tclass=\"bds_sqq\" title=\"分享到QQ好友\">QQ好友</a>\n" +
+                        "\t\t\t\t<a target=\"_blank\" href=\"http://v.t.sina.com.cn/share/share.php?url=http://go.afurun.xyz/article/detail/"+_list[i].id  +"&amp;title="+ _list[i].title +"&amp;pic=http://go.afurun.xyz/public/home/default/img/admin.jpg\" class=\"bds_tsina\" title=\"分享到新浪微博\">新浪微博</a>\n" +
+                        "\t\t\t\t<a href=\"#\" class=\"bds_weixin\" data-id=\""+_list[i].id+"\" data-cmd=\"weixin\" title=\"分享到微信\">微信</a>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t   </span>";
+
                     strVar+="             <a href=\"/article/detail/"+_list[i].id+"\">"+_list[i].title+"</a>\n" +
                         "                            </div>\n" +
                         "                            <div class=\"article-abstract\">\n" +
@@ -90,12 +101,17 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                         "                            <span><i class=\"fa fa-fa\"></i>&nbsp;&nbsp;<a href=\"javascript:classifyList("+_list[i].cate_id+");\"> "+_list[i].cate_title+"</a></span>\n" +
                         "                            <span class=\"article-viewinfo\"><i class=\"fa fa-eye\"></i>&nbsp;"+_list[i].click_num+"</span>\n" +
                         "                            <span class=\"article-viewinfo\"><i class=\"fa fa-commenting\"></i>&nbsp;"+_list[i].count_num+"</span>\n" +
-                        ""+share+""+
+                        ""+share1+""+
                         "                        </div>\n" +
                         "                    </div>";
                 }
                 if(load!=""){
+                    $(".layui-flow-more").remove();
+                    strVar +="                <div class=\"layui-flow-more\">\n" +
+                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
+                        "                    </div>";
                     $("#articleList").append(strVar);
+                    window._bd_share_main.init(); //ajax加载完成后再执行一下分享才能起效
                 }else{
                     strVar+="                <div class=\"layui-flow-more\">\n" +
                         "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
@@ -216,3 +232,34 @@ $(function () {
     $("#articleList").empty(); //清空数据
     article_list(category_id);   //获取数据
 });
+//---------------------------页面分享---------------------------
+setTimeout(function(){
+    var ShareId = "";
+    var url = $("#url").attr('url');
+    //绑定所有分享按钮所在A标签的鼠标移入事件，从而获取动态ID
+    $(".bdsharebuttonbox a").on("mouseover",function () {
+        ShareId = $(this).attr("data-id");
+    });
+    function SetShareUrl(cmd, config) {
+        if (ShareId) {
+            config.bdUrl = url + '/' + ShareId;
+        }
+        return config;
+    }
+
+    //百度分享
+    window._bd_share_config = {
+        "common": {
+            onBeforeClick: SetShareUrl,
+            "bdSnsKey": {},
+            "bdText": "",
+            "bdMini": "2",
+            "bdMiniList": false,
+            "bdPic": "",
+            "bdStyle": "0",
+            "bdSize": "32"
+        },
+        "share": {}};
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    //with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+},3000);

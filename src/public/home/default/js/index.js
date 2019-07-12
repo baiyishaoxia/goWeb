@@ -143,9 +143,20 @@ function hot_users(){
                 var _data = data.data;
                 var strVar = "";
                 for(var i=0;i<_data.length;i++) {
-
+                      strVar+="\t\t<li class=\"hotusers-list-item\">\n" +
+                          "\t\t\t<div class=\"hotusers-top hotusers-num\">"+(i+1) +"</div>\n" +
+                          "\t\t\t<div class=\"hotusers-avator\">\n" +
+                          "\t\t\t\t<img src=\""+_data[i].head_img +"\" width=\"45\" height=\"45\">\n" +
+                          "\t\t\t</div>\n" +
+                          "\t\t\t<div>\n" +
+                          "\t\t\t\t<div class=\"hotusers-nick\">"+ _data[i].name+"</div>\n" +
+                          "\t\t\t\t<span class=\"hotusers-level\" title=\"等级"+(_data[i].level+1) +"\" style=\"background-image: url(https://changyan.itc.cn/v2/asset/scs/imgs/p-lv0"+(_data[i].level+1) +".png);\"><i style=\" background-image:url(https://changyan.itc.cn/v2/asset/scs/imgs/p-lv01-04.png);\">"+ _data[i].level_name+"</i></span>\n" +
+                          "\t\t\t\t<span class=\"hotusers-totalcmt\">本站评论数："+_data[i].hot_count +"</span>\n" +
+                          "\t\t\t</div>\n" +
+                          "\t\t\t<span class=\"hotusers-icons\"></span>\n" +
+                          "\t\t</li>";
                 }
-                $('#hotusers-list').empty().append(strVar);
+                $('.hotusers-list').empty().append(strVar);
             }
         }
     });
@@ -166,7 +177,6 @@ function site_author(){
             }
         }
     });
-
 }
 //加载文章数据
 function article_list(id=0,page=1,limit=10,load=""){
@@ -265,12 +275,32 @@ function user_message(){
         }
     });
 }
+//加载友情链接数据
+function friend_ship(){
+    $.ajax({
+        'url': "/about/ajax",
+        'type': 'post',
+        'dataType': 'json',
+        'data': {'index': "friend_ship"},
+        'success': function (data) {
+            if (data.status == 200) {
+                var strVar = "";
+                var _list = data.data.info;
+                for(var i=0;i<_list.length;i++) {
+                    strVar+="<li>\n" +
+                        "           <a target=\"_blank\" href=\""+_list[i].url+"\" title=\""+_list[i].title+"\">"+ _list[i].title+"</a>\n" +
+                        "     </li>"
+                }
+                $('.blogroll').empty().append(strVar);
+            }
+        }
+    });
+}
 $(function () {
     article_right();
     site_author();
     article_list();
     user_message();
     hot_users();
+    friend_ship();
 });
-
-

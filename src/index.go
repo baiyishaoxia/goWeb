@@ -1,10 +1,13 @@
 package main
 
 import (
+	"app"
 	"app/channel/chat"
+	"app/channel/job"
 	"app/grpc"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/robfig/cron"
 	"golang.org/x/sync/errgroup"
 	"log"
 	"net"
@@ -45,6 +48,9 @@ func main() {
 			go jsonrpc.ServeConn(conn)
 		}
 	})
+	//当前进程中生成一个定时任务协程
+	go job.HandleConcurrent()
+	go cronData()
 	//创建聊天室
 	g.Go(func() error {
 		routers.InitHttpRouter()
@@ -93,4 +99,18 @@ func background() *http.Server {
 	}
 	fmt.Println("http://localhost" + server.Addr + "/login")
 	return server
+}
+
+//启动定时任务
+func cronData() {
+	c := cron.New()
+	spec := "*/600 * * * * ?"
+	c.AddFunc(spec, func() {
+		job.UsereLevelChan <- app.Uuid()
+	})
+	//启动计划任务
+	c.Start()
+	//关闭着计划任务, 但是不能关闭已经在执行中的任务.
+	defer c.Stop()
+	select {}
 }
