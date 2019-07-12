@@ -8,7 +8,7 @@ $(function () {
         'data': {'key':1},
         'success': function (d) {
             if(d.status == 200){
-                console.log(d.data);
+                //console.log(d.data);
                 data = d.data;
             }
         }
@@ -236,3 +236,34 @@ function extra(x) {
 		return x;
 	}
 }
+//加载友情链接数据
+function friend_ship(){
+    $.ajax({
+        'url': "/about/ajax",
+        'type': 'post',
+        'dataType': 'json',
+        'data': {'index': "friend_ship"},
+        'success': function (data) {
+            if (data.status == 200) {
+                var strVar = "";
+                var _list = data.data.info;
+                for(var i=0;i<_list.length;i++) {
+                	if( _list[i].image == "" ){
+                        var image = "/public/home/default/img/jzytp.JPG";
+					}
+                    strVar+="\t\t<li>\n" +
+                        "\t\t<a target=\"_blank\" href=\""+ _list[i].url+"\" title=\""+ _list[i].title+"\" class=\"friendlink-item\">\n" +
+                        "\t\t<p class=\"friendlink-item-pic\"><img src=\""+  image+"\" alt=\""+ _list[i].title+"\"></p>\n" +
+                        "\t\t<p class=\"friendlink-item-title\">"+  _list[i].title+"</p>\n" +
+                        "\t\t<p class=\"friendlink-item-domain\">"+ _list[i].url+"</p>\n" +
+                        "\t\t</a>\n" +
+                        "\t\t</li>"
+                }
+                $('.friendlink').empty().append(strVar);
+            }
+        }
+    });
+}
+$(function () {
+    friend_ship()
+});

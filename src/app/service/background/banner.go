@@ -32,7 +32,8 @@ type BannerData struct {
 func PageBannerList(keywords string, banner_category_id int64, limit int, page int) (*[]BannerData, float64, float64, int) {
 	banner := new([]BannerData)
 	err := databases.Orm.Table("banner").
-		Join("LEFT", "`banner_category`", "`banner_category`.id = `banner`.banner_category_id")
+		Join("LEFT", "`banner_category`", "`banner_category`.id = `banner`.banner_category_id").
+		Asc("banner.sort").Desc("banner.id")
 	if keywords != "" {
 		err.Where("banner.title=?", keywords)
 	}
