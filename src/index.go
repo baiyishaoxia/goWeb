@@ -101,10 +101,10 @@ func background() *http.Server {
 	return server
 }
 
-//启动定时任务
+//启动定时任务(每2分钟执行)
 func cronData() {
 	c := cron.New()
-	spec := "*/600 * * * * ?"
+	spec := "0 */2 * * * ?"
 	c.AddFunc(spec, func() {
 		job.UsereLevelChan <- app.Uuid()
 	})

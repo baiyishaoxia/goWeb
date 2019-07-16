@@ -67,7 +67,7 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                     //一键分享
                     var share1 ="               <div class=\"projectCon-share\">\n" +
                         "                            <span>\n" +
-                        "                                <div class=\"bdsharebuttonbox\">\n" +
+                        "                                <div class=\"bdsharebuttonbox bdshare-button-style0-32\">\n" +
                         "                                    <a target=\"_blank\" href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&title="+ _list[i].title+"&summary="+ _list[i].intro+"...&pics=http://go.afurun.xyz/public/home/default/img/admin.jpg\"\n" +
                         "                                       class=\"bds_qzone\" title=\"分享到QQ空间\"></a>\n" +
                         "                                    <a target=\"_blank\" href=\"http://service.weibo.com/share/share.php?url=http://go.afurun.xyz/article/detail/"+ _list[i].id +"&sharesource=weibo&title="+  _list[i].title +"&pic=http://go.afurun.xyz/public/home/default/img/admin.jpg&searchPic=false\" class=\"bds_tsina\"  title=\"分享到新浪微博\"></a>\n" +
@@ -262,4 +262,5 @@ setTimeout(function(){
         "share": {}};
     with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
     //with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-},3000);
+    window._bd_share_main.init();
+},100);
