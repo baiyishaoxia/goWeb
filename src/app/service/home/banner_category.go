@@ -1,12 +1,13 @@
 package home
 
 import (
-	"app/service/background"
+	"app/models"
 	"databases"
 )
 
-func BannerCategoryByIndex(index string) *background.BannerCategory {
-	baner_category := new(background.BannerCategory)
+//根据index获取分类
+func BannerCategoryByIndex(index string) *models.BannerCategory {
+	baner_category := new(models.BannerCategory)
 	has, err := databases.Orm.Where("`index` = ?", index).Get(baner_category)
 	if !has || err != nil {
 		return nil

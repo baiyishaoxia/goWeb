@@ -24,7 +24,7 @@ func InitBackGroundRouter() *gin.Engine {
 	router.Static("/public", "./public")
 	router.Static("/uploads", "./uploads")
 	router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
-		Root:         "html/background",
+		Root:         "views/background",
 		Extension:    ".html",
 		Master:       "layouts/main",
 		DisableCache: true,

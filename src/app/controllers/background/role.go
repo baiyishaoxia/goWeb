@@ -2,7 +2,7 @@ package background
 
 import (
 	"app"
-	"app/models/background"
+	"app/models"
 	newredis "app/vendors/redis/models"
 	"config"
 	"databases"

@@ -1,7 +1,7 @@
 package home
 
 import (
-	"app/models/background"
+	"app/models"
 	"databases"
 	"fmt"
 	"github.com/go-xorm/xorm"

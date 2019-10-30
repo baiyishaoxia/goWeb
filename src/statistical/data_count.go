@@ -1,7 +1,7 @@
 package statistical
 
 import (
-	"app/models/background"
+	"app/models"
 	"databases"
 )
 

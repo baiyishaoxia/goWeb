@@ -25,7 +25,7 @@ func InitHomeRouter() *gin.Engine {
 	router.Static("/public", "./public")
 	router.Static("/uploads", "./uploads")
 	router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
-		Root:         "html/home",
+		Root:         "views/home",
 		Extension:    ".html",
 		Master:       "layouts/default/main",
 		DisableCache: true,

@@ -2,9 +2,7 @@ package blog
 
 import (
 	"app"
-	models3 "app/models"
-	"app/models/background"
-	models2 "app/models/home"
+	"app/models"
 	"app/service/common"
 	"app/service/home"
 	session "app/vendors/session/models"
@@ -35,7 +33,7 @@ func GetBlogArticle(c *gin.Context) {
 		fmt.Println("---------token---------", token, "---------openid---------", me.OpenID)
 		userinfo, _ := qqouth.Get_User_Info(token, me.OpenID) //获取用户信息 userinfo 是一个json字符串返回
 		//fmt.Println("---------info---------", userinfo)
-		res, err, user_id := models3.AddQQUser(userinfo, me.OpenID) //新增QQ用户
+		res, err, user_id := models.AddQQUser(userinfo, me.OpenID) //新增QQ用户
 		fmt.Println("---------login---------", res, err, user_id)
 		if res {
 			session.SetSession(c, "userid", user_id) //写入session并进行用户登录
@@ -108,7 +106,7 @@ func PostArticleList(c *gin.Context) {
 
 //Ajax请求文章分类
 func PostArticleCatgory(c *gin.Context) {
-	_, category := models2.GetCategory()
+	_, category := models.GetCategory()
 	data := make([]map[string]interface{}, len(*category))
 	for key, val := range *category {
 		data[key] = make(map[string]interface{})

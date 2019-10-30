@@ -2,7 +2,7 @@ package channel
 
 import (
 	"app"
-	"app/models/home"
+	"app/models"
 	"app/vendors/redis/datasource"
 	"config"
 	"databases"

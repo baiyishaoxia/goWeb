@@ -2,7 +2,7 @@ package background
 
 import (
 	"app"
-	"app/models/background"
+	"app/models"
 	"config"
 	"databases"
 	"github.com/gin-gonic/gin"
@@ -89,7 +89,7 @@ func PostLangNationsCreate(c *gin.Context) {
 		return
 	}
 
-	add := &models.BlogLangNations{Id: app.GetRandomSalt(32), Title: title, ImageUrl: img_url, Sort: sort, IsOpen: isOpen, IsDefault: isDefault}
+	add := &models.LangNations{Id: app.GetRandomSalt(32), Title: title, ImageUrl: img_url, Sort: sort, IsOpen: isOpen, IsDefault: isDefault}
 	if add.AddNations() {
 		c.JSON(http.StatusOK, gin.H{
 			"status": config.HttpSuccess,
@@ -180,13 +180,13 @@ func PostLangNationsEdit(c *gin.Context) {
 		return
 	}
 
-	nations := new(models.BlogLangNations)
+	nations := new(models.LangNations)
 	nations.Title = title
 	nations.ImageUrl = img_url
 	nations.Sort = sort
 	nations.IsOpen = isOpen
 	nations.IsDefault = isDefault
-	_, err := databases.Orm.Cols("image_url", "title", "sort", "is_default", "is_open").Update(nations, models.BlogLangNations{Id: id})
+	_, err := databases.Orm.Cols("image_url", "title", "sort", "is_default", "is_open").Update(nations, models.LangNations{Id: id})
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"status": config.HttpError,
@@ -206,7 +206,7 @@ func PostLangNationsEdit(c *gin.Context) {
 //region Remark:删除 Author:tang
 func PostLangNationsDel(c *gin.Context) {
 	ids := c.PostFormArray("id[]")
-	nations := new(models.BlogLangNations)
+	nations := new(models.LangNations)
 	_, err := databases.Orm.In("id", ids).Delete(nations)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -228,7 +228,7 @@ func PostLangNationsDel(c *gin.Context) {
 func PostLangNationsSave(c *gin.Context) {
 	ids := c.PostFormArray("data[sort][]")
 	for _, v := range ids {
-		nations := new(models.BlogLangNations)
+		nations := new(models.LangNations)
 		sort, _ := strconv.ParseInt(c.PostForm("data["+v+"][sort]"), 10, 64)
 		nations.Sort = sort
 		databases.Orm.Where("id = ?", v).Update(nations)

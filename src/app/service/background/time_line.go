@@ -1,28 +1,16 @@
 package background
 
 import (
+	"app/models"
 	"databases"
 	"fmt"
 	"math"
 	"strconv"
 	"strings"
-	"time"
 )
 
-//时光轴表
-type TimeLine struct {
-	Id        int64     `xorm:"pk autoincr BIGINT"`
-	Title     string    `xorm:"VARCHAR(255)"`
-	Content   string    `xorm:"TEXT"`              //内容
-	Time      time.Time `xorm:"DATETIME"`          //时间
-	IsShow    bool      `xorm:"bool default true"` //是否显示
-	Year      int64     `xorm:"BIGINT"`            //当前时间年份
-	CreatedAt time.Time `xorm:"created"`
-	UpdatedAt time.Time `xorm:"updated"`
-}
-
 //增
-func InsertTimeLine(self *TimeLine) bool {
+func InsertTimeLine(self *models.TimeLine) bool {
 	has, err := databases.Orm.Insert(self)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -35,7 +23,7 @@ func InsertTimeLine(self *TimeLine) bool {
 }
 
 //改
-func EditTimeLine(field string, self *TimeLine) (bool, error) {
+func EditTimeLine(field string, self *models.TimeLine) (bool, error) {
 	has, err := databases.Orm.Id(self.Id).Cols(field).Update(self)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -48,16 +36,16 @@ func EditTimeLine(field string, self *TimeLine) (bool, error) {
 }
 
 //查
-func FindOneTimeLine(field string, val interface{}) *TimeLine {
-	item := new(TimeLine)
+func FindOneTimeLine(field string, val interface{}) *models.TimeLine {
+	item := new(models.TimeLine)
 	_, err := databases.Orm.Where(field+" = ?", val).Get(item)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	return item
 }
-func FindAllTimeLine(field string, order string) []*TimeLine {
-	item := make([]*TimeLine, 0)
+func FindAllTimeLine(field string, order string) []*models.TimeLine {
+	item := make([]*models.TimeLine, 0)
 	var err error
 	if order == "asc" {
 		err = databases.Orm.Asc(field).Find(&item)
@@ -71,10 +59,10 @@ func FindAllTimeLine(field string, order string) []*TimeLine {
 }
 
 //根据时间段查询
-func GetTimeLineByTime(year string, mouth string) *[]TimeLine {
+func GetTimeLineByTime(year string, mouth string) *[]models.TimeLine {
 	if year == "" {
 		//查询不同年份的数据
-		data := new([]TimeLine)
+		data := new([]models.TimeLine)
 		err := databases.Orm.GroupBy("year").Desc("time").Find(data)
 		if err != nil {
 			fmt.Println(err)
@@ -82,7 +70,7 @@ func GetTimeLineByTime(year string, mouth string) *[]TimeLine {
 		return data
 	} else if mouth != "" {
 		//查询当前月份下数据
-		data := new([]TimeLine)
+		data := new([]models.TimeLine)
 		err := databases.Orm.Where("time like ?", year+"-"+mouth+"%").Desc("time").Find(data)
 		if err != nil {
 			fmt.Println(err)
@@ -90,7 +78,7 @@ func GetTimeLineByTime(year string, mouth string) *[]TimeLine {
 		return data
 	} else {
 		//查询当前年份下数据
-		data := new([]TimeLine)
+		data := new([]models.TimeLine)
 		err := databases.Orm.Where("time like ?", year+"%").Desc("time").Find(data)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -109,8 +97,13 @@ func LineToLine() []map[string]interface{} {
 		son := GetTimeLineByTime(line_time, "") //当前年
 		if len(*son) != 0 {
 			list := make(map[string]interface{})
+			pre_year,pre_month :="",""
 			for _, v2 := range *son {
 				line_time2 := strings.Split(v2.Time.Format("2006,01,02,15,04,05"), ",")
+				//过滤相同的月份
+				if line_time2[0] == pre_year && line_time2[1] == pre_month{
+					continue
+				}
 				child := GetTimeLineByTime(line_time2[0], line_time2[1]) //当前年下的月份
 				init := make([]map[string]string, len(*child))
 				for k1, v3 := range *child {
@@ -119,6 +112,7 @@ func LineToLine() []map[string]interface{} {
 					init[k1]["content"] = v3.Content
 				}
 				list[line_time2[1]] = init
+				pre_year,pre_month = line_time2[0], line_time2[1]
 			}
 			item["month"] = list
 		}
@@ -129,7 +123,7 @@ func LineToLine() []map[string]interface{} {
 
 //存在?
 func HasTimeLine(ids []string) bool {
-	item := new(TimeLine)
+	item := new(models.TimeLine)
 	count, err := databases.Orm.Table("`time_line`").In("id", ids).Count(item)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -141,8 +135,8 @@ func HasTimeLine(ids []string) bool {
 }
 
 //列表
-func GetTimeLineList(page int, limit int, keywords string) (*[]TimeLine, float64, float64, int) {
-	var data = new([]TimeLine)
+func GetTimeLineList(page int, limit int, keywords string) (*[]models.TimeLine, float64, float64, int) {
+	var data = new([]models.TimeLine)
 	err := databases.Orm.Desc("id")
 	if keywords != "" {
 		err.Where("content like ?", "%"+keywords+"%")

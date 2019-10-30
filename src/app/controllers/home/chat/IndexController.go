@@ -11,7 +11,7 @@ func GetIndex(w http.ResponseWriter, r *http.Request) {
 		title string
 	}
 	//加载模板
-	tpl, err := template.ParseFiles("html/home/layouts/chat/layout.html", "html/home/chat/index.html")
+	tpl, err := template.ParseFiles("views/home/layouts/chat/layout.html", "views/home/chat/index.html")
 	if err != nil {
 		log.Fatal(err)
 		return

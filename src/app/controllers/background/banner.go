@@ -2,6 +2,7 @@ package background
 
 import (
 	"app"
+	"app/models"
 	"app/service/background"
 	"config"
 	"databases"
@@ -24,7 +25,7 @@ func GetBannerList(c *gin.Context) {
 		c.String(http.StatusOK, data)
 		return
 	}
-	cate := new([]background.BannerCategory)
+	cate := new([]models.BannerCategory)
 	databases.Orm.Find(cate)
 	//模版
 	c.HTML(http.StatusOK, "banner/list", gin.H{
@@ -51,7 +52,7 @@ func GetBannerList(c *gin.Context) {
 
 //region Remark: 新增 Author      tang
 func GetBannerCreate(c *gin.Context) {
-	banner_category := new([]background.BannerCategory)
+	banner_category := new([]models.BannerCategory)
 	databases.Orm.Find(banner_category)
 	//模版
 	c.HTML(http.StatusOK, "banner/create", gin.H{
@@ -68,7 +69,7 @@ func PostBannerCreate(c *gin.Context) {
 	abstract := c.PostForm("abstract")
 	image := c.PostForm("image")
 	content := c.PostForm("content")
-	add := &background.Banner{Title: title, BannerCategoryId: banner_category_id, Sort: sort, Url: url, Intro: intro, Image: image, Content: content, Abstract: abstract}
+	add := &models.Banner{Title: title, BannerCategoryId: banner_category_id, Sort: sort, Url: url, Intro: intro, Image: image, Content: content, Abstract: abstract}
 	has, err := databases.Orm.Insert(add)
 	if has < 1 || err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -91,7 +92,7 @@ func PostBannerCreate(c *gin.Context) {
 //region Remark: 编辑 Author      tang
 func GetBannerEdit(c *gin.Context) {
 	id := c.Param("id")
-	data := new(background.Banner)
+	data := new(models.Banner)
 	databases.Orm.Where("id=?", id).Get(data)
 	if data.Id == 0 {
 		c.JSON(http.StatusOK, gin.H{
@@ -100,7 +101,7 @@ func GetBannerEdit(c *gin.Context) {
 		})
 		return
 	}
-	banner_category := new([]background.BannerCategory)
+	banner_category := new([]models.BannerCategory)
 	databases.Orm.Find(banner_category)
 	//模版
 	c.HTML(http.StatusOK, "banner/edit", gin.H{
@@ -120,7 +121,7 @@ func PostBannerEdit(c *gin.Context) {
 	abstract := c.PostForm("abstract")
 	image := c.PostForm("image")
 	content := c.PostForm("content")
-	item := new(background.Banner)
+	item := new(models.Banner)
 	databases.Orm.Where("id=?", id).Get(item)
 	if item.Title == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -164,7 +165,7 @@ func PostBannerDel(c *gin.Context) {
 		ids = []string{}
 		ids = append(ids, c.PostForm("id"))
 	}
-	has, err := databases.Orm.In("id", ids).Delete(new(background.Banner))
+	has, err := databases.Orm.In("id", ids).Delete(new(models.Banner))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -189,7 +190,7 @@ func PostBannerDel(c *gin.Context) {
 //region   保存数据
 func PostBannerSave(c *gin.Context) {
 	id, _ := strconv.ParseInt(c.PostForm("id"), 10, 64)
-	banner := new(background.Banner)
+	banner := new(models.Banner)
 	data := databases.Orm.ID(id)
 	banner.Sort, _ = strconv.ParseInt(c.PostForm("value"), 10, 64)
 	data.Update(banner)

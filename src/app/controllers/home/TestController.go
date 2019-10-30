@@ -2,7 +2,7 @@ package home
 
 import (
 	"app"
-	"app/models/home"
+	"app/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"

@@ -8,7 +8,7 @@ func HandleConcurrent() {
 		select {
 		case userLevel := <-UsereLevelChan:
 			HandleUsereLevel() //升级逻辑
-			fmt.Println(userLevel)
+			fmt.Println("监听管道用户活跃度自动升级定时任务:",userLevel)
 		}
 	}
 }

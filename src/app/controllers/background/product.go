@@ -2,7 +2,7 @@ package background
 
 import (
 	"app"
-	"app/models/background"
+	"app/models"
 	"config"
 	"databases"
 	"fmt"

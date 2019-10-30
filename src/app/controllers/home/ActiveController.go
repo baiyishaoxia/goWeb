@@ -3,7 +3,7 @@ package home
 import (
 	"app"
 	"app/channel"
-	"app/models/home"
+	"app/models"
 	"config"
 	"github.com/gin-gonic/gin"
 	"net/http"

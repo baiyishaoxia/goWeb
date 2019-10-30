@@ -1,7 +1,7 @@
 package background
 
 import (
-	"app/models/background"
+	"app/models"
 	"config"
 	"databases"
 	"fmt"
@@ -63,7 +63,7 @@ func PostLangCreate(c *gin.Context) {
 	for key, val := range *nations {
 		id := val.Id
 		title := nations_titles[key]
-		add := &models.BlogLangs{LangNationsId: id, Title: title, Mark: mark, Remark: remark, Sort: 99}
+		add := &models.Langs{LangNationsId: id, Title: title, Mark: mark, Remark: remark, Sort: 99}
 		res, err := db.Insert(add)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -118,7 +118,7 @@ func PostLangEdit(c *gin.Context) {
 	mark := c.PostForm("mark")
 	remark := c.PostForm("remark")
 	length := len(nations_titles)
-	langs := new(models.BlogLangs)
+	langs := new(models.Langs)
 	langs.Mark = mark
 	langs.Remark = remark
 	var count int = 0
@@ -132,7 +132,7 @@ func PostLangEdit(c *gin.Context) {
 	for i := 0; i < length; i++ {
 		langs.Title = nations_titles[i]
 		if models.GetLangInId(lang_nations_id[i], mark) {
-			_, err := db.Cols("mark", "remark", "title").Where("mark=?", langs.Mark).Update(langs, models.BlogLangs{LangNationsId: lang_nations_id[i]})
+			_, err := db.Cols("mark", "remark", "title").Where("mark=?", langs.Mark).Update(langs, models.Langs{LangNationsId: lang_nations_id[i]})
 			if err != nil {
 				fmt.Println(err.Error())
 				db.Rollback()
@@ -182,7 +182,7 @@ func PostLangDel(c *gin.Context) {
 	for i := 0; i < length; i++ {
 		lang := models.GetLangById(ids[i])
 		if lang != nil {
-			langs := new(models.BlogLangs)
+			langs := new(models.Langs)
 			_, err := databases.Orm.Where("mark = ?", lang.Mark).Delete(langs)
 			if err != nil {
 				fmt.Println(err.Error())

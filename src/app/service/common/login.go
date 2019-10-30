@@ -1,7 +1,7 @@
 package common
 
 import (
-	"app/models/home"
+	"app/models"
 	session "app/vendors/session/models"
 	"databases"
 	"github.com/gin-gonic/gin"

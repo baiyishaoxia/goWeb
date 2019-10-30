@@ -2,7 +2,7 @@ package background
 
 import (
 	"app"
-	"app/models/background"
+	"app/models"
 	"app/vendors/captcha/controllers"
 	newredis "app/vendors/redis/models"
 	session "app/vendors/session/models"

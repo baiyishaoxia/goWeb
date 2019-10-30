@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"app/models/home"
+	"app/models"
 	models2 "app/vendors/redis/models"
 	"config"
 	"github.com/garyburd/redigo/redis"

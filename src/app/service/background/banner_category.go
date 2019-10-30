@@ -1,25 +1,15 @@
 package background
 
 import (
-	"app"
+	"app/models"
 	"databases"
 	"fmt"
 	"math"
 )
 
-//banner图类别表
-type BannerCategory struct {
-	Id        int64    `xorm:"not null pk autoincr unique INTEGER" json:"id"`
-	Title     string   `xorm:"VARCHAR(255)" json:"title"`
-	Index     string   `xorm:"VARCHAR(255)" json:"index"`
-	Intro     string   `xorm:"VARCHAR(255)" json:"intro"`
-	CreatedAt app.Time `xorm:"created" json:"created_at"`
-	UpdatedAt app.Time `xorm:"updated" json:"updated_at"`
-}
-
 //获取列表
-func PagebannerCategoryList(page int, limit int, keywords string) (*[]BannerCategory, float64, float64, int) {
-	data := new([]BannerCategory)
+func PagebannerCategoryList(page int, limit int, keywords string) (*[]models.BannerCategory, float64, float64, int) {
+	data := new([]models.BannerCategory)
 	err := databases.Orm.Table("banner_category").Desc("id")
 	err1 := *err
 	num, _ := err.Count()

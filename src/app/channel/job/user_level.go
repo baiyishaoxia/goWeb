@@ -1,7 +1,7 @@
 package job
 
 import (
-	"app/models/home"
+	"app/models"
 	"databases"
 	"fmt"
 )
@@ -10,7 +10,7 @@ var UsereLevelChan = make(chan string, 10000)
 
 func HandleUsereLevel() {
 	//用户活跃度自动升级
-	data := models.GetUsersList()
+	data := models.GetUsersList2()
 	for key, val := range data {
 		if val.HotCount >= 10 && val.HotCount <= 100 {
 			val.Level = 1

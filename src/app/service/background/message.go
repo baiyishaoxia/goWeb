@@ -1,24 +1,10 @@
 package background
 
 import (
-	"app/models/home"
+	"app/models"
 	"databases"
 	"fmt"
-	"time"
 )
-
-type Message struct {
-	Id            int64     `xorm:"not null pk autoincr unique INTEGER" json:"id"`
-	MessageCateId int64     `xorm:"BIGINT"       json:"message_cate_id"`       //类型(1留言，2评论)
-	UsersId       int64     `xorm:"BIGINT"       json:"users_id"`              //用户ID
-	ParentId      int64     `xorm:"BIGINT"       json:"parent_id"`             //回复留言ID
-	ArticleId     int64     `xorm:"BIGINT"      json:"article_id"`             //文章ID
-	Address       string    `xorm:"VARCHAR(255)" json:"address"`               //地点
-	Content       string    `xorm:"TEXT"    json:"content"`                    //回复内容
-	IsShow        bool      `xorm:"not null default true BOOL" json:"is_show"` //是否显示
-	CreatedAt     time.Time `xorm:"created" json:"created_at"`
-	UpdatedAt     time.Time `xorm:"updated" json:"updated_at"`
-}
 
 //region   定义评论类型   Author:tang
 func GetMessageCate() []string {
@@ -29,7 +15,7 @@ func GetMessageCate() []string {
 //endregion
 
 //region   添加留言   Author:tang
-func InsertMessage(self *Message) (bool, map[string]interface{}) {
+func InsertMessage(self *models.Message) (bool, map[string]interface{}) {
 	has, err := databases.Orm.Insert(self)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -59,7 +45,7 @@ func InsertMessage(self *Message) (bool, map[string]interface{}) {
 
 //region   获取首页最新留言墙   Author:tang
 func GetMessageNew() []map[string]interface{} {
-	message := make([]*Message, 0)
+	message := make([]*models.Message, 0)
 	databases.Orm.Where("is_show=?", true).Desc("id").Find(&message)
 	data := messageInIt(message)
 	return data
@@ -87,7 +73,7 @@ func GetMessageHot(limit int) []map[string]interface{} {
 
 //region   获取留言墙数据、文章评论数据   Author:tang
 func GetMessageListApi(wheres map[string]interface{}) []map[string]interface{} {
-	message := make([]*Message, 0)
+	message := make([]*models.Message, 0)
 	if wheres["article_id"].(int64) != 0 {
 		databases.Orm.Where("message_cate_id=? and article_id=?", wheres["key"], wheres["article_id"]).Where("is_show=?", true).Where("parent_id=?", 0).Find(&message)
 	} else {
@@ -95,14 +81,14 @@ func GetMessageListApi(wheres map[string]interface{}) []map[string]interface{} {
 	}
 	data := messageInIt(message)
 	for k, v := range data {
-		item := make([]*Message, 0)
+		item := make([]*models.Message, 0)
 		databases.Orm.Where("parent_id=?", v["id"]).Where("is_show=?", true).Find(&item)
 		child := messageInIt(item)
 		data[k]["child"] = child
 	}
 	return data
 }
-func messageInIt(mm []*Message) []map[string]interface{} {
+func messageInIt(mm []*models.Message) []map[string]interface{} {
 	data := make([]map[string]interface{}, len(mm))
 	for key, val := range mm {
 		user := models.GetUserById(val.UsersId)
@@ -125,8 +111,8 @@ func messageInIt(mm []*Message) []map[string]interface{} {
 	}
 	return data
 }
-func GetMessageById(id int64) *Message {
-	data := new(Message)
+func GetMessageById(id int64) *models.Message {
+	data := new(models.Message)
 	databases.Orm.Where("id=?", id).Get(data)
 	return data
 }

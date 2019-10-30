@@ -18,7 +18,7 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		//加载模板
-		tpl, err := template.ParseFiles("html/demo.html")
+		tpl, err := template.ParseFiles("views/demo.html")
 		if err != nil {
 			log.Fatal(err)
 			return

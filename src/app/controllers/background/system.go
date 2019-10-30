@@ -1,7 +1,7 @@
 package background
 
 import (
-	"app/models/background"
+	"app/models"
 	"config"
 	"databases"
 	"fmt"

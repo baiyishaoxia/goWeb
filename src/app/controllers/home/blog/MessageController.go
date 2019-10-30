@@ -2,8 +2,7 @@ package blog
 
 import (
 	"app"
-	models2 "app/models/background"
-	"app/models/home"
+	"app/models"
 	"app/service/background"
 	"config"
 	"databases"
@@ -58,7 +57,7 @@ func PostBlogMessageCreate(c *gin.Context) {
 	parent_id, _ := strconv.ParseInt(c.PostForm("parent_id"), 10, 64)   //评论的父级ID
 	content := app.RemoveHtmlScript(c.PostForm("content"))              //评论内容
 	user := models.GetUserById(user_id)
-	var add *background.Message
+	var add *models.Message
 	if flag == 2 {
 		//来自于文章的评论
 		item := models.GetArticleById(article_id)
@@ -84,11 +83,11 @@ func PostBlogMessageCreate(c *gin.Context) {
 			return
 		}
 		//当前文章评论数+1
-		res, err := databases.Orm.Id(item.Id).Incr("count_num").Update(&models2.Article{Id: item.Id})
+		res, err := databases.Orm.Id(item.Id).Incr("count_num").Update(&models.Article{Id: item.Id})
 		fmt.Println("--------", res, err)
-		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id} //article_id
+		add = &models.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true, ArticleId: article_id} //article_id
 	} else {
-		add = &background.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}
+		add = &models.Message{Content: content, UsersId: user_id, ParentId: parent_id, MessageCateId: flag, IsShow: true}
 	}
 	_, message := background.InsertMessage(add)
 	models.UserHotCountInrc(user_id) //为当前评论用户增加“热评”次数

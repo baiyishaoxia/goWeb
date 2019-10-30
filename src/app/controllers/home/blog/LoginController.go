@@ -1,7 +1,7 @@
 package blog
 
 import (
-	"app/models/background"
+	"app/models"
 	session "app/vendors/session/models"
 	"fmt"
 	"github.com/gin-gonic/gin"

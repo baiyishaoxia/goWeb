@@ -2,6 +2,7 @@ package background
 
 import (
 	"app"
+	"app/models"
 	"app/service/background"
 	"config"
 	"databases"
@@ -55,7 +56,7 @@ func PostBannerCategoryCreate(c *gin.Context) {
 		return
 	}
 
-	banner_category := new(background.BannerCategory)
+	banner_category := new(models.BannerCategory)
 	banner_category.Title = title
 	banner_category.Index = index
 	banner_category.Intro = intro
@@ -80,7 +81,7 @@ func PostBannerCategoryCreate(c *gin.Context) {
 
 //region Remark: 编辑 Author      tang
 func GetBannerCategoryEdit(c *gin.Context) {
-	cate := new(background.BannerCategory)
+	cate := new(models.BannerCategory)
 	databases.Orm.ID(c.Param("id")).Get(cate)
 	//模版
 	if cate.Id == 0 {
@@ -109,7 +110,7 @@ func PostBannerCategoryEdit(c *gin.Context) {
 		return
 	}
 
-	item := new(background.BannerCategory)
+	item := new(models.BannerCategory)
 	databases.Orm.ID(id).Get(item)
 	if item.Title == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -155,7 +156,7 @@ func PostBannerCategoryDel(c *gin.Context) {
 		})
 		return
 	}
-	_, err := databases.Orm.In("id", ids).Delete(new(background.BannerCategory))
+	_, err := databases.Orm.In("id", ids).Delete(new(models.BannerCategory))
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"status": config.HttpError,

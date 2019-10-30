@@ -1,7 +1,6 @@
 package models
 
 import (
-	"app/models/home"
 	"databases"
 	"encoding/json"
 	"fmt"
@@ -47,7 +46,7 @@ func AddQQUser(data string, openid string) (bool, error, int64) {
 		fmt.Println("--------2-------------", err)
 		return true, nil, res.UserId //用户已存在
 	}
-	user := new(models.Users)
+	user := new(Users)
 	user.Name = info["nickname"].(string) //QQ昵称
 
 	if info["gender"].(string) == "男" { //性别

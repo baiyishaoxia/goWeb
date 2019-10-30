@@ -2,7 +2,7 @@ package home
 
 import (
 	"app"
-	"app/models/home"
+	"app/models"
 	models2 "app/vendors/session/models"
 	"config"
 	"databases"

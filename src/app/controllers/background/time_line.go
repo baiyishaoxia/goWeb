@@ -1,7 +1,7 @@
 package background
 
 import (
-	"app/models/background"
+	"app/models"
 	"app/service/background"
 	"config"
 	"databases"
@@ -58,7 +58,7 @@ func PostTimeLineCreate(c *gin.Context) {
 	}
 	loc, _ := time.LoadLocation("Local")
 	line_time, err := time.ParseInLocation("2006-01-02 15:04:05", c.PostForm("start_time"), loc)
-	line := new(background.TimeLine)
+	line := new(models.TimeLine)
 	line.Title = c.PostForm("title")
 	line.Content = c.PostForm("content")
 	line.Time = line_time
@@ -90,7 +90,7 @@ func PostTimeLineDel(c *gin.Context) {
 		ids = []string{}
 		ids = append(ids, c.PostForm("id"))
 	}
-	var line = new(background.TimeLine)
+	var line = new(models.TimeLine)
 	_, err := databases.Orm.In("id", ids).Delete(line)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
