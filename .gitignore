@@ -1,9 +1,4 @@
 /src/.idea
-/src/runtime/logs/error
-/src/runtime/logs/info
-/src/uploads/logs
-/src/uploads/images/*
-/src/uploads/file/!template
 /pkg/!documentation.txt
 /pkg/*
 /src/_gsdata_

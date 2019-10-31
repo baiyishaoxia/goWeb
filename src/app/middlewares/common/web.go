@@ -45,7 +45,7 @@ func Web(model string) gin.HandlerFunc {
 		str = str + accept + ","
 		str = str + cookie + "\n"
 		//创建文件夹
-		path := "./uploads/logs/" + model + "/" + time.Now().Format("2006/0102/")
+		path := "./runtime/logs/" + model + "/" + time.Now().Format("2006/0102/")
 		directory.DirectoryMkdir(path)
 		file := path + time.Now().Format("2006_01_02_15_00_00") + ".csv"
 		request_logFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
