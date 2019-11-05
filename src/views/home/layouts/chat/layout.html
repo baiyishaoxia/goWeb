@@ -43,6 +43,12 @@
                     <a href="/sigu/video"><i class="fa fa-sigu-video fa-fw"></i>&nbsp;精彩视频</a>
                 </li>
                 <li class="layui-nav-item">
+                    <a href="/v2/chat"><i class="fa fa-wechat fa-fw"></i>&nbsp;聊天室</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/reading/"><i class="fa fa-book fa-fw"></i>&nbsp;看小说</a>
+                </li>
+                <li class="layui-nav-item">
                     <a href="/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
                 </li>
                 <span class="layui-nav-bar"></span></ul>
@@ -81,7 +87,7 @@
         <a href="javascript:void(0)">Tang博客</a><span>Design By tangBoy</span>
     </p>
     <p>
-        <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备18032684号-1</a>
+        <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备18032684号-1</a>|总访问量<span id="site_count"></span>
         <input type="button" value="繁体" onclick="zh_tran('t');"/>
         <input type="button" value="简体" onclick="zh_tran('s');"/>
     </p>
@@ -105,6 +111,9 @@
     </li>
     <li class="layui-nav-item">
         <a href="/v2/chat"><i class="fa fa-wechat  fa-fw"></i>&nbsp;聊天室</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="/reading/"><i class="fa fa-book fa-fw"></i>&nbsp;看小说</a>
     </li>
     <li class="layui-nav-item">
         <a href="/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
@@ -177,6 +186,21 @@ tpwidget("show");</script>
         $(this).parents('form').eq(0).attr('method','get');
         $(this).parents('form').eq(0).find("input[name='_token']").remove();
         $(this).parents('form').eq(0).submit();
+    });
+    //endregion
+    //region 站点统计
+    $.ajax({
+        'url': "/site/count",
+        'type': 'get',
+        'dataType': 'json',
+        'data': {},
+        'success':  function (data) {
+            if (data.status == 200) {
+                console.log(data.data)
+                var item = data.data;
+                $("#site_count").empty().append(item.num +"次")
+            }
+        }
     });
     //endregion
 </script>

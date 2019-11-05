@@ -3,3 +3,6 @@
 /pkg/*
 /src/_gsdata_
 /.idea
+/src/*.exe
+/src/index
+/src/runtime/logs/web_people_count.log

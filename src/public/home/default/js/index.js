@@ -245,7 +245,7 @@ $(document).on('click','#page_load',function(){
     $(this).attr('page',page); //下一页+1
     var sort = '';
     var total = $(this).attr('total'); //数据总数
-    var limit = 10; //每页分页的数量
+    var limit = 12; //每页分页的数量
     var status  = '';
     var keywords  = '';
     article_list(0,page,limit,"page_load");
@@ -299,7 +299,7 @@ function friend_ship(){
 $(function () {
     article_right();
     site_author();
-    article_list();
+    article_list(0,1,12);
     user_message();
     hot_users();
     friend_ship();

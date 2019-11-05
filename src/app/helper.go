@@ -441,3 +441,43 @@ func RemoveHtmlScript(src string) string {
 }
 
 //endregion
+
+//region Remark: 字符串数组去重  tang
+func RemoveRepeatedElement(arr []string) (newArr []string) {
+	newArr = make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
+		}
+		if !repeat {
+			newArr = append(newArr, arr[i])
+		}
+	}
+	return
+}
+//endregion
+
+func DateFormat(format string, timestamp ...int64) string {
+	var ts = time.Now().Unix()
+	if len(timestamp) > 0 {
+		ts = timestamp[0]
+	}
+	var t = time.Unix(ts, 0)
+	Y := strconv.Itoa(t.Year())
+	m := fmt.Sprintf("%02d", t.Month())
+	d := fmt.Sprintf("%02d", t.Day())
+	H := fmt.Sprintf("%02d", t.Hour())
+	i := fmt.Sprintf("%02d", t.Minute())
+	s := fmt.Sprintf("%02d", t.Second())
+	format = strings.Replace(format, "Y", Y, -1)
+	format = strings.Replace(format, "m", m, -1)
+	format = strings.Replace(format, "d", d, -1)
+	format = strings.Replace(format, "H", H, -1)
+	format = strings.Replace(format, "i", i, -1)
+	format = strings.Replace(format, "s", s, -1)
+	return format
+}

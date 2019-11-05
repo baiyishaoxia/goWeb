@@ -6,6 +6,7 @@ import (
 	"app/controllers/home/blog"
 	"app/middlewares/common"
 	"app/middlewares/home"
+	fun "app/service/common"
 	captcha "app/vendors/captcha/controllers"
 	upload "app/vendors/upload/controllers"
 	"github.com/foolin/gin-template"
@@ -71,5 +72,9 @@ func InitHomeRouter() *gin.Engine {
 	router.GET("/message/ajax", blog.GetBlogMessageAjax)               //获取留言(Ajax)
 	router.POST("/message/create", blog.PostBlogMessageCreate)         //提交文章评论、留言(Ajax)
 	router.GET("/download", blog.FileDownload)                         //文件下载
+	router.GET("/site/count", fun.SiteStatistic)                       //站点统计
+	//---------------------------------API---------------------------------
+	v2 := router.Group("/v2")
+	v2.GET("/test", fun.GetTest)
 	return router
 }

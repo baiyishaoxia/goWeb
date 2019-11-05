@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/rpc"
 	"net/rpc/jsonrpc"
+	readroute "other/reading/yournovel/routers"
 	"routers"
 	"time"
 )
@@ -30,6 +31,10 @@ func main() {
 	//当前进程中生成一个background协程
 	g.Go(func() error {
 		return background().ListenAndServe()
+	})
+	//当前进程中生成爬虫获取小说资源协程
+	g.Go(func() error {
+		return realdata().ListenAndServe()
 	})
 	//当前进程中生成一个RPC通信协程
 	g.Go(func() error {
@@ -98,6 +103,20 @@ func background() *http.Server {
 		WriteTimeout: 60 * time.Second,
 	}
 	fmt.Println("http://localhost" + server.Addr + "/login")
+	return server
+}
+
+//加载爬虫小说
+func realdata() *http.Server {
+	gin.SetMode(gin.DebugMode)
+	router := readroute.InitGetRouter()
+	server := &http.Server{
+		Addr:         ":9093",
+		Handler:      router,
+		ReadTimeout:  60 * time.Second,
+		WriteTimeout: 60 * time.Second,
+	}
+	fmt.Println("http://localhost" + server.Addr)
 	return server
 }
 
