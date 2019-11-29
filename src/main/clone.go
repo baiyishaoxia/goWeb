@@ -15,6 +15,7 @@ func (that *bbb)clone() *bbb{
 	return &n
 }
 
+//todo test clone ...
 func main()  {
 	var item = new(aaa)  //new aaa ...
 	item.name = "aaa"
