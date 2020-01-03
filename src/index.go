@@ -120,10 +120,10 @@ func realdata() *http.Server {
 	return server
 }
 
-//启动定时任务(每2分钟执行)
+//启动定时任务(每25分钟执行)
 func cronData() {
 	c := cron.New()
-	spec := "0 */2 * * * ?"
+	spec := "0 */25 * * * ?"
 	c.AddFunc(spec, func() {
 		job.UsereLevelChan <- app.Uuid()
 	})

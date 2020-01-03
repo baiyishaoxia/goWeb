@@ -102,14 +102,14 @@
 					<input type="checkbox" id="checkbox-moban">
 					<label for="checkbox-moban">&nbsp;</label>
 				</div>
-				<button onClick="mobanxuanze()" class="btn btn-default radius ml-10">选择模版</button>
+				<button  type="button"  onClick="mobanxuanze()" class="btn btn-default radius ml-10" id="template">选择模版</button>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-thum-container">
-                    <input class="input normal upload-path" name="img" type="text">
+                    <input class="input normal upload-path" name="img" type="text" id="templateUrl">
                     <div class="upload-box upload-image"></div>
 				</div>
 			</div>
@@ -290,6 +290,37 @@ $(function(){
     });
 	var ue = UE.getEditor('editor');
 });
+
+function mobanxuanze() {
+	$.ajax({
+		type: 'GET',
+		url: "/admin/article/template",
+		data: {},
+		dataType:"html",
+		success: function (data) {
+			var index = layer.alert(data,function () {
+				$("#templateUrl").attr("value",getBlogData("image_url"));
+				layer.close(index);
+			});
+			layer.style(index, {
+				width: '850px',
+				height:'500px',
+				top: '20%',
+				left: '20%',
+			});
+		}
+	});
+	// layer.open({
+	// 	title: '选择模板'
+	// 	,type:2
+	// 	,offset: 'b'
+	// 	,shade: 0
+	// 	,area: [$(window).width()/2+'px', $(window).height()*0.45+'px']
+	// 	,maxmin: true
+	// 	,content:"/admin/article/template",
+	// });
+	return false;
+}
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 <script>

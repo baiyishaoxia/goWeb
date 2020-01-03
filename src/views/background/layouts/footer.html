@@ -226,4 +226,16 @@
             });
         });
     }
+    //取值
+    function getBlogData(key) {
+        return localStorage.getItem(key);
+    }
+    //保存
+    function setBlogData(key,value) {
+        localStorage.setItem(key, value);
+    }
+    //删除
+    function removeBlogData(key) {
+        localStorage.removeItem(key);
+    }
 </script>

@@ -19,7 +19,7 @@
             <span>正在播放:</span>
             <h1 id="tittext">感谢您使用TangBoy视频解析服务,正在播放视频/MV！</h1>
         </div>
-        <iframe id="palybox" src="http://app.baiduoos.cn:2019/time/time.php" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
+        <iframe id="palybox" src="https://www.jq22.com/demo/jquerydm2201910230030/" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
         <div class="url-box">
             <div class="input-group">
                 <input type="text" id="url" class="form-control url-text" aria-label="Text input with segmented button dropdown" placeholder="请粘贴或输入视频网址进行解析：" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！" value="">
@@ -284,7 +284,9 @@
                 var conf = 'prod_f36f3ef203c35cdc84a04b9edcc596bc';
                 var width = window.innerWidth || document.documentElement.clientWidth;
                 if (width < 960) {
-                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="/public/home/default/js/changyan_mobile.js' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="/public/home/default/js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
+                }
+            })();
         </script>
     </div>
 </div>
@@ -312,13 +314,18 @@
                 var _list = data.data.info;
                 var str = "";
                 for(var i=0;i<_list.length;i++){
-                    str+='<option value="'+_list[i].url+'" selected>'+_list[i].title+' </option>';
+                    if(i == 0){
+                        str+='<option value="'+_list[i].url+'" selected>'+_list[i].title+' </option>';
+                    }else{
+                        str+='<option value="'+_list[i].url+'">'+_list[i].title+' </option>';
+                    }
                 }
                 $('#jk').empty().append(str);
             }
         }
     })
 </script>
+<script src="/public/home/default/js/bootstrap.js"></script>
 <script src="/public/home/default/js/tv-beipy.js"></script>
-<script src="/public/home/default/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 {{end}}

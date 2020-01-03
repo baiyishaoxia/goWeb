@@ -18,7 +18,7 @@ func GetBannerCategoryList(c *gin.Context) {
 	keywords := c.Query("keywords")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
-	data, num, all, page := background.PagebannerCategoryList(limit, page-1, keywords)
+	data, num, all, page := background.PageBannerCategoryList(limit, page-1, keywords)
 	//模版
 	c.HTML(http.StatusOK, "banner_category/list", gin.H{
 		"Title":    "Background Index",

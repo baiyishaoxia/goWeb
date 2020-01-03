@@ -55,6 +55,7 @@ func InitBackGroundRouter() *gin.Engine {
 	v1.POST("/article/edit/:id", background.PostArticleEdit)
 	v1.POST("/article/del", background.PostArticleDel)
 	v1.GET("/article/status", background.GetArticleSetStatus)
+	v1.GET("/article/template", background.GetArticleTemplate)
 	//图片管理
 	v1.GET("/picture/list", background.GetPictureList)
 	v1.GET("/picture/show/:id", background.GetPictureShow)

@@ -114,7 +114,7 @@ func getFileRows(fileName string,flag byte)  (int64,int64){
 		real_arr = append(real_arr, strings.Split(content,"|")[1])
 		count++
 	}
-	fmt.Println(app.RemoveRepeatedElement(real_arr))
+	//fmt.Println(app.RemoveRepeatedElement(real_arr))
 	return count+1,int64(len(app.RemoveRepeatedElement(real_arr)))
 }
 

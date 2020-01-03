@@ -24,6 +24,7 @@ func InitHomeRouter() *gin.Engine {
 	router.Use(common.Web("home"))
 	//静态资源
 	router.Static("/public", "./public")
+	router.Static("/static", "./public/home/baiduShare/static")
 	router.Static("/uploads", "./uploads")
 	router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
 		Root:         "views/home",

@@ -1,0 +1,42 @@
+﻿{{define "css"}}
+<title>图片展示</title>
+{{end}}
+
+{{define "content"}}
+<div class="page-container">
+    <form action="" id="form1">
+	   <div class="portfolio-content">
+		<ul class="cl portfolio-area">
+			{{range $key,$val:=.Data}}
+				<li class="item">
+						<input onchange="isSelect(this)" class="checkbox"  name="id[]" type="checkbox" value="{{$val.Id}}" image="{{$val.Image}}">
+						<div class="picbox"><img src="{{$val.Image}}" title="{{$val.Title}}"></div>
+				</li>
+            {{end}}
+		</ul>
+	</div>
+    </form>
+</div>
+
+{{end}}
+{{define "js"}}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+function isSelect(obj){
+    var url = $(obj).attr("image");
+    var isSelect=$(obj).is(':checked');
+    if(isSelect){
+		setBlogData("image_url",url);
+    }
+}
+$('.item').on('click' , function(){
+	var check = $(this).find("input[type='checkbox']");
+	if ($(check).is(':checked')) {
+		$(check).prop('checked', false);
+	} else {
+		$(check).prop('checked', true);
+		isSelect(check)
+	}
+});
+</script>
+{{end}}

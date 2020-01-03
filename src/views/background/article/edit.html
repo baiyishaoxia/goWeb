@@ -100,14 +100,14 @@
                     <input type="checkbox" id="checkbox-moban">
                     <label for="checkbox-moban">&nbsp;</label>
                 </div>
-                <button onClick="mobanxuanze()" class="btn btn-default radius ml-10">选择模版</button>
+                <button type="button" onClick="mobanxuanze()" class="btn btn-default radius ml-10">选择模版</button>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <div class="uploader-thum-container">
-                    <input class="input normal upload-path" name="img" type="text" value="{{.Data.Img}}">
+                    <input class="input normal upload-path" name="img" type="text" value="{{.Data.Img}}" id="templateUrl">
                     <div class="upload-box upload-image"></div>
                 </div>
             </div>
@@ -148,5 +148,26 @@
             $(this).InitUploader({sendurl: "/admin/upload/image", swf: "/public/home/script/webuploader/uploader.swf" });
         });
     })
+    function mobanxuanze() {
+        $.ajax({
+            type: 'GET',
+            url: "/admin/article/template",
+            data: {},
+            dataType:"html",
+            success: function (data) {
+                var index = layer.alert(data,function () {
+                    $("#templateUrl").attr("value",getBlogData("image_url"));
+                    layer.close(index);
+                });
+                layer.style(index, {
+                    width: '850px',
+                    height:'500px',
+                    top: '20%',
+                    left: '20%',
+                });
+            }
+        });
+        return false;
+    }
 </script>
 {{end}}

@@ -2,6 +2,7 @@ package background
 
 import (
 	"app/models"
+	"app/service/background"
 	models2 "app/vendors/redis/models"
 	"config"
 	"databases"
@@ -207,6 +208,16 @@ func GetArticleSetStatus(c *gin.Context) {
 	}
 }
 
+//endregion
+
+//region   选择模板   Author:tang
+func GetArticleTemplate(c *gin.Context)  {
+	temp:= background.BannerCategoryByIndex("blog_template")
+	c.HTML(http.StatusOK, "article/show", gin.H{
+		"Title":         "Background Index",
+		"Data":          temp,
+	})
+}
 //endregion
 
 //region Remark:自定义搜索 Author:tang
