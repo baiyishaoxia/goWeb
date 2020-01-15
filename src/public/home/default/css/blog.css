@@ -178,3 +178,6 @@
     padding: 10px 10px;
     height: 43px;
 }
+.fa-sigu-video:before {
+    content: "\f152";
+}

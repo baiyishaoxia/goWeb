@@ -28,7 +28,12 @@
             <div class="card horizontal">
                 <div id="user-messages" class="card-content" v-html="userContent">
                 </div>
-                欢迎使用聊天室!
+                <div id="user-mess" class="card-content">
+                    欢迎使用聊天室!<br/>
+                    本系统采用GO+WebSocket打造一个简洁、方便、实用、高性能、高并发即时通讯平台。<br>
+                    我很方便，因为我只需要一个游客的身份就可以有效地使用。<br/>
+                    它在服务器和浏览器之间建立了全双工通信！<br/>
+                </div>
             </div>
         </div>
     </div>
@@ -118,7 +123,6 @@
             </div>
         </div>
     </div>
-
 </div>
 </main>
 
@@ -145,5 +149,10 @@
     }else{
         document.getElementById('mobile_web').innerHTML = "";
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fa-wechat").parent().parent().addClass("layui-this");
+    });
 </script>
 {{end}}

@@ -67,20 +67,7 @@
                 </a>
             </div>
         </nav>
-        <style>
-            .blog-nav .blog-navicon {
-                border: 0px;
-            }
-            .blog-nav .blog-navicon:hover {
-                border: 0px;
-            }
-            .blog-nav .blog-logo {
-                left: -5%;
-            }
-            .fa-sigu-video:before {
-                content: "\f152";
-            }
-        </style>
+
     </head>
 {{ end }}}
 
@@ -184,6 +171,11 @@
             }
         });
         //endregion
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fa-book").parent().parent().addClass("layui-this");
+        });
     </script>
     </body>
     </html>

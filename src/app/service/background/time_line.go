@@ -88,15 +88,14 @@ func GetTimeLineByTime(year string, mouth string) *[]models.TimeLine {
 }
 func LineToLine() []map[string]interface{} {
 	list := GetTimeLineByTime("", "")
-	fmt.Println(*list)
 	data := make([]map[string]interface{}, 0)
-	item := make(map[string]interface{}) //年--月
 	for _, val := range *list {
+		item := make(map[string]interface{}) //年--月
 		item["year"] = val.Year
 		line_time := strconv.Itoa(int(val.Year))
 		son := GetTimeLineByTime(line_time, "") //当前年
 		if len(*son) != 0 {
-			list := make(map[string]interface{})
+			list :=map[int]interface{}{}
 			pre_year,pre_month :="",""
 			for _, v2 := range *son {
 				line_time2 := strings.Split(v2.Time.Format("2006,01,02,15,04,05"), ",")
@@ -104,22 +103,27 @@ func LineToLine() []map[string]interface{} {
 				if line_time2[0] == pre_year && line_time2[1] == pre_month{
 					continue
 				}
-				child := GetTimeLineByTime(line_time2[0], line_time2[1]) //当前年下的月份
+				//当前年下的月份
+				child := GetTimeLineByTime(line_time2[0], line_time2[1])
 				init := make([]map[string]string, len(*child))
 				for k1, v3 := range *child {
 					init[k1] = make(map[string]string)
 					init[k1]["create_time"] = v3.Time.Format("01月02日 15:04:05")
 					init[k1]["content"] = v3.Content
 				}
-				list[line_time2[1]] = init
+				_key,_:=strconv.Atoi(line_time2[1])
+				list[_key] = init
 				pre_year,pre_month = line_time2[0], line_time2[1]
 			}
 			item["month"] = list
 		}
 		data = append(data, item)
 	}
+
 	return data
 }
+
+
 
 //存在?
 func HasTimeLine(ids []string) bool {

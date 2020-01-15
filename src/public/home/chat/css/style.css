@@ -14,3 +14,6 @@ main {
     width: 100%;
     overflow-y: scroll;
 }
+.layui-nav .layui-nav-item a{
+    height: 64px;
+}

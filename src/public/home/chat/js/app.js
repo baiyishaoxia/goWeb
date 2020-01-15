@@ -13,7 +13,11 @@ new Vue({
 
     created: function() {
         var self = this;
-        this.ws = new WebSocket('ws://' + window.location.host + '/v2/ws');
+        // 实例化socket
+        this.ws = new WebSocket('wss://' + window.location.host + '/v2/ws');
+        // 监听socket连接
+        this.ws.onopen = this.wsonopen(this.ws);
+        // 监听socket消息
         this.ws.addEventListener('message', function(e) {
             //console.log("ws",e);
             //console.log(e);
@@ -23,14 +27,28 @@ new Vue({
                 var msg = e.data;
             }
             if(isJsonString(e.data) && !msg.hasOwnProperty("current_user")) { //当前活跃用户
-                self.chatContent += '<div class="chip">'
-                    + '<img src="' + self.gravatarURL(msg.email) + '">' // Avatar
-                    + msg.username
-                    + '</div>'
-                    + emojione.toImage(msg.message) + '<br/>'; // Parse emojis
+                if(msg.username == self.username){
+                    self.chatContent+='<div style="text-align: right">'
+                        + emojione.toImage(msg.message)
+                        + '<div class="chip">'
+                            + '<img src="' + self.gravatarURL(msg.email) + '">' // Avatar
+                            + msg.username
+                        + '</div>'
+                        +'</div>';
+                }else{
+                    self.chatContent += '<div>'
+                        + '<div class="chip">'
+                            + '<img src="' + self.gravatarURL(msg.email) + '">' // Avatar
+                            + msg.username
+                        + '</div>'
+                        + emojione.toImage(msg.message) + '<br/>'
+                        +'</div>';
+                }
+                // Parse emojis
                 var element = document.getElementById('chat-messages');
                 element.scrollTop = element.scrollHeight; // Auto scroll to the bottom
             }else if(isJsonString(e.data) && msg.hasOwnProperty("current_user")){  //在线用户列表
+                $("#user-mess").empty();
                 self.userContent ='<div class="col s12 m12"> '+msg.current_user
                    +'    <div class="card blue-grey darken-1">\n' +
                     '      <span class="card-content white-text">'+msg.user_list_str+'</span>\n' +
@@ -61,15 +79,23 @@ new Vue({
                 element.scrollTop = element.scrollHeight;
             }
         });
+        // 监听close消息
         this.ws.addEventListener('close', function(e) {
             alert('请重新登录,Lost connection!');
         });
+        // 监听error消息
         this.ws.addEventListener('error', function(e) {
             alert('请重新登录,Connection ERROR!');
         });
     },
-
+    destroyed: function() {
+        //页面销毁时关闭长连接
+        this.ws.close();
+    },
     methods: {
+        wsonopen(ws) {
+            console.log("WebSocket连接成功");
+        },
         send: function () {
             if (this.newMsg != '') {
                 if(this.ws.readyState == 3){
@@ -121,7 +147,7 @@ var vm2 = new Vue({
 
     created: function() {
         var self = this;
-        this.ws = new WebSocket('ws://' + window.location.host + '/v2/ws');
+        this.ws = new WebSocket('wss://' + window.location.host + '/v2/ws');
         this.ws.addEventListener('message', function(e) {
             //console.log("ws",e);
             //console.log(e);
@@ -198,7 +224,7 @@ var vm2 = new Vue({
             return 'http://www.gravatar.com/avatar/' + CryptoJS.MD5(email);
         }
     }
-})
+});
 //是否是json数据
 function isJsonString(str) {
     try {

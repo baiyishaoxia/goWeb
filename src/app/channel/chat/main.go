@@ -36,8 +36,8 @@ type Message struct {
 
 type UserMessageList struct {
 	CurrentUser string   `json:"current_user"`  //当前用户
-	UserList    []string `json:"user_list"`     //用户列表
-	UserListStr string   `json:"user_list_str"` //用户列表
+	UserList    []string `json:"user_list"`     //用户列表,Array
+	UserListStr string   `json:"user_list_str"` //用户列表,String
 }
 
 func HandleConnections(w http.ResponseWriter, r *http.Request) {
