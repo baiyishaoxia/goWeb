@@ -1,11 +1,11 @@
 package models
 
 import (
-	"app"
 	"databases"
 	"fmt"
 	"html/template"
 	"math"
+	"time"
 )
 
 type Article struct {
@@ -28,8 +28,8 @@ type Article struct {
 	IsTop      bool          `xorm:"bool default true" json:"is_top"`     //是否置顶
 	StartTime  string        `xorm:"VARCHAR(255)" json:"start_time"`
 	EndTime    string        `xorm:"VARCHAR(255)" json:"end_time"`
-	CreatedAt  app.Time      `xorm:"created" json:"created_at"`
-	UpdatedAt  app.Time      `xorm:"updated" json:"updated_at"`
+	CreatedAt  time.Time      `xorm:"created" json:"created_at"`
+	UpdatedAt  time.Time      `xorm:"updated" json:"updated_at"`
 	CateName   string        `xorm:"- <- ->"`
 	AuthorName string        `xorm:"- <- ->"`
 }
@@ -73,7 +73,8 @@ func GetArticleList(page int, limit int, keywords string, cate_id int64, start_t
 	if page >= int(all) {
 		page = int(all) - 1
 	}
-	err2 := err.Limit(limit, page*limit).Find(art)
+	//err2 := err.Limit(limit, page*limit).Find(art)
+	err2 := err.Find(art)
 	if err2 != nil {
 		fmt.Println(err2.Error())
 	}

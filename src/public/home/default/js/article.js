@@ -108,13 +108,13 @@ function article_list(id=0,page=1,limit=10,load="",keywords=""){
                 if(load!=""){
                     $(".layui-flow-more").remove();
                     strVar +="                <div class=\"layui-flow-more\">\n" +
-                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
+                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\" categoryId=\""+id +"\"><cite>加载更多</cite></a>\n" +
                         "                    </div>";
                     $("#articleList").append(strVar);
                     window._bd_share_main.init(); //ajax加载完成后再执行一下分享才能起效
                 }else{
                     strVar+="                <div class=\"layui-flow-more\">\n" +
-                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
+                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\" categoryId=\""+id +"\"><cite>加载更多</cite></a>\n" +
                         "                    </div>";
                     $("#articleList").empty().append(strVar);
                 }
@@ -211,13 +211,17 @@ $(function () {
 });
 //加载更多ajax请求
 $(document).on('click','#page_load',function(){
-    var page = $(this).attr('page'); //分页的页码
+    var page = $(this).attr('page');         //分页的页码
+    var categoryId = $(this).attr('categoryId'); //分类
+    if(categoryId === "null"){
+        categoryId = 0;
+    }
     page = parseInt(page)+1;
     $(this).attr('page',page); //下一页+1
     var total = $(this).attr('total'); //数据总数
     var limit = 10; //每页分页的数量
     var keyword=$("#keywords").val();
-    article_list(0,page,limit,"page_load",keyword);
+    article_list(categoryId,page,limit,"page_load",keyword);
 });
 //自定义搜索
 function GetQueryString(name) {

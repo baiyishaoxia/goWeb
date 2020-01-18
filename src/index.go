@@ -120,13 +120,18 @@ func realdata() *http.Server {
 	return server
 }
 
-//启动定时任务(每25分钟执行)
+//启动定时任务
 func cronData() {
 	c := cron.New()
-	spec := "0 */25 * * * ?"
-	c.AddFunc(spec, func() {
+	spec := "0 */25 * * * ?" //(每25分钟执行)
+	_err:=c.AddFunc(spec, func() {
 		job.UsereLevelChan <- app.Uuid()
 	})
+	fmt.Println("----------------用户活跃度自动升级---------------",_err)
+	_err2:=c.AddFunc("0 0 12 0 1,3,6 ?",func(){ //(每周一、周三、周六的12点更新) //0 0 12 0 1,3,6 ?
+		job.NewsChan <- app.Uuid()
+	})
+	fmt.Println("----------------每天自动更新新闻---------------",_err2)
 	//启动计划任务
 	c.Start()
 	//关闭着计划任务, 但是不能关闭已经在执行中的任务.

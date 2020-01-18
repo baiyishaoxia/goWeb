@@ -219,13 +219,19 @@ function article_list(id=0,page=1,limit=10,load=""){
                         "                    </div>";
                 }
                 if(load!=""){
+                    $(".layui-flow-more").remove();
+                    strVar +="                <div class=\"layui-flow-more\">\n" +
+                        "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
+                        "                    </div>";
                     $("#articleList").append(strVar);
+
                 }else{
                     strVar+="                <div class=\"layui-flow-more\">\n" +
                         "                        <a href=\"javascript:void(0);\" id=\"page_load\" page=\""+data.data.page+"\" total=\""+data.data.num +"\"><cite>加载更多</cite></a>\n" +
                         "                    </div>";
                     $("#articleList").empty().append(strVar);
                 }
+
                 if(data.data.num / limit <= page){
                     $("#page_load").remove();
                     $("#articleList").append($('<div class="layui-flow-more">\n' +

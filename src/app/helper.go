@@ -6,18 +6,24 @@ import (
 	"bytes"
 	"crypto/md5"
 	"crypto/rand"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/csv"
 	"encoding/hex"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/satori/go.uuid"
 	"html/template"
 	"io"
+	"io/ioutil"
 	"math"
 	"math/big"
 	rand1 "math/rand"
 	"net"
+	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -480,4 +486,61 @@ func DateFormat(format string, timestamp ...int64) string {
 	format = strings.Replace(format, "i", i, -1)
 	format = strings.Replace(format, "s", s, -1)
 	return format
+}
+
+/*
+ *发送post请求   Author:tang
+ *@param apiUrl api地址
+ *@param postParam post参数
+ *@param result map格式解析json数据， err error对象
+ */
+func UrlPost(apiUrl string, param Mp) (Mp, error) {
+	if apiUrl == "" {
+		return nil, errors.New("Please check the request address!")
+	}
+	v := url.Values{}
+	for key, value := range param {
+		v.Set(key, ToString(value))
+	}
+	u, _ := url.ParseRequestURI(apiUrl)
+	urlStr := u.String()
+
+	tr := &http.Transport{    //解决x509: certificate signed by unknown authority
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{
+		Timeout:   15 * time.Second,
+		Transport: tr,    //解决x509: certificate signed by unknown authority
+	}
+	r, _ := http.NewRequest("POST", urlStr, strings.NewReader(v.Encode())) // URL-encoded payload
+	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")      //添加请求头Type
+	r.Header.Add("Content-Length", strconv.Itoa(len(v.Encode())))          //添加请求头Length
+	r.Header.Add("Authorization", ToString(param["authorization"]))        //添加请求头token
+
+	resp, err := client.Do(r)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	obj := Mp{}
+	err = json.Unmarshal([]byte(body), &obj)
+	if obj.Has("code") {
+		if _, _code := obj.Get("code").(float64); !_code {
+			return obj, errors.New(ToString(obj.Get("message")))
+		}
+	}
+	if obj.Has("status") && (ToInt64(obj.Get("status")) != 0 && ToInt64(obj.Get("status")) != 200) {
+		if obj.Has("message") {
+			return obj, errors.New(ToString(obj.Get("message")))
+		}
+		return obj, errors.New(ToString(obj.Get("msg")))
+	}
+	if obj.Has("data") {
+		return obj, nil
+	}
+	return obj, nil
 }

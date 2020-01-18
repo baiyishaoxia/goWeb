@@ -5,7 +5,7 @@ const (
 	Port = 8080
 	Scheme = "http://"
 
-	RedisAddr     = "127.0.0.1:6379"
-	RedisPassword = "123456"
+	RedisAddr     = "172.16.31.138:6379"
+	RedisPassword = "a123456"
 	RedisDb       = 0
 )
