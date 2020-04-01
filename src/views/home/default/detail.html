@@ -19,7 +19,7 @@
 							<div class="article-detail shadow">
 								<div class="article-detail-title title">{{.Data.Title}}</div>
 								<div class="article-detail-info">
-									<span>编辑时间：{{.Data.CreatedAt}}</span>
+									<span>编辑时间：{{call $.TimeInit $.Data.CreatedAt}}</span>
 									<span>作者：{{.Data.AuthorName}}</span>
 									<span>浏览量：{{.Data.ClickNum}}</span>
 								</div>

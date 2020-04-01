@@ -123,12 +123,12 @@ func realdata() *http.Server {
 //启动定时任务
 func cronData() {
 	c := cron.New()
-	spec := "0 */25 * * * ?" //(每25分钟执行)
+	spec := "0 */25 * * * ?" //(0 */25 * * * ?每25分钟执行)
 	_err:=c.AddFunc(spec, func() {
 		job.UsereLevelChan <- app.Uuid()
 	})
 	fmt.Println("----------------用户活跃度自动升级---------------",_err)
-	_err2:=c.AddFunc("0 0 12 0 1,3,6 ?",func(){ //(每周一、周三、周六的12点更新) //0 0 12 0 1,3,6 ?
+	_err2:=c.AddFunc("0 0,10 17 * * 0,2,3",func(){ //(每周日,周二,周三的 17:00和 17:10 执行 )
 		job.NewsChan <- app.Uuid()
 	})
 	fmt.Println("----------------每天自动更新新闻---------------",_err2)

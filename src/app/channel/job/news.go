@@ -75,12 +75,6 @@ func HandleNewsPull() {
 			removal = append(removal, v)
 		}
 	}
-	//todo 开始批量入库
-	res, err := db.Insert(removal)
-	if res < 1  || err != nil{
-		fmt.Println("-----------------------更新失败-------------------------------",len(removal),params["start"],err)
-		return
-	}
 	//todo 更新配置
 	config := []models.Config{
 		models.Config{
@@ -89,5 +83,11 @@ func HandleNewsPull() {
 		},
 	}
 	models.SetConfig(config)
+	//todo 开始批量入库
+	res, err := db.Insert(removal)
+	if res < 1  || err != nil{
+		fmt.Println("-----------------------更新失败-------------------------------",len(removal),params["start"],err)
+		return
+	}
 	fmt.Println("-----------------------拉取新闻更新成功------------------------",len(item))
 }
