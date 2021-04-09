@@ -6,7 +6,7 @@ import (
 	"routers"
 )
 
-func main() {
+func main2() {
 	//数据库初始化测试
 	//databases.Init()
 	//使用管道

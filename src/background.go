@@ -6,7 +6,7 @@ import (
 	"routers"
 )
 
-func main() {
+func main3() {
 	//数据迁移表
 	//databases.Orm.Sync(new(models.Article))
 	//databases.Orm.Sync(new(models.BlogAdmin))

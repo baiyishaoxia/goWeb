@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 	"testing"
-	"yournovel/yournovel/tool"
+	"other/reading/yournovel/tool"
 )
 
 func TestNextChapter(t *testing.T) {
