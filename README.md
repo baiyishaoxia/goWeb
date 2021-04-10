@@ -35,6 +35,10 @@ Go语言是谷歌推出的一种全新的编程语言，可以在不损失应用
 ## 运行效果
 ![image](./screenshots/Snipaste_2021-04-10_13-58-49.png)
 
+![image](./screenshots/Snipaste_2021-04-10_14-38-51.png)
+
+![image](./screenshots/Snipaste_2021-04-10_14-38-34.png)
+
 ![image](./screenshots/Snipaste_2021-04-10_13-59-37.png)
 
 
