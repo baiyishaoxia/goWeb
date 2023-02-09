@@ -12,11 +12,14 @@ require (
 	github.com/boj/redistore v0.0.0-20180917114910-cd5dcc76aeff // indirect
 	github.com/garyburd/redigo v1.6.2
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
-	github.com/gin-gonic/gin v1.7.1 // indirect
+	github.com/gin-gonic/gin v1.7.7 // indirect
 	github.com/go-ini/ini v1.62.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/go-xorm/core v0.6.3
 	github.com/go-xorm/xorm v0.7.9
 	github.com/gorilla/sessions v1.2.1 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/lib/pq v1.10.0
+	github.com/smartystreets/goconvey v1.7.2 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 )
