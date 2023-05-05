@@ -22,6 +22,8 @@ require (
 	databases v0.0.0-00010101000000-000000000000
 	github.com/garyburd/redigo v1.6.2
 	github.com/gin-contrib/sessions v0.0.3 // indirect
-	github.com/gin-gonic/gin v1.7.1
+	github.com/gin-gonic/gin v1.9.0
 	github.com/go-xorm/xorm v0.7.9
+	github.com/smartystreets/goconvey v1.8.0 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 )
